@@ -20,7 +20,7 @@ import com.mobicomkit.database.MobiComDatabaseHelper;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,Fragment_ecommerce.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,EcommerceFragment.OnFragmentInteractionListener {
 
     public static final String DATABASE_NAME = "yourappdb";
     public static final int DATABASE_VERSION = 1;
@@ -73,7 +73,7 @@ public class MainActivity extends ActionBarActivity
             mTitle = "Ecommerce";
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, Fragment_ecommerce.newInstance("Test1", "Test2"))
+                    .replace(R.id.container, EcommerceFragment.newInstance("Test1", "Test2"))
                     .commit();
            return;
         }

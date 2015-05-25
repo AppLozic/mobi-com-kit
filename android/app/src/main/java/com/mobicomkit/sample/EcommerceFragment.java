@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_ecommerce.OnFragmentInteractionListener} interface
+ * {@link EcommerceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Fragment_ecommerce#newInstance} factory method to
+ * Use the {@link EcommerceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_ecommerce extends Fragment {
+public class EcommerceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,11 +36,11 @@ public class Fragment_ecommerce extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_ecommerce.
+     * @return A new instance of fragment EcommerceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_ecommerce newInstance(String param1, String param2) {
-        Fragment_ecommerce fragment = new Fragment_ecommerce();
+    public static EcommerceFragment newInstance(String param1, String param2) {
+        EcommerceFragment fragment = new EcommerceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,7 +48,7 @@ public class Fragment_ecommerce extends Fragment {
         return fragment;
     }
 
-    public Fragment_ecommerce() {
+    public EcommerceFragment() {
         // Required empty public constructor
     }
 
