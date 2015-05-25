@@ -1,6 +1,7 @@
 package com.mobicomkit.api.account.register;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -26,9 +27,12 @@ public class RegisterUserClientService extends MobiComKitClientService {
     }
 
     public RegistrationResponse createAccount(User user) throws Exception {
+        MobiComUserPreference mobiComUserPreference = MobiComUserPreference.getInstance(context);
+
         Gson gson = new Gson();
         user.setAppVersionCode(MobiComKitServer.MOBICOMKIT_VERSION_CODE);
         user.setApplicationId(MobiComKitServer.APPLICATION_KEY_HEADER_VALUE);
+        user.setRegistrationId(mobiComUserPreference.getDeviceRegistrationId());
         String response = HttpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
 
         Log.i(TAG, "Registration response is: " + response);
@@ -37,7 +41,6 @@ public class RegisterUserClientService extends MobiComKitClientService {
         }
         RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
 
-        MobiComUserPreference mobiComUserPreference = MobiComUserPreference.getInstance(context);
         //mobiComUserPreference.setCountryCode(user.getCountryCode());
         mobiComUserPreference.setUserId(user.getUserId());
         mobiComUserPreference.setContactNumber(user.getContactNumber());
@@ -63,20 +66,15 @@ public class RegisterUserClientService extends MobiComKitClientService {
         user.setContactNumber(ContactNumberUtils.getPhoneNumber(phoneNumber, mobiComUserPreference.getCountryCode()));
 
         return createAccount(user);
-        /*
-        user.setRegistrationId(registrationId);
-        String countryCode = usrpref.getCountryCode();
-        if (countryCode != null && !countryCode.equals("")) {
-            user.setCountryCode(countryCode);
-            user.setPrefContactAPI(Short.valueOf("1"));
+    }
+
+    public void updatePushNotificationId(final String pushNotificationId) throws Exception {
+        MobiComUserPreference pref = MobiComUserPreference.getInstance(context);
+        //Note: In case if gcm registration is done before login then only updating in pref
+        if (TextUtils.isEmpty(pref.getEmailIdValue()) && TextUtils.isEmpty(pref.getUserId())) {
+            pref.setDeviceRegistrationId(pushNotificationId);
         } else {
-            user.setPrefContactAPI(Short.valueOf("0"));
+            createAccount(pref.getEmailIdValue(), pref.getUserId(), pref.getContactNumber(), pushNotificationId);
         }
-        if (!TextUtils.isEmpty(password)) {
-            user.setPassword(password);
-        }
-        user.setEmailVerified(usrpref.isEmailVerified());
-        user.setTimezone(TimeZone.getDefault().getID());
-        user.setRoleName(userType);*/
     }
 }

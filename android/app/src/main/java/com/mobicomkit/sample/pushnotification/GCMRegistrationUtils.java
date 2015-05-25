@@ -27,12 +27,20 @@ public class GCMRegistrationUtils extends Handler {
 	}
 
 	@Override
-	public void handleMessage(Message msg) {
-
+	public void handleMessage(final Message msg) {
 		super.handleMessage(msg);
 		if (msg.what == 1) {
-			sendRegistrationIdToBackend(msg.obj.toString());
-
+			final String pushnotificationId = msg.obj.toString();
+			new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        new RegisterUserClientService(mActivity).updatePushNotificationId(pushnotificationId);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
 		} else {
 			Log.i(TAG, "Handler: Background registration failed");
 		}
@@ -111,22 +119,5 @@ public class GCMRegistrationUtils extends Handler {
 				}
 			}
 		}).start();
-	}
-
-
-	private void sendRegistrationIdToBackend(final String pushNotificationId) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						MobiComUserPreference pref = MobiComUserPreference.getInstance(mActivity);
-						new RegisterUserClientService(mActivity)
-                                                    .createAccount(pref.getEmailIdValue(),pref.getEmailIdValue(),
-															pref.getContactNumber(), pushNotificationId);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}).start();
 	}
 }

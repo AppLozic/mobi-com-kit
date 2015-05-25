@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mobicomkit.api.conversation.Message;
+import com.mobicomkit.api.conversation.MessageIntentService;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.broadcast.BroadcastService;
@@ -38,7 +39,7 @@ import java.util.Map;
 /**
  * Created by devashish on 10/2/15.
  */
-abstract public class MobiComQuickConversationFragment extends Fragment {
+public class MobiComQuickConversationFragment extends Fragment {
 
     public static final String QUICK_CONVERSATION_EVENT = "quick_conversation";
     protected MobiComConversationService conversationService;
@@ -60,6 +61,14 @@ abstract public class MobiComQuickConversationFragment extends Fragment {
 
     public ConversationListView getListView() {
         return listView;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        conversationService = new MobiComConversationService(getActivity());
+        conversationAdapter = new ConversationAdapter(getActivity(),
+                R.layout.mobicom_message_row_view, messageList, null, true, MessageIntentService.class, null);
     }
 
     @Override
@@ -180,7 +189,6 @@ abstract public class MobiComQuickConversationFragment extends Fragment {
                 checkForEmptyConversations();
             }
         });
-
     }
 
     public void removeConversation(final Contact contact) {
@@ -214,10 +222,13 @@ abstract public class MobiComQuickConversationFragment extends Fragment {
     public void onPause() {
         super.onPause();
         listIndex = listView.getFirstVisiblePosition();
+        BroadcastService.currentUserId =null;
     }
 
     @Override
     public void onResume() {
+        //Assigning to avoid notification in case if quick conversation fragment is opened....
+        BroadcastService.currentUserId ="quick-conversation";
         super.onResume();
         if (listView != null) {
             if (listView.getCount() > listIndex) {

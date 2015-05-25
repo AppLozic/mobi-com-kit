@@ -16,6 +16,8 @@ public class BroadcastService {
 
     private static final String TAG = "BroadcastService";
 
+    public static String currentUserId = null;
+
     public static void sendFirstTimeSyncCompletedBroadcast(Context context) {
         Log.i(TAG, "Sending " + INTENT_ACTIONS.FIRST_TIME_SYNC_COMPLETE.toString() + " broadcast");
         Intent intent = new Intent();
@@ -75,7 +77,6 @@ public class BroadcastService {
         Intent notificationIntent = new Intent();
         notificationIntent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(message, Message.class));
         notificationIntent.setAction("com.mobicomkit.notification");
-        //    notificationIntent.addCategory();
         context.sendBroadcast(notificationIntent);
     }
 

@@ -26,7 +26,8 @@ public class QuickConversationFragment extends MobiComQuickConversationFragment 
     @Override
     public void onResume() {
         super.onResume();
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
+
+       ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
     }
 }
 

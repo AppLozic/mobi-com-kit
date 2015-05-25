@@ -97,8 +97,12 @@ public class MobiComMessageService {
 
         Contact contact = ContactUtils.getContact(context, message.getTo());
         BroadcastService.sendMessageUpdateBroadcast(context, BroadcastService.INTENT_ACTIONS.SYNC_MESSAGE.toString(), message);
-        //Todo: use email if contact number is empty
-        BroadcastService.sendNotificationBroadcast(context, message);
+
+        //Check if we are........container is already opened...don't send broadcast
+        if (BroadcastService.currentUserId == null) {
+            BroadcastService.sendNotificationBroadcast(context, message);
+        }
+
         Log.i(TAG, "Updating delivery status: " + message.getPairedMessageKeyString() + ", " + userPreferences.getUserId() + ", " + userPreferences.getContactNumber());
         messageClientService.updateDeliveryStatus(message.getPairedMessageKeyString(), userPreferences.getUserId(), userPreferences.getContactNumber());
         return contact;
@@ -130,12 +134,10 @@ public class MobiComMessageService {
                     processMessage(message, tofield);
                     MobiComUserPreference.getInstance(context).setLastInboxSyncTime(message.getCreatedAtTime());
                 }
-
                 MessageClientService.recentProcessedMessage.add(message);
                 BroadcastService.sendMessageUpdateBroadcast(context, BroadcastService.INTENT_ACTIONS.SYNC_MESSAGE.toString(), message);
                 messageDatabaseService.createMessage(message);
             }
-
             userpref.setLastSyncTime(String.valueOf(syncMessageFeed.getLastSyncTime()));
         }
     }

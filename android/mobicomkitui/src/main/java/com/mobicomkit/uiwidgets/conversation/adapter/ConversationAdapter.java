@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -38,6 +38,7 @@ import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
+import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import net.mobitexter.mobiframework.alphanumbericcolor.AlphaNumberColorUtil;
@@ -129,10 +130,10 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         };
         imageThumbnailLoader.setImageFadeIn(false);
         contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
-        contactImageLoader.addImageCache(((ActionBarActivity) context).getSupportFragmentManager(), 0.1f);
+        contactImageLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
 
         contactImageLoader.setImageFadeIn(false);
-        imageThumbnailLoader.addImageCache(((ActionBarActivity) context).getSupportFragmentManager(), 0.1f);
+        imageThumbnailLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
 
         sentIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_sent);
         deliveredIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_delivered);
@@ -247,7 +248,6 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
             if (attachedFile != null) {
                 attachedFile.setTextColor(Color.BLACK);
             }
-
 
             if (sentOrReceived != null) {
                 if ((!quick && !message.isCall()) || message.isDummyEmptyMessage()) {
@@ -490,7 +490,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
                 @Override
                 public void onClick(View view) {
                     InstructionUtil.hideInstruction(context, R.string.instruction_open_conversation_thread);
-                    ((MobiComActivity) context).onQuickConversationFragmentItemClick(view, contactReceiver);
+                    ((MobiComKitActivityInterface) context).onQuickConversationFragmentItemClick(view, contactReceiver);
                 }
             });
         }

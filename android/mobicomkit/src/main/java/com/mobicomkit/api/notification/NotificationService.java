@@ -60,7 +60,7 @@ public class NotificationService {
                         .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setWhen(System.currentTimeMillis())
-                        .setContentTitle(contact.getFullName() != null ? contact.getFullName() : contact.getContactNumber())
+                        .setContentTitle(contact.getFullName() != null ? contact.getFullName() : sms.getContactIds())
                         .setContentText(sms.getMessage())
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         mBuilder.setContentIntent(pendingIntent);

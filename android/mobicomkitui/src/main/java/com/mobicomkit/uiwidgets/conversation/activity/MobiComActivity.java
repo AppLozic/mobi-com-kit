@@ -50,7 +50,7 @@ import java.util.ArrayList;
 
 
 abstract public class MobiComActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
-        MessageCommunicator {
+        MessageCommunicator, MobiComKitActivityInterface {
 
     public static final int REQUEST_CODE_FULL_SCREEN_ACTION = 301;
     public static final int REQUEST_CODE_CONTACT_GROUP_SELECTION = 101;
@@ -122,7 +122,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
     public abstract void processLocation();
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if ((requestCode == MultimediaOptionFragment.REQUEST_CODE_ATTACH_PHOTO ||
@@ -159,6 +159,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
 
     public abstract void startContactActivityForResult(Message message, String messageContent);
 
+    @Override
     public void onQuickConversationFragmentItemClick(View view, Contact contact) {
         TextView textView = (TextView) view.findViewById(R.id.unreadSmsCount);
         textView.setVisibility(View.GONE);
