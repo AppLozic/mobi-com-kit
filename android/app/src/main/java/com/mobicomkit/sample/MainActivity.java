@@ -2,6 +2,7 @@ package com.mobicomkit.sample;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +20,7 @@ import com.mobicomkit.database.MobiComDatabaseHelper;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,Fragment_ecommerce.OnFragmentInteractionListener {
 
     public static final String DATABASE_NAME = "yourappdb";
     public static final int DATABASE_VERSION = 1;
@@ -68,10 +69,24 @@ public class MainActivity extends ActionBarActivity
             startActivity(intent);
             return;
         }
+        if (position == 3) {
+            mTitle = "Ecommerce";
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, Fragment_ecommerce.newInstance("Test1", "Test2"))
+                    .commit();
+           return;
+        }
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
+    }
+
+    public void startChat(View v){
+        Intent i = new Intent(this,SlidingPaneActivity.class);
+        i.putExtra("userId","devashish.mamgain@gmail.com");
+        startActivity(i);
     }
 
     public void onSectionAttached(int number) {
@@ -117,11 +132,16 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**
@@ -162,6 +182,9 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+
+
+
     }
 
 }
