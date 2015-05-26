@@ -7,7 +7,16 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ecommerce_text1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="#000000"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -15,7 +24,7 @@
         android:orientation="horizontal">
 
     <Button android:text="@string/ecommerce_ad_button" android:layout_height="wrap_content" android:layout_width="188dp"
-        android:id="@+id/button_ad" android:background="@color/link_text_material_light"/>
+        android:id="@+id/button_ad" android:background="@color/whitesmoke"/>
 
     <TextView
         android:layout_width="194dp"
@@ -145,8 +154,9 @@
         </TableLayout>
 
             <Button android:text="@string/ecommerce_chat_button" android:layout_height="wrap_content" android:layout_width="188dp"
-                android:id="@+id/button_chat" android:background="@color/link_text_material_light"
-                android:onClick="startChat"/>
+                android:id="@+id/button_chat" android:background="@color/holo_blue"
+                android:onClick="startChat"
+                android:layout_gravity="center"/>
 
     </LinearLayout>
 
