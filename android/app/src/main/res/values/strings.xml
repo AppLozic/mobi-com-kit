@@ -16,5 +16,17 @@
     <string name="button_text">Test</string>
     <string name="title_activity_test">Test</string>
     <string name="hello_world">Hello world test!</string>
-
+    <string name="ecommerce">Ecommerce</string>
+    <string name="ecommerce_button1_text">Gadgets</string>
+    <string name="ecommerce_button2_text">Home</string>
+    <string name="ecommerce_button3_text">PC</string>
+    <string name="ecommerce_button4_text">Bags</string>
+    <string name="ecommerce_button5_text">Watches</string>
+    <string name="ecommerce_button6_text">Mobiles</string>
+    <string name="ecommerce_button7_text">Cars</string>
+    <string name="ecommerce_button8_text">Games</string>
+    <string name="ecommerce_button9_text">Music</string>
+    <string name="ecommerce_ad_button">Post Free Ad</string>
+    <string name="ecommerce_chat_button">Chat</string>
+    <string name="ecommerce_ad_text">Free Advertise</string>
 </resources>

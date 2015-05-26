@@ -69,11 +69,11 @@ public class MainActivity extends ActionBarActivity
             startActivity(intent);
             return;
         }
-        if (position == 3) {
-            mTitle = "Ecommerce";
+        if (position == 0) {
+            mTitle = getString(R.string.ecommerce);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, EcommerceFragment.newInstance("Test1", "Test2"))
+                    .replace(R.id.container, EcommerceFragment.newInstance("",""))
                     .commit();
            return;
         }
