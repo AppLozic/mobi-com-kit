@@ -71,9 +71,12 @@ public class RegisterUserClientService extends MobiComKitClientService {
     public void updatePushNotificationId(final String pushNotificationId) throws Exception {
         MobiComUserPreference pref = MobiComUserPreference.getInstance(context);
         //Note: In case if gcm registration is done before login then only updating in pref
-        if (TextUtils.isEmpty(pref.getEmailIdValue()) && TextUtils.isEmpty(pref.getUserId())) {
+
+        if (!TextUtils.isEmpty(pushNotificationId)) {
             pref.setDeviceRegistrationId(pushNotificationId);
-        } else {
+        }
+
+        if (pref.isRegistered()) {
             createAccount(pref.getEmailIdValue(), pref.getUserId(), pref.getContactNumber(), pushNotificationId);
         }
     }
