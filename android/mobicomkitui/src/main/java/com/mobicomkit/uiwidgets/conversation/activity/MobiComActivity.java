@@ -141,6 +141,8 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
             conversationFragment.loadFile(selectedFileUri);
 
             Log.i(TAG, "File uri: " + selectedFileUri);
+        } else if (requestCode == REQUEST_CODE_CONTACT_GROUP_SELECTION && resultCode == RESULT_OK) {
+            checkForStartNewConversation(intent);
         }
     }
 

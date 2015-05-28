@@ -155,7 +155,6 @@ public class SlidingPaneActivity extends MobiComActivity {
     public void startContactActivityForResult(Message message, String messageContent) {
         Intent intent = new Intent(this, MobiComKitPeopleActivity.class);
         super.startContactActivityForResult(intent, message, messageContent);
-
     }
 
     @Override
@@ -172,12 +171,6 @@ public class SlidingPaneActivity extends MobiComActivity {
             return;
         } /*else if (resultCode == MultimediaOptionFragment.REQUEST_CODE_ATTACH_PHOTO ||
                 resultCode == MultimediaOptionFragment.REQUEST_CODE_TAKE_PHOTO && intent != null) {*/
-
-        if (requestCode == REQUEST_CODE_CONTACT_GROUP_SELECTION) {
-            if (resultCode == RESULT_OK) {
-                checkForStartNewConversation(intent);
-            }
-        }
     }
 
     public void processLocation() {
