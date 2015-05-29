@@ -21,10 +21,9 @@ import java.util.List;
 
 public class MobiComPushReceiver {
 
+    public static final String MTCOM_PREFIX = "MT_";
     public static final List<String> notificationKeyList = new ArrayList<String>();
-
     static {
-
         notificationKeyList.add("MT_SYNC"); // 0
         notificationKeyList.add("MT_MARK_ALL_MESSAGE_AS_READ"); //1
         notificationKeyList.add("MT_DELIVERED"); //2
@@ -40,23 +39,20 @@ public class MobiComPushReceiver {
         notificationKeyList.add("MT_DEVICE_CONTACT_MESSAGE");//12
         notificationKeyList.add("MT_CANCEL_CALL");//13
         notificationKeyList.add("MT_MESSAGE");//14
-
-
     }
-
-    public static final String MTCOM_PREFIX = "MT_";
     private static final String TAG = "MobiComPushReceiver";
 
     public static boolean isMobiComPushNotification(Context context, Intent intent) {
-
         //This is to identify collapse key sent in notification..
-        String playload = intent.getStringExtra("collapse_key");
-        if (playload.contains(MTCOM_PREFIX) || notificationKeyList.contains(playload)) {
+        String payLoad = intent.getStringExtra("collapse_key");
+        Log.i(TAG, "Received notification: " + payLoad);
+
+        if (payLoad.contains(MTCOM_PREFIX) || notificationKeyList.contains(payLoad)) {
             return true;
         } else {
             for (String key : notificationKeyList) {
-                playload = intent.getStringExtra(key);
-                if (playload != null) {
+                payLoad = intent.getStringExtra(key);
+                if (payLoad != null) {
                     return true;
                 }
             }
