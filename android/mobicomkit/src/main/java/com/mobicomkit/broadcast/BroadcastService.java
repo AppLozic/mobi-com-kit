@@ -35,12 +35,12 @@ public class BroadcastService {
         context.sendBroadcast(intent);
     }
 
-    public static void sendMessageUpdateBroadcast(Context context, String action, Message sms) {
-        Log.i(TAG, "Sending message update broadcast for " + action + ", " + sms.getKeyString());
+    public static void sendMessageUpdateBroadcast(Context context, String action, Message message) {
+        Log.i(TAG, "Sending message update broadcast for " + action + ", " + message.getKeyString());
         Intent intentUpdate = new Intent();
         intentUpdate.setAction(action);
         intentUpdate.addCategory(Intent.CATEGORY_DEFAULT);
-        intentUpdate.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(sms, Message.class));
+        intentUpdate.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(message, Message.class));
         context.sendBroadcast(intentUpdate);
     }
 

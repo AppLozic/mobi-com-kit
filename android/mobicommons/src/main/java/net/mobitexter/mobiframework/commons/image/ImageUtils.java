@@ -3,9 +3,13 @@ package net.mobitexter.mobiframework.commons.image;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by devashish on 21/12/14.
@@ -51,6 +55,13 @@ public class ImageUtils {
         final int width = displayMetrics.widthPixels;
 
         return height > width ? height : width;
+    }
+
+    public static Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
 }
