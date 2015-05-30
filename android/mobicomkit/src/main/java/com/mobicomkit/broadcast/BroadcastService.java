@@ -2,6 +2,7 @@ package com.mobicomkit.broadcast;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 
 import com.mobicomkit.api.MobiComKitConstants;
@@ -78,6 +79,23 @@ public class BroadcastService {
         notificationIntent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(message, Message.class));
         notificationIntent.setAction("com.mobicomkit.notification");
         context.sendBroadcast(notificationIntent);
+    }
+
+    public static IntentFilter getIntentFilter() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.FIRST_TIME_SYNC_COMPLETE.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.LOAD_MORE.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.MESSAGE_SYNC_ACK_FROM_SERVER.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.SYNC_MESSAGE.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.DELETE_MESSAGE.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.DELETE_CONVERSATION.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.MESSAGE_DELIVERY.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.UPLOAD_ATTACHMENT_FAILED.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.MESSAGE_ATTACHMENT_DOWNLOAD_DONE.toString());
+        intentFilter.addAction(BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
+
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        return intentFilter;
     }
 
     public static enum INTENT_ACTIONS {
