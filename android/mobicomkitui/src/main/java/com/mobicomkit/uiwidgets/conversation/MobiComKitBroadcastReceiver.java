@@ -45,7 +45,7 @@ public class MobiComKitBroadcastReceiver extends BroadcastReceiver {
         if (!TextUtils.isEmpty(messageJson)) {
             message = (Message) GsonUtils.getObjectFromJson(messageJson, Message.class);
         }
-        Log.i(TAG, "Received broadcast, action: " + action + ", sms: " + message);
+        Log.i(TAG, "Received broadcast, action: " + action + ", message: " + message);
 
         MobiComUserPreference userPreferences = MobiComUserPreference.getInstance(context);
         String formattedContactNumber = "";
