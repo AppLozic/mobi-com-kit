@@ -1,8 +1,6 @@
 package com.mobicomkit.api.account.register;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -12,13 +10,13 @@ import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.MobiComKitServer;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.account.user.User;
-import com.mobicomkit.exception.Error404;
-import com.mobicomkit.exception.InvalidAppId;
-import com.mobicomkit.exception.NoInternetConnection;
+import com.mobicomkit.exception.InvalidApplicationException;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 
+import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.TimeZone;
 
 /**
@@ -27,7 +25,7 @@ import java.util.TimeZone;
 public class RegisterUserClientService extends MobiComKitClientService {
 
     private static final String TAG = "RegisterUserClient";
-    private static final CharSequence INVALID_APP_ID = "INVALID_APPLICATIONID";
+    private static final String INVALID_APP_ID = "INVALID_APPLICATIONID";
 
     public RegisterUserClientService(Context context) {
         this.context = context;
@@ -59,18 +57,19 @@ public class RegisterUserClientService extends MobiComKitClientService {
         user.setRegistrationId(mobiComUserPreference.getDeviceRegistrationId());
 
         if (!isInternetAvailable()) {
-            throw new NoInternetConnection("No Internet Connection");
+            throw new ConnectException("No Internet Connection");
         }
+
         String response = HttpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
 
         Log.i(TAG, "Registration response is: " + response);
 
         if (response.contains("<html")) {
-            throw new Error404("Error 404 : Server is down");
+            throw new UnknownHostException("Error 404");
 //            return null;
         }
         if (response.contains(INVALID_APP_ID)) {
-            throw new InvalidAppId("Invalid Application Id");
+            throw new InvalidApplicationException("Invalid Application Id");
         }
         RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
 
