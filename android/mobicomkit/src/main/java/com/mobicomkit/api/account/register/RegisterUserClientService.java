@@ -1,6 +1,8 @@
 package com.mobicomkit.api.account.register;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -10,9 +12,13 @@ import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.MobiComKitServer;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.account.user.User;
+import com.mobicomkit.exception.Error404;
+import com.mobicomkit.exception.InvalidAppId;
+import com.mobicomkit.exception.NoInternetConnection;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 
+import java.net.InetAddress;
 import java.util.TimeZone;
 
 /**
@@ -21,9 +27,27 @@ import java.util.TimeZone;
 public class RegisterUserClientService extends MobiComKitClientService {
 
     private static final String TAG = "RegisterUserClient";
+    private static final CharSequence INVALID_APP_ID = "INVALID_APPLICATIONID";
 
     public RegisterUserClientService(Context context) {
         this.context = context;
+    }
+
+
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
+
+            if (ipAddr.equals("")) {
+                return false;
+            } else {
+                return true;
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     public RegistrationResponse createAccount(User user) throws Exception {
@@ -33,11 +57,20 @@ public class RegisterUserClientService extends MobiComKitClientService {
         user.setAppVersionCode(MobiComKitServer.MOBICOMKIT_VERSION_CODE);
         user.setApplicationId(MobiComKitServer.APPLICATION_KEY_HEADER_VALUE);
         user.setRegistrationId(mobiComUserPreference.getDeviceRegistrationId());
+
+        if (!isInternetAvailable()) {
+            throw new NoInternetConnection("No Internet Connection");
+        }
         String response = HttpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
 
         Log.i(TAG, "Registration response is: " + response);
-        if (response.startsWith("<html>")) {
-            return null;
+
+        if (response.contains("<html")) {
+            throw new Error404("Error 404 : Server is down");
+//            return null;
+        }
+        if (response.contains(INVALID_APP_ID)) {
+            throw new InvalidAppId("Invalid Application Id");
         }
         RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
 
