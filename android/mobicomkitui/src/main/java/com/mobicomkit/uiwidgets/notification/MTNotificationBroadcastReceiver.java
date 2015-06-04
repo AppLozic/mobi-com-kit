@@ -34,7 +34,6 @@ public class MTNotificationBroadcastReceiver extends BroadcastReceiver {
             final NotificationService notificationService =
                     new NotificationService(R.drawable.ic_launcher, context, R.string.wearable_action_label, R.string.wearable_action_title, R.drawable.ic_action_send);
 
-            Log.i(TAG, "Received broadcast, action: " + action + ", sms: " + message);
             final Contact contact = ContactUtils.getContact(context, message.getContactIds());
             new Thread(new Runnable() {
                 @Override
