@@ -1,11 +1,11 @@
 package com.mobicomkit.database;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.mobicomkit.api.MobiComKitServer;
 
 import net.mobitexter.mobiframework.commons.core.utils.DBUtils;
 
@@ -26,8 +26,8 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
             + _ID + " integer primary key autoincrement  ," + SMS
             + " text not null, " + TIMESTAMP + " INTEGER ,"
             + TO_FIELD + " varchar(20) not null, " + SMS_TYPE + " varchar(20) not null ," + CONTACTID + " varchar(20) , " + SMS_KEY_STRING + " varChar(50), " + STORE_ON_DEVICE_COLUMN + " INTEGER DEFAULT 1, source INTEGER, timeToLive integer) ;";
-    public static final String DB_NAME_KEY = "DB_NAME";
-    public static final String DB_VERSION = "DB_VERSION";
+    public static final String DB_NAME = "MCK_" + MobiComKitServer.APPLICATION_KEY_HEADER_VALUE;
+    public static final int DB_VERSION = 1;
     public static final String CREATE_SMS_TABLE = "create table sms ( "
             + "id integer primary key autoincrement, "
             + "keyString var(100), "
@@ -59,14 +59,12 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private MobiComDatabaseHelper(Context context) {
-        this(context, PreferenceManager.getDefaultSharedPreferences(context).getString(DB_NAME_KEY, null), null,
-                PreferenceManager.getDefaultSharedPreferences(context).getInt(DB_VERSION, 1));
+        this(context, DB_NAME, null, DB_VERSION);
         this.context = context;
     }
 
     public MobiComDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
-        init(context, name, version);
     }
 
     public static MobiComDatabaseHelper getInstance(Context context) {
@@ -77,12 +75,6 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
             sInstance = new MobiComDatabaseHelper(context.getApplicationContext());
         }
         return sInstance;
-    }
-
-    public static void init(Context context, String databaseName, int databaseVersion) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(MobiComDatabaseHelper.DB_NAME_KEY, databaseName).commit();
-        sharedPreferences.edit().putInt(MobiComDatabaseHelper.DB_VERSION, databaseVersion).commit();
     }
 
     @Override

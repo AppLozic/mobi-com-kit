@@ -49,8 +49,6 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        MobiComDatabaseHelper.init(this, DATABASE_NAME, DATABASE_VERSION);
-
         MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
         if (!userPreference.isRegistered()) {
             Intent intent = new Intent(this, LoginActivity.class);

@@ -317,6 +317,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         if (!TextUtils.isEmpty(userId)) {
             contact = new Contact();
             contact.setUserId(userId);
+            contact.setContactNumber(userId);
             //Todo: Load contact details from server.
         }
 
