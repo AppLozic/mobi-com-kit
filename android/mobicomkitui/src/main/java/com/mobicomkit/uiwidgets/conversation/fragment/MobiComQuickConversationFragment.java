@@ -228,7 +228,7 @@ public class MobiComQuickConversationFragment extends Fragment {
     @Override
     public void onResume() {
         //Assigning to avoid notification in case if quick conversation fragment is opened....
-        BroadcastService.currentUserId ="quick-conversation";
+        BroadcastService.selectMobiComKitAll();
         super.onResume();
         if (listView != null) {
             if (listView.getCount() > listIndex) {
