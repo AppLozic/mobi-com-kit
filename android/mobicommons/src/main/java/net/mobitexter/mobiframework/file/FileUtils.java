@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.mobitexter.mobicom;
+package net.mobitexter.mobiframework.file;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;

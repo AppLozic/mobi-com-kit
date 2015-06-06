@@ -14,7 +14,7 @@ import com.mobicomkit.api.attachment.FileClientService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 
-import net.mobitexter.mobicom.FileUtils;
+import net.mobitexter.mobiframework.file.FileUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
