@@ -129,8 +129,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="APPLICATION_KEY_HEADER_VALUE"
-            android:value="mobicomkit-sample-app" />
-
+            android:value="@string/application_key" />
     </application>
 
 </manifest>
