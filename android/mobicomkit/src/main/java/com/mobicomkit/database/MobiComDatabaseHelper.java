@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitServer;
 
 import net.mobitexter.mobiframework.commons.core.utils.DBUtils;
@@ -26,7 +27,7 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
             + _ID + " integer primary key autoincrement  ," + SMS
             + " text not null, " + TIMESTAMP + " INTEGER ,"
             + TO_FIELD + " varchar(20) not null, " + SMS_TYPE + " varchar(20) not null ," + CONTACTID + " varchar(20) , " + SMS_KEY_STRING + " varChar(50), " + STORE_ON_DEVICE_COLUMN + " INTEGER DEFAULT 1, source INTEGER, timeToLive integer) ;";
-    public static final String DB_NAME = "MCK_" + MobiComKitServer.APPLICATION_KEY_HEADER_VALUE;
+    //    public static final String DB_NAME = "MCK_" + MobiComKitServer.APPLICATION_KEY_HEADER_VALUE;
     public static final int DB_VERSION = 1;
     public static final String CREATE_SMS_TABLE = "create table sms ( "
             + "id integer primary key autoincrement, "
@@ -59,7 +60,8 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private MobiComDatabaseHelper(Context context) {
-        this(context, DB_NAME, null, DB_VERSION);
+//        this(context, DB_NAME, null, DB_VERSION);
+        this(context, "MCK_" + new HttpRequestUtils(context).getApplicationKeyHeaderValue(), null, DB_VERSION);
         this.context = context;
     }
 

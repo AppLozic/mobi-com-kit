@@ -42,6 +42,7 @@ public class MobiComKitServer {
     public static final String ERROR_BASE_URL = "https://osu-alpha.appspot.com";
     public static final String SUBMIT_ERROR_URL = ERROR_BASE_URL + "/rest/ws/error/submit";
     public static String APPLICATION_KEY_HEADER = "Application-Key";
-    public static String APPLICATION_KEY_HEADER_VALUE = "mobicomkit-sample-app";
+    public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "APPLICATION_KEY_HEADER_VALUE";
+//    public static String APPLICATION_KEY_HEADER_VALUE = "mobicomkit-sample-app";
 
 }

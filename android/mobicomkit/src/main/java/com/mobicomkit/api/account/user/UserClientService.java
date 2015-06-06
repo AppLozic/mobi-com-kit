@@ -23,16 +23,18 @@ import java.util.TimeZone;
 public class UserClientService extends MobiComKitClientService {
 
     private static final String TAG = "UserClientService";
+    private HttpRequestUtils httpRequestUtils;
 
     public UserClientService(Context context) {
         super(context);
+        this.httpRequestUtils = new HttpRequestUtils(context);
     }
 
-    public static String updateTimezone(String osuUserKeyString) {
+    public String updateTimezone(String osuUserKeyString) {
         //Note: This can be used if user decides to change the timezone
         String response = null;
         try {
-            response = HttpRequestUtils.getStringFromUrl(MobiComKitServer.TIMEZONE_UPDATAE_URL + "?suUserKeyString=" + osuUserKeyString +
+            response = httpRequestUtils.getStringFromUrl(MobiComKitServer.TIMEZONE_UPDATAE_URL + "?suUserKeyString=" + osuUserKeyString +
                     "&timeZone=" + URLEncoder.encode(TimeZone.getDefault().getID(), "UTF-8"));
             Log.i(TAG, "Response from sendDeviceTimezoneToServer : " + response);
         } catch (Exception e) {
@@ -43,7 +45,7 @@ public class UserClientService extends MobiComKitClientService {
 
     public boolean sendVerificationCodeToServer(String verificationCode) {
         try {
-            String response = HttpRequestUtils.getResponse(credentials, MobiComKitServer.VERIFICATION_CODE_CONTACT_NUMBER_URL + "?verificationCode=" + verificationCode, "application/json", "application/json");
+            String response = httpRequestUtils.getResponse(credentials, MobiComKitServer.VERIFICATION_CODE_CONTACT_NUMBER_URL + "?verificationCode=" + verificationCode, "application/json", "application/json");
             JSONObject json = new JSONObject(response);
             return json.has("code") && json.get("code").equals("200");
         } catch (Exception e) {
@@ -57,18 +59,18 @@ public class UserClientService extends MobiComKitClientService {
             @Override
             public void run() {
                 String url = MobiComKitServer.APP_VERSION_UPDATE_URL + "?appVersionCode=" + MobiComKitServer.MOBICOMKIT_VERSION_CODE + "&deviceKeyString=" + deviceKeyString;
-                String response = HttpRequestUtils.getResponse(credentials, url, "text/plain", "text/plain");
+                String response = httpRequestUtils.getResponse(credentials, url, "text/plain", "text/plain");
                 Log.i(TAG, "Version update response: " + response);
             }
         }).start();
     }
 
     public String updatePhoneNumber(String contactNumber) throws UnsupportedEncodingException {
-        return HttpRequestUtils.getResponse(credentials, MobiComKitServer.PHONE_NUMBER_UPDATE_URL + "?phoneNumber=" + URLEncoder.encode(contactNumber, "UTF-8"), "text/plain", "text/plain");
+        return httpRequestUtils.getResponse(credentials, MobiComKitServer.PHONE_NUMBER_UPDATE_URL + "?phoneNumber=" + URLEncoder.encode(contactNumber, "UTF-8"), "text/plain", "text/plain");
     }
 
     public void notifyFriendsAboutJoiningThePlatform() {
-        String response = HttpRequestUtils.getResponse(credentials, MobiComKitServer.NOTIFY_CONTACTS_ABOUT_JOINING_MT, "text/plain", "text/plain");
+        String response = httpRequestUtils.getResponse(credentials, MobiComKitServer.NOTIFY_CONTACTS_ABOUT_JOINING_MT, "text/plain", "text/plain");
         Log.i(TAG, "Response for notify contact about joining MT: " + response);
     }
 
@@ -78,7 +80,7 @@ public class UserClientService extends MobiComKitClientService {
             if (viaSms) {
                 viaSmsParam = "&viaSms=true";
             }
-            return HttpRequestUtils.getResponse(credentials, MobiComKitServer.VERIFICATION_CONTACT_NUMBER_URL + "?countryCode=" + countryCode + "&contactNumber=" + URLEncoder.encode(contactNumber, "UTF-8") + viaSmsParam, "application/json", "application/json");
+            return httpRequestUtils.getResponse(credentials, MobiComKitServer.VERIFICATION_CONTACT_NUMBER_URL + "?countryCode=" + countryCode + "&contactNumber=" + URLEncoder.encode(contactNumber, "UTF-8") + viaSmsParam, "application/json", "application/json");
         } catch (Exception e) {
             Log.e("Verification Code", "Got Exception while submitting contact number for verification to server: " + e);
         }
@@ -93,7 +95,7 @@ public class UserClientService extends MobiComKitClientService {
                     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                     nameValuePairs.add(new BasicNameValuePair("key", key));
                     nameValuePairs.add(new BasicNameValuePair("value", value));
-                    String response = HttpRequestUtils.postData(credentials, MobiComKitServer.SETTING_UPDATE_URL, "text/plain", "text/plain", null, nameValuePairs);
+                    String response = httpRequestUtils.postData(credentials, MobiComKitServer.SETTING_UPDATE_URL, "text/plain", "text/plain", null, nameValuePairs);
                     Log.i(TAG, "Response from setting update : " + response);
                 } catch (Exception e) {
                     e.printStackTrace();

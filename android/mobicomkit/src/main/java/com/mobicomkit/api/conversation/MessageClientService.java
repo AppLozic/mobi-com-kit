@@ -46,32 +46,34 @@ public class MessageClientService extends MobiComKitClientService {
     public static List<Message> recentMessageSentToServer = new ArrayList<Message>();
     private Context context;
     private MessageDatabaseService messageDatabaseService;
+    private HttpRequestUtils httpRequestUtils;
 
     public MessageClientService(Context context) {
         super(context);
         this.context = context;
         this.messageDatabaseService = new MessageDatabaseService(context);
+        this.httpRequestUtils = new HttpRequestUtils(context);
     }
 
-    public static String updateDeliveryStatus(Message message, String contactNumber, String countryCode) {
+    public String updateDeliveryStatus(Message message, String contactNumber, String countryCode) {
         try {
             String argString = "?smsKeyString=" + message.getKeyString() + "&contactNumber=" + URLEncoder.encode(contactNumber, "UTF-8") + "&deviceKeyString=" + message.getDeviceKeyString()
                     + "&countryCode=" + countryCode;
             String URL = MobiComKitServer.UPDATE_DELIVERY_FLAG_URL + argString;
-            return HttpRequestUtils.getStringFromUrl(URL);
+            return httpRequestUtils.getStringFromUrl(URL);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static void updateDeliveryStatus(String messageKeyString, String userId, String receiverNumber) {
+    public void updateDeliveryStatus(String messageKeyString, String userId, String receiverNumber) {
         try {
             //Note: messageKeyString comes as null for the welcome message as it is inserted directly.
             if (TextUtils.isEmpty(messageKeyString)) {
                 return;
             }
-            HttpRequestUtils.getStringFromUrl(MobiComKitServer.MTEXT_DELIVERY_URL + "smsKeyString=" + messageKeyString
+            httpRequestUtils.getStringFromUrl(MobiComKitServer.MTEXT_DELIVERY_URL + "smsKeyString=" + messageKeyString
                     + "&userId=" + userId + "&contactNumber=" + URLEncoder.encode(receiverNumber, "UTF-8"));
         } catch (Exception ex) {
             Log.e(TAG, "Exception while updating delivery report for MT message", ex);
@@ -237,13 +239,13 @@ public class MessageClientService extends MobiComKitClientService {
 
     public String syncMessages(SmsSyncRequest smsSyncRequest) throws Exception {
         String data = GsonUtils.getJsonFromObject(smsSyncRequest, SmsSyncRequest.class);
-        return HttpRequestUtils.postData(credentials, MobiComKitServer.SYNC_SMS_URL, "application/json", null, data);
+        return httpRequestUtils.postData(credentials, MobiComKitServer.SYNC_SMS_URL, "application/json", null, data);
     }
 
     public String sendMessage(Message message) {
         String jsonFromObject = GsonUtils.getJsonFromObject(message, message.getClass());
         Log.i(TAG, "Sending message to server: " + jsonFromObject);
-        return HttpRequestUtils.postData(credentials, MobiComKitServer.SEND_MESSAGE_URL, "application/json", null, jsonFromObject);
+        return httpRequestUtils.postData(credentials, MobiComKitServer.SEND_MESSAGE_URL, "application/json", null, jsonFromObject);
     }
 
     public SyncMessageFeed getMessageFeed(String deviceKeyString, String lastSyncKeyString) {
@@ -253,7 +255,7 @@ public class MessageClientService extends MobiComKitClientService {
                 + "=" + lastSyncKeyString;
         try {
             Log.i(TAG, "Calling message feed url: " + url);
-            String response = HttpRequestUtils.getResponse(credentials, url, "application/json", "application/json");
+            String response = httpRequestUtils.getResponse(credentials, url, "application/json", "application/json");
             Log.i(TAG, "Response: " + response);
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(new ArrayAdapterFactory())
                     .setExclusionStrategies(new AnnotationExclusionStrategy()).create();
@@ -270,7 +272,7 @@ public class MessageClientService extends MobiComKitClientService {
         }
         try {
             String url = MobiComKitServer.MESSAGE_THREAD_DELETE_URL + "?contactNumber=" + URLEncoder.encode(contact.getFormattedContactNumber(), "UTF-8");
-            HttpRequestUtils.getResponse(credentials, url, "text/plain", "text/plain");
+            httpRequestUtils.getResponse(credentials, url, "text/plain", "text/plain");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -286,7 +288,7 @@ public class MessageClientService extends MobiComKitClientService {
             }
         }
         if (message.isSentToServer()) {
-            HttpRequestUtils.getResponse(credentials, MobiComKitServer.MESSAGE_DELETE_URL + "?key=" + message.getKeyString() + contactNumberParameter, "text/plain", "text/plain");
+            httpRequestUtils.getResponse(credentials, MobiComKitServer.MESSAGE_DELETE_URL + "?key=" + message.getKeyString() + contactNumberParameter, "text/plain", "text/plain");
         }
     }
 
@@ -302,7 +304,7 @@ public class MessageClientService extends MobiComKitClientService {
         params += (group != null && group.getGroupId() != null) ? "broadcastGroupId=" + group.getGroupId() + "&" : "";
         params += "startIndex=0&pageSize=50";
 
-        return HttpRequestUtils.getResponse(credentials, MobiComKitServer.MESSAGE_LIST_URL + "?" + params
+        return httpRequestUtils.getResponse(credentials, MobiComKitServer.MESSAGE_LIST_URL + "?" + params
                 , "application/json", "application/json");
     }
 
@@ -311,7 +313,7 @@ public class MessageClientService extends MobiComKitClientService {
     }
 
     public String deleteMessage(String keyString) {
-        return HttpRequestUtils.getResponse(credentials, MobiComKitServer.MESSAGE_DELETE_URL + "?key=" + keyString, "text/plain", "text/plain");
+        return httpRequestUtils.getResponse(credentials, MobiComKitServer.MESSAGE_DELETE_URL + "?key=" + keyString, "text/plain", "text/plain");
     }
 
     public void updateMessageDeliveryReport(final Message message, final String contactNumber) throws Exception {

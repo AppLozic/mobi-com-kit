@@ -1,6 +1,8 @@
 package com.mobicomkit.api.account.register;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -53,14 +55,16 @@ public class RegisterUserClientService extends MobiComKitClientService {
 
         Gson gson = new Gson();
         user.setAppVersionCode(MobiComKitServer.MOBICOMKIT_VERSION_CODE);
-        user.setApplicationId(MobiComKitServer.APPLICATION_KEY_HEADER_VALUE);
+        user.setApplicationId(new HttpRequestUtils(context).getApplicationKeyHeaderValue());
         user.setRegistrationId(mobiComUserPreference.getDeviceRegistrationId());
 
         if (!isInternetAvailable()) {
             throw new ConnectException("No Internet Connection");
         }
 
-        String response = HttpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
+//        Log.i(TAG, "App Id is: " + new HttpRequestUtils(context).getApplicationKeyHeaderValue());
+
+        String response = new HttpRequestUtils(context).postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
 
         Log.i(TAG, "Registration response is: " + response);
 
@@ -73,7 +77,7 @@ public class RegisterUserClientService extends MobiComKitClientService {
         }
         RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
 
-        //mobiComUserPreference.setCountryCode(user.getCountryCode());
+        mobiComUserPreference.setCountryCode(user.getCountryCode());
         mobiComUserPreference.setUserId(user.getUserId());
         mobiComUserPreference.setContactNumber(user.getContactNumber());
         mobiComUserPreference.setEmailVerified(user.isEmailVerified());

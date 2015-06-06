@@ -1,5 +1,8 @@
 package com.mobicomkit.api;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -33,28 +36,34 @@ import java.util.List;
  */
 public class HttpRequestUtils {
 
+    private Context context;
+
     private static final String TAG = "HttpRequestUtils";
 
     private static String SOURCE_HEADER = "Source";
 
     private static String SOURCE_HEADER_VALUE = "1";
 
-    private static void log(String message) {
+    public HttpRequestUtils(Context context) {
+        this.context = context;
+    }
+
+    private void log(String message) {
         Log.i(TAG, message);
     }
 
-    public static InputStream getInputStreamFromUrl(String url)
+    public InputStream getInputStreamFromUrl(String url)
             throws Exception {
         HttpClient httpclient = new DefaultHttpClient();
         HttpResponse response = httpclient.execute(new HttpGet(url));
         return response.getEntity().getContent();
     }
 
-    public static String postData(UsernamePasswordCredentials credentials, String url, String contentType, String accept, String data) {
+    public String postData(UsernamePasswordCredentials credentials, String url, String contentType, String accept, String data) {
         return postData(credentials, url, contentType, accept, data, null);
     }
 
-    public static String postData(UsernamePasswordCredentials credentials, String url, String contentType, String accept, String data, List<NameValuePair> nameValuePairs) {
+    public String postData(UsernamePasswordCredentials credentials, String url, String contentType, String accept, String data, List<NameValuePair> nameValuePairs) {
         Log.i(TAG, "Calling url: " + url);
         HttpPost request = new HttpPost();
         try {
@@ -106,7 +115,7 @@ public class HttpRequestUtils {
         return null;
     }
 
-    public static String getStringFromUrl(String url) throws Exception {
+    public String getStringFromUrl(String url) throws Exception {
         BufferedReader br;
         br = new BufferedReader(new InputStreamReader(getInputStreamFromUrl(url), "UTF-8"));
         StringBuilder sb = new StringBuilder();
@@ -121,7 +130,7 @@ public class HttpRequestUtils {
         return sb.toString();
     }
 
-    public static String postJsonToServer(String url, String data) throws Exception {
+    public String postJsonToServer(String url, String data) throws Exception {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(url);
         httppost.addHeader("Content-Type", "application/json");
@@ -134,7 +143,7 @@ public class HttpRequestUtils {
         return response;
     }
 
-    public static String getStringFromUrlWithPost(String url, String data) throws Exception {
+    public String getStringFromUrlWithPost(String url, String data) throws Exception {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(url);
         httppost.addHeader("Content-Type", "application/xml");
@@ -147,7 +156,7 @@ public class HttpRequestUtils {
         return response;
     }
 
-    public static String getResponse(UsernamePasswordCredentials credentials, String url, String contentType, String accept) {
+    public String getResponse(UsernamePasswordCredentials credentials, String url, String contentType, String accept) {
         HttpGet request = new HttpGet();
         try {
             request.setURI(new URI(url));
@@ -189,9 +198,20 @@ public class HttpRequestUtils {
         return null;
     }
 
-    public static void addGlobalHeaders(HttpRequest request) {
-        request.addHeader(MobiComKitServer.APPLICATION_KEY_HEADER, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE);
+    public void addGlobalHeaders(HttpRequest request) {
+        request.addHeader(MobiComKitServer.APPLICATION_KEY_HEADER, getApplicationKeyHeaderValue());
         request.addHeader(SOURCE_HEADER, SOURCE_HEADER_VALUE);
+    }
+
+    public String getApplicationKeyHeaderValue() {
+        ApplicationInfo ai = null;
+        try {
+            ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return ai.metaData.getString(MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA);
     }
 
 }

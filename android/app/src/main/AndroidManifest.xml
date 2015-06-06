@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mobicomkit.sample" >
+    package="com.mobicomkit.sample">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -23,11 +23,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/ecommerce"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +39,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/MobiComAppBaseTheme" >
+            android:theme="@style/MobiComAppBaseTheme">
 
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
@@ -67,7 +67,7 @@
             android:label="@string/activity_contacts_list"
             android:parentActivityName="com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity"
             android:theme="@style/ContactTheme"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity" />
@@ -86,7 +86,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Image"
             android:parentActivityName="com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity"
-            android:theme="@style/MobiComAppBaseTheme" >
+            android:theme="@style/MobiComAppBaseTheme">
 
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
@@ -101,23 +101,20 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
 
         <receiver
             android:name="com.mobicomkit.sample.pushnotification.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="com.mobicomkit.sample" />
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name="com.mobicomkit.uiwidgets.notification.MTNotificationBroadcastReceiver"
-            >
+        <receiver android:name="com.mobicomkit.uiwidgets.notification.MTNotificationBroadcastReceiver">
             <intent-filter>
-                <action  android:name="com.mobicomkit.notification" />
+                <action android:name="com.mobicomkit.notification" />
             </intent-filter>
         </receiver>
 
@@ -127,7 +124,13 @@
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="APPLICATION_KEY_HEADER_VALUE"
+            android:value="mobicomkit-sample-app" />
+
     </application>
 
 </manifest>
