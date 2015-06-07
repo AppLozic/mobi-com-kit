@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.net.InetAddress;
+
 
 /**
  * This class contains static utility methods.
@@ -188,5 +190,15 @@ public class Utils {
 
     public static int pxToDp(int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static boolean isInternetAvailable(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return (activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting());
+
     }
 }
