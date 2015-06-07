@@ -1,8 +1,7 @@
 # mobi-com-kit
 
-Integrate messaging into your mobile app and website.
-
-Note: Under progress, please visit http://mobicomkit.com/ to get notified for latest updates.
+Integrate messaging into your mobile apps and website without developing or maintaining any infrastructure.
+Register at http://www.mobicomkit.com to get the application id.
 
 Instructions for Android: https://github.com/MobiComKit/mobi-com-kit/wiki/Android
 
