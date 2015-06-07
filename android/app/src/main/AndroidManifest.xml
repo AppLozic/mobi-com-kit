@@ -62,7 +62,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.mobitexter.mobiframework.people.activity.MobiComKitPeopleActivity"
+            android:name="com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/activity_contacts_list"
             android:parentActivityName="com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity"
