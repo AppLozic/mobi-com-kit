@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build.VERSION;
@@ -264,6 +266,7 @@ public class LoginActivity extends Activity {
         private final String mEmail;
         private final String mPassword;
         private final String mPhoneNumber;
+        private Exception mException;
 
         UserLoginTask(String email, String password, String phoneNumber) {
             mEmail = email;
@@ -293,8 +296,21 @@ public class LoginActivity extends Activity {
                 gcmRegistrationUtils.setUpGcmNotification();
                 finish();
             } else {
+
+                AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+                alertDialog.setTitle(getString(R.string.text_alert));
+                alertDialog.setMessage(mException.toString());
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+
             }
 
         }
