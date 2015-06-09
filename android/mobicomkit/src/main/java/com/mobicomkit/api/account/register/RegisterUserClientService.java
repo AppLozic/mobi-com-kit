@@ -13,9 +13,9 @@ import com.mobicomkit.api.account.user.User;
 import com.mobicomkit.exception.InvalidApplicationException;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
 
 import java.net.ConnectException;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.TimeZone;
 
@@ -26,26 +26,11 @@ public class RegisterUserClientService extends MobiComKitClientService {
 
     private static final String TAG = "RegisterUserClient";
     private static final String INVALID_APP_ID = "INVALID_APPLICATIONID";
+    private HttpRequestUtils httpRequestUtils;
 
     public RegisterUserClientService(Context context) {
         this.context = context;
-    }
-
-
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
-
-            if (ipAddr.equals("")) {
-                return false;
-            } else {
-                return true;
-            }
-
-        } catch (Exception e) {
-            return false;
-        }
-
+        this.httpRequestUtils = new HttpRequestUtils(context);
     }
 
     public RegistrationResponse createAccount(User user) throws Exception {
@@ -53,14 +38,18 @@ public class RegisterUserClientService extends MobiComKitClientService {
 
         Gson gson = new Gson();
         user.setAppVersionCode(MobiComKitServer.MOBICOMKIT_VERSION_CODE);
-        user.setApplicationId(MobiComKitServer.APPLICATION_KEY_HEADER_VALUE);
+        user.setApplicationId(getApplicationKeyHeaderValue(context));
         user.setRegistrationId(mobiComUserPreference.getDeviceRegistrationId());
 
-        if (!isInternetAvailable()) {
+//        Log.i(TAG, "Net status" + Utils.isInternetAvailable(context));
+
+        if (!Utils.isInternetAvailable(context)) {
             throw new ConnectException("No Internet Connection");
         }
 
-        String response = HttpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
+//        Log.i(TAG, "App Id is: " + getApplicationKeyHeaderValue(context));
+
+        String response = httpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
 
         Log.i(TAG, "Registration response is: " + response);
 
@@ -73,7 +62,7 @@ public class RegisterUserClientService extends MobiComKitClientService {
         }
         RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
 
-        //mobiComUserPreference.setCountryCode(user.getCountryCode());
+        mobiComUserPreference.setCountryCode(user.getCountryCode());
         mobiComUserPreference.setUserId(user.getUserId());
         mobiComUserPreference.setContactNumber(user.getContactNumber());
         mobiComUserPreference.setEmailVerified(user.isEmailVerified());

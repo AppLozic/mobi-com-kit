@@ -1,4 +1,4 @@
-package net.mobitexter.mobicom;
+package net.mobitexter.mobiframework.file;
 
 import android.annotation.TargetApi;
 import android.content.res.AssetFileDescriptor;

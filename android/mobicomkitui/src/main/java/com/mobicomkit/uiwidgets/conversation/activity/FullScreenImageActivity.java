@@ -19,7 +19,7 @@ import com.mobicomkit.api.attachment.AttachmentView;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.uiwidgets.R;
 
-import net.mobitexter.mobicom.FileUtils;
+import net.mobitexter.mobiframework.file.FileUtils;
 import net.mobitexter.mobiframework.json.GsonUtils;
 
 import java.io.File;

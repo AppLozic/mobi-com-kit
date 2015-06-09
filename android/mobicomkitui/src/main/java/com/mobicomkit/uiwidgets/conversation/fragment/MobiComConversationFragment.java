@@ -65,7 +65,7 @@ import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 import com.mobicomkit.uiwidgets.schedule.ConversationScheduler;
 import com.mobicomkit.uiwidgets.schedule.ScheduledTimeHolder;
 
-import net.mobitexter.mobicom.FileUtils;
+import net.mobitexter.mobiframework.file.FileUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.emoticon.EmojiconHandler;

@@ -1,4 +1,4 @@
-package net.mobitexter.mobiframework.alphanumbericcolor;
+package com.mobicomkit.uiwidgets.alphanumbericcolor;
 
 import com.mobicomkit.uiwidgets.R;
 

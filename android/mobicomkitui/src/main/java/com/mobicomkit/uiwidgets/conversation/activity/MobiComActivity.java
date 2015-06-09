@@ -1,12 +1,9 @@
 package com.mobicomkit.uiwidgets.conversation.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
@@ -39,13 +36,12 @@ import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.file.FilePathFinder;
 import net.mobitexter.mobiframework.json.GsonUtils;
-import net.mobitexter.mobiframework.people.activity.MobiComKitPeopleActivity;
+import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
 import net.mobitexter.mobiframework.people.group.Group;
 import net.mobitexter.mobiframework.people.group.GroupUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 

@@ -45,9 +45,11 @@ public class FileClientService extends MobiComKitClientService {
     public static final String MOBI_TEXTER_THUMBNAIL_SUFIX = "/Thumbnail";
     public static final String IMAGE_DIR = "image";
     private static final String TAG = "FileClientService";
+    private HttpRequestUtils httpRequestUtils;
 
     public FileClientService(Context context) {
         super(context);
+        this.httpRequestUtils = new HttpRequestUtils(context);
     }
 
     public static File getFilePath(String fileName, Context context, String contentType, boolean isThumbnail) {
@@ -146,7 +148,7 @@ public class FileClientService extends MobiComKitClientService {
 
         BasicScheme scheme = new BasicScheme();
         httppost.addHeader(scheme.authenticate(credentials, httppost));
-        HttpRequestUtils.addGlobalHeaders(httppost);
+        httpRequestUtils.addGlobalHeaders(httppost);
 
         try {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -166,6 +168,6 @@ public class FileClientService extends MobiComKitClientService {
     }
 
     public String getUploadKey() {
-        return HttpRequestUtils.getResponse(credentials, MobiComKitServer.FILE_UPLOAD_URL + "?" + new Date().getTime(), "text/plain", "text/plain");
+        return httpRequestUtils.getResponse(credentials, MobiComKitServer.FILE_UPLOAD_URL + "?" + new Date().getTime(), "text/plain", "text/plain");
     }
 }

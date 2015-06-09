@@ -1,5 +1,5 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="net.mobitexter.mobiframework.people.contact.device.ContactsListFragment"
     android:id="@+id/contact_list"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent" />
+    android:name="com.mobicomkit.uiwidgets.people.fragment.ContactsListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />

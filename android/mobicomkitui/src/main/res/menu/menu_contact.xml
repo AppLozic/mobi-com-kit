@@ -1,17 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mobicomkit="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="net.mobitexter.mobiframework.people.activity.MobiComKitPeopleActivity">
+    tools:context="com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity">
 
     <item
         android:id="@+id/menu_search"
-        android:title="@string/menu_search"
-        android:icon="@drawable/ic_action_search"
-        android:showAsAction="always"
-        mobicomkit:showAsAction="always"
-        android:iconifiedByDefault="true"
-        mobicomkit:iconifiedByDefault="true"
         android:actionViewClass="android.support.v7.widget.SearchView"
-        mobicomkit:actionViewClass="android.support.v7.widget.SearchView" />
+        android:icon="@drawable/ic_action_search"
+        android:iconifiedByDefault="true"
+        android:showAsAction="always"
+        android:title="@string/menu_search"
+        mobicomkit:actionViewClass="android.support.v7.widget.SearchView"
+        mobicomkit:iconifiedByDefault="true"
+        mobicomkit:showAsAction="always" />
 
 </menu>

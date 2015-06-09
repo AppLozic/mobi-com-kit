@@ -1,4 +1,4 @@
-package net.mobitexter.mobiframework.people.activity;
+package com.mobicomkit.uiwidgets.people.activity;
 
 import android.annotation.TargetApi;
 import android.app.SearchManager;
@@ -21,7 +21,7 @@ import com.mobicomkit.uiwidgets.R;
 
 import net.mobitexter.mobiframework.people.OnContactsInteractionListener;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
-import net.mobitexter.mobiframework.people.contact.device.ContactsListFragment;
+import com.mobicomkit.uiwidgets.people.fragment.ContactsListFragment;
 import net.mobitexter.mobiframework.people.group.Group;
 
 import java.util.Map;

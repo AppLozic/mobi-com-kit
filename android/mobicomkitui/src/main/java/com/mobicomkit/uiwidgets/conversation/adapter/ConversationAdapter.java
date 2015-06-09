@@ -41,7 +41,7 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import net.mobitexter.mobiframework.alphanumbericcolor.AlphaNumberColorUtil;
+import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
 import net.mobitexter.mobiframework.commons.core.utils.FileUtils;
