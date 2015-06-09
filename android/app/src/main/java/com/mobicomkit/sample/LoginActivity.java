@@ -280,6 +280,8 @@ public class LoginActivity extends Activity {
                 new RegisterUserClientService(LoginActivity.this).createAccount(mEmail, mEmail, mPhoneNumber, "");
             } catch (Exception e) {
                 e.printStackTrace();
+                mException = e;
+                return false;
             }
 
             return true;
@@ -308,8 +310,8 @@ public class LoginActivity extends Activity {
                         });
                 alertDialog.show();
 
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+//                mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                mPasswordView.requestFocus();
 
             }
 
