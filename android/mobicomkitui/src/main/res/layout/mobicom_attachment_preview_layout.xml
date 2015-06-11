@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/emoji_23ec" />
+            android:src="@drawable/mobicom_emoji_23ec" />
 
         <TextView
             android:id="@+id/attachment_size_text"

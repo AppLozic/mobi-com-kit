@@ -232,7 +232,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:scaleType="center"
-            android:src="@drawable/ic_action_send_now"
+            android:src="@drawable/mobicom_ic_action_send_now"
             android:visibility="visible" />
     </LinearLayout>
 

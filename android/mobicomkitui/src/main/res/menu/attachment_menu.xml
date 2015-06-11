@@ -15,10 +15,11 @@
     <item
         android:id="@+id/shareOptions"
         android:orderInCategory="2"
-        android:icon="@drawable/social_share"
+        android:icon="@drawable/mobicom_social_share"
         mobitexter:showAsAction="always"
         android:showAsAction="always"
         android:actionProviderClass="android.support.v7.widget.ShareActionProvider"
         android:title="@string/shareOptions" />
+
 
 </menu>
