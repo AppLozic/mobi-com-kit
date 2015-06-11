@@ -34,7 +34,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);
         String activityToOpen = intent.getStringExtra(MobiComKitConstants.ACTIVITY_TO_OPEN);
-        Log.i(TAG, "got broadcast receiver.."+ messageJson + " , " + activityToOpen);
+        Log.i(TAG, "got broadcast receiver.." + messageJson + " , " + activityToOpen);
         Intent newIntent;
         if (actionName.equals(LAUNCH_APP)) {
             String messageText = getMessageText(intent) == null ? null : getMessageText(intent).toString();

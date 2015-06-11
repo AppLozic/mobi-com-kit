@@ -40,7 +40,9 @@ import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.commons.image.ImageLoader;
 import net.mobitexter.mobiframework.people.OnContactsInteractionListener;
 import net.mobitexter.mobiframework.people.SearchListFragment;
+
 import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
+
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
 
 import java.io.FileDescriptor;

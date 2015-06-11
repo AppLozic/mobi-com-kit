@@ -35,11 +35,11 @@ public class NotificationService {
     private int wearable_send_icon;
 
 
-    public NotificationService( int iconResourceID, Context context,int wearable_action_label,int wearable_action_title,int wearable_send_icon){
-        this.context =  context;
+    public NotificationService(int iconResourceID, Context context, int wearable_action_label, int wearable_action_title, int wearable_send_icon) {
+        this.context = context;
         this.iconResourceId = iconResourceID;
-        this.wearable_action_label= wearable_action_label;
-        this.wearable_action_title= wearable_action_title;
+        this.wearable_action_label = wearable_action_label;
+        this.wearable_action_title = wearable_action_title;
         this.wearable_send_icon = wearable_send_icon;
 
 
@@ -51,7 +51,7 @@ public class NotificationService {
         intent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(sms, Message.class));
         intent.setAction(NotificationBroadcastReceiver.LAUNCH_APP);
         intent.putExtra(MobiComKitConstants.ACTIVITY_TO_OPEN, "com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity");
-        intent.setClass(context,NotificationBroadcastReceiver.class);
+        intent.setClass(context, NotificationBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) (System.currentTimeMillis() & 0xfffffff), intent, 0);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
@@ -80,14 +80,14 @@ public class NotificationService {
             }
         }
         WearableNotificationWithVoice notificationWithVoice =
-                new WearableNotificationWithVoice(mBuilder,wearable_action_title,
-                        wearable_action_label,wearable_send_icon,sms.getContactIds().hashCode());
+                new WearableNotificationWithVoice(mBuilder, wearable_action_title,
+                        wearable_action_label, wearable_send_icon, sms.getContactIds().hashCode());
         notificationWithVoice.setCurrentContext(context);
         notificationWithVoice.setPendingIntent(pendingIntent);
 
         try {
             notificationWithVoice.sendNotification();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

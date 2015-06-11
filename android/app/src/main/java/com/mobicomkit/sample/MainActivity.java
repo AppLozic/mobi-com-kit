@@ -15,12 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
-import com.mobicomkit.database.MobiComDatabaseHelper;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
+import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,EcommerceFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
 
     public static final String DATABASE_NAME = "yourappdb";
     public static final int DATABASE_VERSION = 1;
@@ -71,9 +70,9 @@ public class MainActivity extends ActionBarActivity
             mTitle = getString(R.string.ecommerce);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, EcommerceFragment.newInstance("",""))
+                    .replace(R.id.container, EcommerceFragment.newInstance("", ""))
                     .commit();
-           return;
+            return;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -81,9 +80,9 @@ public class MainActivity extends ActionBarActivity
                 .commit();
     }
 
-    public void startChat(View v){
-        Intent i = new Intent(this,SlidingPaneActivity.class);
-        i.putExtra("userId","devashish.mamgain@gmail.com");
+    public void startChat(View v) {
+        Intent i = new Intent(this, SlidingPaneActivity.class);
+        i.putExtra("userId", "devashish.mamgain@gmail.com");
         startActivity(i);
     }
 
@@ -180,8 +179,6 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-
-
 
     }
 

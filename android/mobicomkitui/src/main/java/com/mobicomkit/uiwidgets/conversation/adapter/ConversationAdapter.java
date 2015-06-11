@@ -42,6 +42,7 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterfac
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
+
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
 import net.mobitexter.mobiframework.commons.core.utils.FileUtils;
@@ -255,9 +256,9 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
                 } else if (message.isCall()) {
                     sentOrReceived.setImageResource(R.drawable.ic_action_call_holo_light);
                 } else if (getItemViewType(position) == 0) {
-                    sentOrReceived.setImageResource(R.drawable.social_forward);
+                    sentOrReceived.setImageResource(R.drawable.mobicom_social_forward);
                 } else {
-                    sentOrReceived.setImageResource(R.drawable.social_reply);
+                    sentOrReceived.setImageResource(R.drawable.mobicom_social_reply);
                 }
 
                 if (quick && message.isCall()) {

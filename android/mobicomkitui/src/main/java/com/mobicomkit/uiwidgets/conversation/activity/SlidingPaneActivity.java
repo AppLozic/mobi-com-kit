@@ -30,6 +30,7 @@ import com.mobicomkit.uiwidgets.conversation.fragment.QuickConversationFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import net.mobitexter.mobiframework.commons.core.utils.Support;
+
 import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
 

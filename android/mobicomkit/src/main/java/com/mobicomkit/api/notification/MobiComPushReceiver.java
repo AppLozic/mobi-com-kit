@@ -23,6 +23,7 @@ public class MobiComPushReceiver {
 
     public static final String MTCOM_PREFIX = "MT_";
     public static final List<String> notificationKeyList = new ArrayList<String>();
+
     static {
         notificationKeyList.add("MT_SYNC"); // 0
         notificationKeyList.add("MT_MARK_ALL_MESSAGE_AS_READ"); //1
@@ -40,6 +41,7 @@ public class MobiComPushReceiver {
         notificationKeyList.add("MT_CANCEL_CALL");//13
         notificationKeyList.add("MT_MESSAGE");//14
     }
+
     private static final String TAG = "MobiComPushReceiver";
 
     public static boolean isMobiComPushNotification(Context context, Intent intent) {
