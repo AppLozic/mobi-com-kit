@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="0dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/mobicomkit_label"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -51,8 +51,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/mobicomkitdemo"
                 android:id="@+id/textView"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"/>
+                android:layout_gravity="center_horizontal" />
 
             <AutoCompleteTextView
                 android:id="@+id/email"
@@ -106,12 +105,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/action_sign_in"
+        android:text="Sign up"
         android:padding="20dip"
         android:textColor="#ffffff"
+        android:textStyle="normal"
         android:configChanges="orientation" />
-
-
 </LinearLayout>
 
 
