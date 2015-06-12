@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.mobicomkit.api.MobiComKitClientService;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 
@@ -44,7 +47,9 @@ public class MobiComUserPreference {
 
     private MobiComUserPreference(Context context) {
         this.context = context;
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.i("MobiComUserPreference", "Preference File Name is: " + MobiComKitClientService.getApplicationKeyHeaderValue(context));
+        sharedPreferences = context.getSharedPreferences(MobiComKitClientService.getApplicationKeyHeaderValue(context), context.MODE_PRIVATE);
         initialize(context);
     }
 

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.api.conversation.Message;
@@ -352,7 +353,7 @@ public class MessageDatabaseService {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long id = -1;
         boolean duplicateCheck = true;
-        SharedPreferences prefs = context.getSharedPreferences("net.mobitexter", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(MobiComKitClientService.getApplicationKeyHeaderValue(context), Context.MODE_PRIVATE);
         long minCreatedAt = prefs.getLong(MIN_CREATED_AT_KEY, 0);
         long maxCreatedAt = prefs.getLong(MAX_CREATED_AT_KEY, Long.MAX_VALUE);
 
