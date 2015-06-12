@@ -27,8 +27,6 @@ public class GeneralConstants {
     public static final String DISPLAY_CALLS = "DISPLAY_CALLS";
 
     public static final String PUSH_NOTIFICATION_KEY_DIAL = "PUSH_NOTIFICATION_KEY_DIAL";
-    // ANDROID_VERSION<8
-    public static final int ANDROID_VERSION = Build.VERSION.SDK_INT;
 
     public static final String NEW_PATCH_AVAILABLE = "NEWPATCHAVAILABLE";
     public static final String START_SERVICE_FLAG = "STARTSERVICE";

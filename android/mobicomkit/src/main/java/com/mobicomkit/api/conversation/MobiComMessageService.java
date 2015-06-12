@@ -13,6 +13,7 @@ import com.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.sync.SyncMessageFeed;
 
 import net.mobitexter.mobiframework.commons.core.utils.Support;
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
 import net.mobitexter.mobiframework.personalization.PersonalizedMessage;
@@ -117,7 +118,7 @@ public class MobiComMessageService {
         // if regIdInvalid in syncrequest, tht means device reg with c2dm is no
         // more valid, do it again and make the sync request again
         if (syncMessageFeed != null && syncMessageFeed.isRegIdInvalid()
-                && GeneralConstants.ANDROID_VERSION >= 8) {
+                && Utils.hasHoneycomb()) {
             Log.i(TAG, "Going to call GCM device registration");
             //Todo: Replace it with mobicomkit gcm registration
             // C2DMessaging.register(context);
