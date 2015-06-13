@@ -70,10 +70,6 @@ public class Utils {
         }
     }
 
-    public static boolean hasFroyo() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
-    }
-
     /**
      * Uses static final constants to detect if the device's platform version is Froyo or
      * later.
