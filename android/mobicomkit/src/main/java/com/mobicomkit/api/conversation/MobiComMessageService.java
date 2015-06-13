@@ -118,7 +118,7 @@ public class MobiComMessageService {
         // if regIdInvalid in syncrequest, tht means device reg with c2dm is no
         // more valid, do it again and make the sync request again
         if (syncMessageFeed != null && syncMessageFeed.isRegIdInvalid()
-                && Utils.hasHoneycomb()) {
+                && Utils.hasFroyo()) {
             Log.i(TAG, "Going to call GCM device registration");
             //Todo: Replace it with mobicomkit gcm registration
             // C2DMessaging.register(context);
