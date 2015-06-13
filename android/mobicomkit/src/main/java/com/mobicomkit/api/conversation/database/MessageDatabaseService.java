@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.api.conversation.Message;
@@ -32,8 +33,8 @@ public class MessageDatabaseService {
 
     private static final String TAG = "MessageDatabaseService";
 
-    private static final String MIN_CREATED_AT_KEY = "net.mobitexter.sms.createdAt.min";
-    private static final String MAX_CREATED_AT_KEY = "net.mobitexter.sms.createdAt.max";
+    private static final String MIN_CREATED_AT_KEY = "mck.sms.createdAt.min";
+    private static final String MAX_CREATED_AT_KEY = "mck.sms.createdAt.max";
     public static List<Message> recentlyAddedMessage = new ArrayList<Message>();
     Context context = null;
     private MobiComUserPreference userPreferences;
@@ -352,7 +353,7 @@ public class MessageDatabaseService {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long id = -1;
         boolean duplicateCheck = true;
-        SharedPreferences prefs = context.getSharedPreferences("net.mobitexter", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(MobiComKitClientService.getApplicationKey(context), Context.MODE_PRIVATE);
         long minCreatedAt = prefs.getLong(MIN_CREATED_AT_KEY, 0);
         long maxCreatedAt = prefs.getLong(MAX_CREATED_AT_KEY, Long.MAX_VALUE);
 

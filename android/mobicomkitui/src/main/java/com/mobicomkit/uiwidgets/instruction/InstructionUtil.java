@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import com.mobicomkit.api.MobiComKitClientService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +19,7 @@ import java.util.Map;
  */
 public class InstructionUtil {
 
-    public static final String SHARED_PREFERENCE_INSTRUCTION_KEY = "net.mobitexter.instruction";
+    public static final String SHARED_PREFERENCE_INSTRUCTION_KEY = "mck.instruction";
 
     private final static Map<Integer, Toast> toastMap = new HashMap<Integer, Toast>();
     private static final String info_message_sync = "info_message_sync";
@@ -26,7 +29,7 @@ public class InstructionUtil {
     public static boolean enabled = true;
 
     public static void init(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("net.mobitexter", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MobiComKitClientService.getApplicationKey(context), Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean(SHARED_PREFERENCE_INSTRUCTION_KEY + "." + info_message_sync, true).commit();
         sharedPreferences.edit().putBoolean(SHARED_PREFERENCE_INSTRUCTION_KEY + "." + instruction_open_conversation_thread, true).commit();
         sharedPreferences.edit().putBoolean(SHARED_PREFERENCE_INSTRUCTION_KEY + "." + instruction_go_back_to_recent_conversation_list, true).commit();
@@ -59,7 +62,7 @@ public class InstructionUtil {
     }
 
     public static void showInstruction(Context context, int resId, boolean actionable, int colorId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("net.mobitexter", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MobiComKitClientService.getApplicationKey(context), Context.MODE_PRIVATE);
         if (!sharedPreferences.contains(SHARED_PREFERENCE_INSTRUCTION_KEY + "." + resId)) {
             return;
         }
@@ -90,7 +93,7 @@ public class InstructionUtil {
             toastMap.get(resId).cancel();
         }
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("net.mobitexter", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MobiComKitClientService.getApplicationKey(context), Context.MODE_PRIVATE);
         sharedPreferences.edit().remove(SHARED_PREFERENCE_INSTRUCTION_KEY + "." + resId).commit();
     }
 }

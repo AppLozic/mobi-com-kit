@@ -1,8 +1,6 @@
 package com.mobicomkit.api;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -199,7 +197,7 @@ public class HttpRequestUtils {
     }
 
     public void addGlobalHeaders(HttpRequest request) {
-        request.addHeader(MobiComKitServer.APPLICATION_KEY_HEADER, MobiComKitClientService.getApplicationKeyHeaderValue(context));
+        request.addHeader(MobiComKitServer.APPLICATION_KEY_HEADER, MobiComKitClientService.getApplicationKey(context));
         request.addHeader(SOURCE_HEADER, SOURCE_HEADER_VALUE);
     }
 

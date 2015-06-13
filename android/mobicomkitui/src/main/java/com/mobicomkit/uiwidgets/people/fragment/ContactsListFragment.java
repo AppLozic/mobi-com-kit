@@ -62,7 +62,7 @@ public class ContactsListFragment extends ListFragment implements SearchListFrag
 
     // Bundle key for saving previously selected search result item
     private static final String STATE_PREVIOUSLY_SELECTED_KEY =
-            "net.mobitexter.mobiframework.contact.ui.SELECTED_ITEM";
+            "mck.mobiframework.contact.ui.SELECTED_ITEM";
 
     private ContactsAdapter mAdapter; // The main query adapter
     private ImageLoader mImageLoader; // Handles loading the contact image in a background thread
