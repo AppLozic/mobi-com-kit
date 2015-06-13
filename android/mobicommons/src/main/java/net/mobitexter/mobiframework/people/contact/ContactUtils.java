@@ -185,8 +185,9 @@ public class ContactUtils {
     public static Contact getContact(Context context, String contactId, String number) {
         Contact contact = new Contact();
         contact.setContactNumber(number);
-        if (Support.isSupportNumber(number)) {
-            return Support.getSupportContact();
+        Support support = new Support(context);
+        if (support.isSupportNumber(number)) {
+            return support.getSupportContact();
         } else if (TextUtils.isEmpty(contactId) || UNKNOWN_NUMBER.equals(contactId)) {
             contact.processContactNumbers(context);
             return contact;

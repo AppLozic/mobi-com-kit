@@ -497,7 +497,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         downloadConversation = new DownloadConversation(listView, true, 1, 0, 0, contact, group);
         downloadConversation.execute();
 
-        if (contact != null && Support.isSupportNumber(contact.getFormattedContactNumber())) {
+        if (contact != null && new Support(getActivity()).isSupportNumber(contact.getFormattedContactNumber())) {
             sendType.setSelection(1);
             extendedSendingOptionLayout.setVisibility(View.GONE);
             messageEditText.setHint(R.string.enter_support_query_hint);
@@ -737,7 +737,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                         mediaUploadProgressBarIndividualMessage.setVisibility(View.GONE);
                         TextView createdAtTime = (TextView) view.findViewById(R.id.createdAtTime);
                         if (messageListItem.isTypeOutbox() && !messageListItem.isCall() && !messageListItem.getDelivered() && messageListItem.getScheduledAt() == null) {
-                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, Support.isSupportNumber(getFormattedContactNumber()) ? deliveredIcon : sentIcon, null);
+                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, new Support(getActivity()).isSupportNumber(getFormattedContactNumber()) ? deliveredIcon : sentIcon, null);
                         }
                     }
                 }

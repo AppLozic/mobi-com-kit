@@ -43,6 +43,7 @@ public class MobiComKitServer {
     public static final String SUBMIT_ERROR_URL = ERROR_BASE_URL + "/rest/ws/error/submit";
     public static String APPLICATION_KEY_HEADER = "Application-Key";
     public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "com.mobicomkit.application.id";
+    public static String SUPPORT_PHONE_NUMBER_METADATA = "com.mobicomkit.phone.number";
 //    public static String APPLICATION_KEY_HEADER_VALUE = "c";
 
 }

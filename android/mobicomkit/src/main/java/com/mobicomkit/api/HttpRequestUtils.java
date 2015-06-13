@@ -197,7 +197,7 @@ public class HttpRequestUtils {
     }
 
     public void addGlobalHeaders(HttpRequest request) {
-        request.addHeader(MobiComKitServer.APPLICATION_KEY_HEADER, MobiComKitClientService.getApplicationKey(context));
+        request.addHeader(MobiComKitServer.APPLICATION_KEY_HEADER, MobiComKitClientService.getMetaData(context, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA));
         request.addHeader(SOURCE_HEADER, SOURCE_HEADER_VALUE);
     }
 

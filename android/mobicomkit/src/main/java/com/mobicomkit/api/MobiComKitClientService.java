@@ -7,6 +7,8 @@ import android.util.Base64;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
+
 import org.apache.http.auth.UsernamePasswordCredentials;
 
 import java.io.IOException;
@@ -57,7 +59,7 @@ public class MobiComKitClientService {
             String userCredentials = credentials.getUserName() + ":" + credentials.getPassword();
             String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.NO_WRAP);
             httpConn.setRequestProperty("Authorization", basicAuth);
-            httpConn.setRequestProperty(MobiComKitServer.APPLICATION_KEY_HEADER, getApplicationKey(context));
+            httpConn.setRequestProperty(MobiComKitServer.APPLICATION_KEY_HEADER, getMetaData(context, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA));
             httpConn.connect();
             //Shifting this Code to individual class..this is needed so that caller can decide ..what should be done with the error
 //            response = httpConn.getResponseCode();
@@ -72,15 +74,9 @@ public class MobiComKitClientService {
         return httpConn;
     }
 
-    public static String getApplicationKey(Context context) {
+    public static String getMetaData(Context context, String metaDataName) {
 
-        try {
-            ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            return ai.metaData.getString(MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return Utils.getMetaDataValue(context, metaDataName);
 
     }
 }

@@ -38,7 +38,7 @@ public class RegisterUserClientService extends MobiComKitClientService {
 
         Gson gson = new Gson();
         user.setAppVersionCode(MobiComKitServer.MOBICOMKIT_VERSION_CODE);
-        user.setApplicationId(getApplicationKey(context));
+        user.setApplicationId(getMetaData(context, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA));
         user.setRegistrationId(mobiComUserPreference.getDeviceRegistrationId());
 
         Log.i(TAG, "Net status" + Utils.isInternetAvailable(context));
@@ -47,7 +47,7 @@ public class RegisterUserClientService extends MobiComKitClientService {
             throw new ConnectException("No Internet Connection");
         }
 
-//        Log.i(TAG, "App Id is: " + getApplicationKey(context));
+//        Log.i(TAG, "App Id is: " + getMetaData(context));
 
         String response = httpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
 

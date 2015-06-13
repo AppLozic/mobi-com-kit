@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.mobicomkit.GeneralConstants;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.api.conversation.selfdestruct.DisappearingMessageTask;
@@ -207,8 +206,8 @@ public class MobiComMessageService {
     public void addWelcomeMessage(String welcome_message) {
         Message message = new Message();
         MobiComUserPreference userPreferences = MobiComUserPreference.getInstance(context);
-        message.setContactIds(Support.getSupportNumber());
-        message.setTo(Support.getSupportNumber());
+        message.setContactIds(new Support(context).getSupportNumber());
+        message.setTo(new Support(context).getSupportNumber());
         message.setMessage(welcome_message);
         message.setStoreOnDevice(Boolean.TRUE);
         message.setSendToDevice(Boolean.FALSE);
