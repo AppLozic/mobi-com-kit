@@ -82,7 +82,7 @@ public class SlidingPaneActivity extends MobiComActivity {
         mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversationFragment);
         InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
 
-        SharedPreferences prefs = getSharedPreferences(MobiComKitClientService.getApplicationKeyHeaderValue(this), Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(MobiComKitClientService.getApplicationKey(this), Context.MODE_PRIVATE);
         if (prefs.getBoolean(GeneralConstants.SHARED_PREFERENCE_VERSION_UPDATE_KEY, false)) {
             new UserClientService(this).updateCodeVersion(userPreferences.getDeviceKeyString());
             prefs.edit().remove(GeneralConstants.SHARED_PREFERENCE_VERSION_UPDATE_KEY).commit();

@@ -2,7 +2,6 @@ package com.mobicomkit.api.account.user;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -48,8 +47,7 @@ public class MobiComUserPreference {
     private MobiComUserPreference(Context context) {
         this.context = context;
 //        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Log.i("MobiComUserPreference", "Preference File Name is: " + MobiComKitClientService.getApplicationKeyHeaderValue(context));
-        sharedPreferences = context.getSharedPreferences(MobiComKitClientService.getApplicationKeyHeaderValue(context), context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(MobiComKitClientService.getApplicationKey(context), context.MODE_PRIVATE);
         initialize(context);
     }
 

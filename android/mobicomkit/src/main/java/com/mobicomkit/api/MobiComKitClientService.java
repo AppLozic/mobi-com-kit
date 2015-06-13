@@ -3,38 +3,16 @@ package com.mobicomkit.api;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 
 /**
  * Created by devashish on 27/12/14.
@@ -79,7 +57,7 @@ public class MobiComKitClientService {
             String userCredentials = credentials.getUserName() + ":" + credentials.getPassword();
             String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.NO_WRAP);
             httpConn.setRequestProperty("Authorization", basicAuth);
-            httpConn.setRequestProperty(MobiComKitServer.APPLICATION_KEY_HEADER, getApplicationKeyHeaderValue(context));
+            httpConn.setRequestProperty(MobiComKitServer.APPLICATION_KEY_HEADER, getApplicationKey(context));
             httpConn.connect();
             //Shifting this Code to individual class..this is needed so that caller can decide ..what should be done with the error
 //            response = httpConn.getResponseCode();
@@ -94,7 +72,7 @@ public class MobiComKitClientService {
         return httpConn;
     }
 
-    public static String getApplicationKeyHeaderValue(Context context) {
+    public static String getApplicationKey(Context context) {
 
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
