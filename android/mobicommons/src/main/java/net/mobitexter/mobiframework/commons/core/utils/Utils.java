@@ -71,6 +71,15 @@ public class Utils {
     }
 
     /**
+     * Uses static final constants to detect if the device's platform version is Froyo or
+     * later.
+     */
+    public static boolean hasFroyo() {
+
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
+    }
+
+    /**
      * Uses static final constants to detect if the device's platform version is Gingerbread or
      * later.
      */
@@ -83,7 +92,10 @@ public class Utils {
      * later.
      */
     public static boolean hasHoneycomb() {
+
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+
+
     }
 
     /**
@@ -98,6 +110,7 @@ public class Utils {
      * Uses static final constants to detect if the device's platform version is ICS or
      * later.
      */
+
     public static boolean hasICS() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
