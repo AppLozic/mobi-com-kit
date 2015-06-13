@@ -46,7 +46,6 @@ public class MobiComUserPreference {
 
     private MobiComUserPreference(Context context) {
         this.context = context;
-//        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences = context.getSharedPreferences(MobiComKitClientService.getApplicationKey(context), context.MODE_PRIVATE);
         initialize(context);
     }
