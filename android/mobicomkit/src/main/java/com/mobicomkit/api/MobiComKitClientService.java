@@ -1,8 +1,6 @@
 package com.mobicomkit.api;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.util.Base64;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
@@ -59,7 +57,7 @@ public class MobiComKitClientService {
             String userCredentials = credentials.getUserName() + ":" + credentials.getPassword();
             String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.NO_WRAP);
             httpConn.setRequestProperty("Authorization", basicAuth);
-            httpConn.setRequestProperty(MobiComKitServer.APPLICATION_KEY_HEADER, getMetaData(context, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA));
+            httpConn.setRequestProperty(MobiComKitServer.APPLICATION_KEY_HEADER, getApplicationKey(context));
             httpConn.connect();
             //Shifting this Code to individual class..this is needed so that caller can decide ..what should be done with the error
 //            response = httpConn.getResponseCode();
@@ -74,9 +72,9 @@ public class MobiComKitClientService {
         return httpConn;
     }
 
-    public static String getMetaData(Context context, String metaDataName) {
+    public static String getApplicationKey(Context context) {
 
-        return Utils.getMetaDataValue(context, metaDataName);
+        return Utils.getMetaDataValue(context, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA);
 
     }
 }

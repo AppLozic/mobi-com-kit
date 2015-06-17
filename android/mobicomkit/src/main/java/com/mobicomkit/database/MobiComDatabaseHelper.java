@@ -7,7 +7,6 @@ import android.util.Log;
 
 //import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
-import com.mobicomkit.api.MobiComKitServer;
 
 import net.mobitexter.mobiframework.commons.core.utils.DBUtils;
 
@@ -60,7 +59,7 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private MobiComDatabaseHelper(Context context) {
-        this(context, "MCK_" + MobiComKitClientService.getMetaData(context, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA), null, DB_VERSION);
+        this(context, "MCK_" + MobiComKitClientService.getApplicationKey(context), null, DB_VERSION);
         this.context = context;
     }
 
