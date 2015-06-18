@@ -11,8 +11,8 @@ import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.MobiComKitServer;
 
-import net.mobitexter.mobiframework.commons.core.utils.FileUtils;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
+import net.mobitexter.mobiframework.file.FileUtils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

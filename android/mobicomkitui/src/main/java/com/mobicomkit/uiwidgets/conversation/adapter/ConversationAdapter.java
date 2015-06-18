@@ -45,13 +45,13 @@ import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
-import net.mobitexter.mobiframework.commons.core.utils.FileUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.commons.image.ImageLoader;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.emoticon.EmojiconHandler;
 import net.mobitexter.mobiframework.emoticon.EmoticonUtils;
+import net.mobitexter.mobiframework.file.FileUtils;
 import net.mobitexter.mobiframework.json.GsonUtils;
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.mobicomkit.uiwidgets.R;
 
 import net.mobitexter.mobiframework.people.OnContactsInteractionListener;
+import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
 
 import com.mobicomkit.uiwidgets.people.fragment.ContactsListFragment;
@@ -120,6 +121,11 @@ public class MobiComKitPeopleActivity extends ActionBarActivity implements OnCon
         intent.putExtra("groupId", group.getGroupId());
         intent.putExtra("groupName", group.getName());
         finishActivity(intent);
+    }
+
+    @Override
+    public void onCustomContactSelected(Contact contact) {
+
     }
 
     public void finishActivity(Intent intent) {

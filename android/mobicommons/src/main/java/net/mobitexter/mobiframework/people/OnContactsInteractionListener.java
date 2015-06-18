@@ -2,6 +2,7 @@ package net.mobitexter.mobiframework.people;
 
 import android.net.Uri;
 
+import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.group.Group;
 
 /**
@@ -19,6 +20,7 @@ public interface OnContactsInteractionListener {
 
     public void onGroupSelected(Group group);
 
+    public void onCustomContactSelected( Contact contact);
     /**
      * Called when the ListView selection is cleared like when
      * a contact search is taking place or is finishing.
