@@ -50,7 +50,7 @@ public class LoginActivity extends Activity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    private Button mEmailSignInButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +74,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+       mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,7 +168,9 @@ public class LoginActivity extends Activity {
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password, phoneNumber);
+            mEmailSignInButton.setVisibility(View.INVISIBLE);
             mAuthTask.execute((Void) null);
+
         }
     }
 
