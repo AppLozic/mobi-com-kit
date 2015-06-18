@@ -16,7 +16,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.mobicomkit.api.MobiComKitClientService;
-import com.mobicomkit.api.MobiComKitServer;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.account.user.UserClientService;
 import com.mobicomkit.api.conversation.Message;
@@ -82,7 +81,7 @@ public class SlidingPaneActivity extends MobiComActivity {
         mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversationFragment);
         InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
 
-        SharedPreferences prefs = getSharedPreferences(MobiComKitClientService.getMetaData(this, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA), Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(MobiComKitClientService.getApplicationKey(this), Context.MODE_PRIVATE);
         if (prefs.getBoolean(UserClientService.SHARED_PREFERENCE_VERSION_UPDATE_KEY, false)) {
             new UserClientService(this).updateCodeVersion(userPreferences.getDeviceKeyString());
             prefs.edit().remove(UserClientService.SHARED_PREFERENCE_VERSION_UPDATE_KEY).commit();
@@ -124,7 +123,7 @@ public class SlidingPaneActivity extends MobiComActivity {
             startContactActivityForResult();
         } else if (i == R.id.dial) {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + (support.isSupportNumber(currentOpenedContactNumber) ? MobiComKitClientService.getMetaData(this, MobiComKitServer.SUPPORT_PHONE_NUMBER_METADATA) : currentOpenedContactNumber)));
+            callIntent.setData(Uri.parse("tel:" + (support.isSupportNumber(currentOpenedContactNumber) ? MobiComKitClientService.getApplicationKey(this) : currentOpenedContactNumber)));
             startActivity(callIntent);
         } else if (i == R.id.shareOptions) {
             intent = new Intent(Intent.ACTION_SEND);
