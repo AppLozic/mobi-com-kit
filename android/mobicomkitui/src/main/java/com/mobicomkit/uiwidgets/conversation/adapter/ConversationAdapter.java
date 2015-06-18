@@ -271,7 +271,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
             } else if (!quick && message.getKeyString() == null && message.isTypeOutbox()) {
                 createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, message.getScheduledAt() != null ? scheduledIcon : pendingIcon, null);
             } else if (!quick && message.isTypeOutbox()) {
-                createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, message.getDelivered() || (contact != null && Support.isSupportNumber(contact.getFormattedContactNumber())) ? deliveredIcon : (message.getScheduledAt() != null ? scheduledIcon : sentIcon), null);
+                createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, message.getDelivered() || (contact != null && new Support(context).isSupportNumber(contact.getFormattedContactNumber())) ? deliveredIcon : (message.getScheduledAt() != null ? scheduledIcon : sentIcon), null);
             }
 
             if (message.isCall()) {
@@ -300,7 +300,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
                     if (imageUri != null) {
                         contactImage.setImageURI(imageUri);
                     }
-                } else if (contactReceiver != null && Support.isSupportNumber(contactReceiver.getContactNumber()) && (quick || !message.isTypeOutbox())) {
+                } else if (contactReceiver != null && new Support(context).isSupportNumber(contactReceiver.getContactNumber()) && (quick || !message.isTypeOutbox())) {
                     contactImage.setImageResource(R.drawable.ic_launcher);
                 } else {
                     contactImageLoader.loadImage(contactUri, contactImage, alphabeticTextView);

@@ -130,6 +130,9 @@
         <meta-data
             android:name="com.mobicomkit.application.id"
             android:value="@string/application_key" />
+        <meta-data
+            android:name="com.mobicomkit.support.phone.number"
+            android:value="@string/support_phone_number" />
     </application>
 
 </manifest>

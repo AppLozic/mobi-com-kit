@@ -1,11 +1,11 @@
 package com.mobicomkit.api;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.util.Base64;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
+
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
 
 import org.apache.http.auth.UsernamePasswordCredentials;
 
@@ -74,13 +74,7 @@ public class MobiComKitClientService {
 
     public static String getApplicationKey(Context context) {
 
-        try {
-            ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            return ai.metaData.getString(MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return Utils.getMetaDataValue(context, MobiComKitServer.APPLICATION_KEY_HEADER_VALUE_METADATA);
 
     }
 }

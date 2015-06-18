@@ -120,12 +120,9 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     protected Drawable sentIcon;
     protected Drawable deliveredIcon;
     protected ImageButton emoticonsBtn;
-
+    protected Support support;
     protected MultimediaOptionFragment multimediaOptionFragment = new MultimediaOptionFragment();
-
     protected boolean hideExtendedSendingOptionLayout;
-
-
     private EmojiconHandler emojiIconHandler;
 
     public void setEmojiIconHandler(EmojiconHandler emojiIconHandler) {
@@ -497,7 +494,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         downloadConversation = new DownloadConversation(listView, true, 1, 0, 0, contact, group);
         downloadConversation.execute();
 
-        if (contact != null && Support.isSupportNumber(contact.getFormattedContactNumber())) {
+        if (contact != null && support.isSupportNumber(contact.getFormattedContactNumber())) {
             sendType.setSelection(1);
             extendedSendingOptionLayout.setVisibility(View.GONE);
             messageEditText.setHint(R.string.enter_support_query_hint);
@@ -615,6 +612,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        support = new Support(activity);
         try {
             messageCommunicator = (MessageCommunicator) activity;
         } catch (ClassCastException e) {
@@ -737,7 +735,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                         mediaUploadProgressBarIndividualMessage.setVisibility(View.GONE);
                         TextView createdAtTime = (TextView) view.findViewById(R.id.createdAtTime);
                         if (messageListItem.isTypeOutbox() && !messageListItem.isCall() && !messageListItem.getDelivered() && messageListItem.getScheduledAt() == null) {
-                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, Support.isSupportNumber(getFormattedContactNumber()) ? deliveredIcon : sentIcon, null);
+                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, support.isSupportNumber(getFormattedContactNumber()) ? deliveredIcon : sentIcon, null);
                         }
                     }
                 }

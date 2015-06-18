@@ -327,7 +327,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
 
         boolean support = intent.getBooleanExtra(Support.SUPPORT_INTENT_KEY, false);
         if (support) {
-            contact = Support.getSupportContact();
+            contact = new Support(this).getSupportContact();
         }
 
         if (contact != null) {

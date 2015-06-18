@@ -24,6 +24,7 @@ import java.util.TimeZone;
 public class UserClientService extends MobiComKitClientService {
 
     private static final String TAG = "UserClientService";
+    public static final String SHARED_PREFERENCE_VERSION_UPDATE_KEY = "mck.version.update";
     private HttpRequestUtils httpRequestUtils;
 
     public UserClientService(Context context) {

@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
-import com.mobicomkit.GeneralConstants;
 import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.account.user.UserClientService;
@@ -83,9 +82,9 @@ public class SlidingPaneActivity extends MobiComActivity {
         InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
 
         SharedPreferences prefs = getSharedPreferences(MobiComKitClientService.getApplicationKey(this), Context.MODE_PRIVATE);
-        if (prefs.getBoolean(GeneralConstants.SHARED_PREFERENCE_VERSION_UPDATE_KEY, false)) {
+        if (prefs.getBoolean(UserClientService.SHARED_PREFERENCE_VERSION_UPDATE_KEY, false)) {
             new UserClientService(this).updateCodeVersion(userPreferences.getDeviceKeyString());
-            prefs.edit().remove(GeneralConstants.SHARED_PREFERENCE_VERSION_UPDATE_KEY).commit();
+            prefs.edit().remove(UserClientService.SHARED_PREFERENCE_VERSION_UPDATE_KEY).commit();
         }
 
         /*googleApiClient = new GoogleApiClient.Builder(this)
@@ -118,12 +117,13 @@ public class SlidingPaneActivity extends MobiComActivity {
 
         //Note:  using if-else and not switch as resource constants in library projects are not final
         Intent intent;
+        Support support = new Support(this);
         int i = item.getItemId();
         if (i == R.id.start_new) {
             startContactActivityForResult();
         } else if (i == R.id.dial) {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + (Support.isSupportNumber(currentOpenedContactNumber) ? GeneralConstants.MOBITEXTER_SUPPORT_DIAL_PHONE_NUMBER : currentOpenedContactNumber)));
+            callIntent.setData(Uri.parse("tel:" + (support.isSupportNumber(currentOpenedContactNumber) ? MobiComKitClientService.getApplicationKey(this) : currentOpenedContactNumber)));
             startActivity(callIntent);
         } else if (i == R.id.shareOptions) {
             intent = new Intent(Intent.ACTION_SEND);
@@ -135,7 +135,7 @@ public class SlidingPaneActivity extends MobiComActivity {
             String message = this.getString(R.string.info_message_sync);
             new MobiComMessageService(this, MessageIntentService.class).syncMessagesWithServer(message);
         } else if (i == R.id.support) {
-            openConversationFragment(Support.getSupportContact());
+            openConversationFragment(support.getSupportContact());
         } else if (i == R.id.deleteConversation) {
             conversationFragment.deleteConversationThread();
         }
