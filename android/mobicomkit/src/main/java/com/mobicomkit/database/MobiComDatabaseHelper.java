@@ -28,7 +28,7 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
             + _ID + " integer primary key autoincrement  ," + SMS
             + " text not null, " + TIMESTAMP + " INTEGER ,"
             + TO_FIELD + " varchar(20) not null, " + SMS_TYPE + " varchar(20) not null ," + CONTACTID + " varchar(20) , " + SMS_KEY_STRING + " varChar(50), " + STORE_ON_DEVICE_COLUMN + " INTEGER DEFAULT 1, source INTEGER, timeToLive integer) ;";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
     public static final String CREATE_SMS_TABLE = "create table sms ( "
             + "id integer primary key autoincrement, "
             + "keyString var(100), "
@@ -55,6 +55,8 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
             + "blobKeyString varchar(2000), "
             + "canceled integer default 0, "
             + "UNIQUE (keyString, contactNumbers))";
+
+    private static final String CREATE_INDEX_SMS_TYPE = "CREATE INDEX IF NOT EXISTS INDEX_SMS_TYPE ON sms (type)";
     private static final String TAG = "MobiComDatabaseHelper";
     private static MobiComDatabaseHelper sInstance;
     private Context context;
@@ -87,6 +89,9 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
         if (!DBUtils.isTableExists(database, SCHEDULE_SMS_TABLE_NAME)) {
             database.execSQL(CREATE_SCHEDULE_SMS_TABLE);
         }
+        //ALL indexes should go here after creating tables.
+        database.execSQL(CREATE_INDEX_SMS_TYPE);
+
     }
 
     @Override
@@ -106,6 +111,7 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
             if (!DBUtils.isTableExists(database, SCHEDULE_SMS_TABLE_NAME)) {
                 database.execSQL(CREATE_SCHEDULE_SMS_TABLE);
             }
+            database.execSQL(CREATE_INDEX_SMS_TYPE);
         } else {
             onCreate(database);
         }
