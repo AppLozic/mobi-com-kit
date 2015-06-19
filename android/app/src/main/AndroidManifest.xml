@@ -133,6 +133,10 @@
         <meta-data
             android:name="com.mobicomkit.support.phone.number"
             android:value="@string/support_phone_number" />
+        <meta-data
+            android:name="com.mobicomkit.server.url"
+            android:value="@string/default_server_url" />
+
     </application>
 
 </manifest>

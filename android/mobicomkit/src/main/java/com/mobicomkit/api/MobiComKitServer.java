@@ -1,13 +1,19 @@
 package com.mobicomkit.api;
 
+import android.content.Context;
+
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
+
 /**
  * Created by devashish on 22/12/14.
  */
 public class MobiComKitServer {
 
+
     public static final boolean PROD = true;
     public static final String PROD_DISPLAY_URL = "http://www.mobicomkit.com";
-    public static final String BASE_URL = "http://mobi-com.appspot.com";
+    public static final String BASE_URL_METADATA = "com.mobicomkit.server.url";
+    public static String BASE_URL=getBaseUrl();
     public static final String CREATE_ACCOUNT_URL = BASE_URL + "/rest/ws/registration/v1/register";
     public static final String CHECK_FOR_MT_USER = BASE_URL + "/rest/ws/contact/v2/ismtexter";
     public static final String PHONE_NUMBER_UPDATE_URL = BASE_URL + "/rest/ws/registration/phone/number/update";
@@ -46,4 +52,17 @@ public class MobiComKitServer {
     public static String SUPPORT_PHONE_NUMBER_METADATA = "com.mobicomkit.support.phone.number";
 //    public static String APPLICATION_KEY_HEADER_VALUE = "c";
 
+    public MobiComKitServer(Context context) {
+        this.BASE_URL = Utils.getMetaDataValue(context, BASE_URL_METADATA);
+        System.out.println("Insdie con");
+
+    }
+
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
+
+    public static void setBaseUrl(String baseUrl) {
+        BASE_URL = baseUrl;
+    }
 }
