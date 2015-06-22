@@ -46,20 +46,6 @@
             android:src="@drawable/ic_action_add"
             android:visibility="gone" />
 
-        <!--<com.shamanland.fab.FloatingActionButton-->
-        <!--android:id="@+id/fab_start_new"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginBottom="14dp"-->
-        <!--android:layout_marginRight="0dp"-->
-        <!--android:src="@drawable/ic_action_add"-->
-        <!--android:visibility="gone"-->
-        <!--mobitexter:floatingActionButtonColor="@color/compose_action_button"-->
-        <!--mobitexter:floatingActionButtonSize="normal" />-->
-
     </RelativeLayout>
 
     <TextView
