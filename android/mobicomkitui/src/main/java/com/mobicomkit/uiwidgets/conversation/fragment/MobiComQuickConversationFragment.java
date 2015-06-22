@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,7 +46,8 @@ public class MobiComQuickConversationFragment extends Fragment {
     protected MobiComConversationService conversationService;
 
     protected ConversationListView listView = null;
-    protected FloatingActionButton fabButton;
+    //    protected FloatingActionButton fabButton;
+    protected ImageButton fabButton;
     protected TextView emptyTextView;
     protected Button startNewButton;
     protected ProgressBar spinner;
@@ -78,7 +80,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         listView = (ConversationListView) list.findViewById(R.id.messageList);
         listView.setScrollToBottomOnSizeChange(Boolean.FALSE);
 
-        fabButton = (FloatingActionButton) list.findViewById(R.id.fab_start_new);
+        fabButton = (ImageButton) list.findViewById(R.id.fab_start_new);
         fabButton.setVisibility(View.VISIBLE);
 
         LinearLayout individualMessageSendLayout = (LinearLayout) list.findViewById(R.id.individual_message_send_layout);
@@ -250,6 +252,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         listView.setAdapter(conversationAdapter);
         startNewButton.setOnClickListener(startNewConversation());
         fabButton.setOnClickListener(startNewConversation());
+
 
         //listView.setOnTouchListener(new ShowHideOnScroll(fabButton));
 
