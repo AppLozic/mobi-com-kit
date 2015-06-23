@@ -27,7 +27,6 @@ import com.mobicomkit.uiwidgets.conversation.ConversationListView;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.adapter.ConversationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
-import com.shamanland.fab.FloatingActionButton;
 
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.people.contact.Contact;
@@ -46,7 +45,6 @@ public class MobiComQuickConversationFragment extends Fragment {
     protected MobiComConversationService conversationService;
 
     protected ConversationListView listView = null;
-    //    protected FloatingActionButton fabButton;
     protected ImageButton fabButton;
     protected TextView emptyTextView;
     protected Button startNewButton;
@@ -252,10 +250,6 @@ public class MobiComQuickConversationFragment extends Fragment {
         listView.setAdapter(conversationAdapter);
         startNewButton.setOnClickListener(startNewConversation());
         fabButton.setOnClickListener(startNewConversation());
-
-
-        //listView.setOnTouchListener(new ShowHideOnScroll(fabButton));
-
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -373,5 +367,4 @@ public class MobiComQuickConversationFragment extends Fragment {
             }
         }
     }
-
 }
