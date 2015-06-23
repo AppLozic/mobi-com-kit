@@ -190,7 +190,7 @@ public class AttachmentView extends ImageView {
         if (message == null || message.getFileMetas() == null || message.getFileMetas().isEmpty()) {
             return null;
         }
-        return new MobiComKitClientService(context).getFileUrl() + message.getFileMetas().get(0).getKeyString();
+        return new MobiComKitClientService(getContext().getApplicationContext()).getFileUrl() + message.getFileMetas().get(0).getKeyString();
     }
 
     public String getLocalPath() {
