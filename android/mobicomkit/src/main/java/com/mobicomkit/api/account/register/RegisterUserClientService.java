@@ -7,7 +7,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
-import com.mobicomkit.api.MobiComKitServer;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.account.user.User;
 import com.mobicomkit.exception.InvalidApplicationException;
@@ -26,6 +25,10 @@ public class RegisterUserClientService extends MobiComKitClientService {
 
     private static final String TAG = "RegisterUserClient";
     private static final String INVALID_APP_ID = "INVALID_APPLICATIONID";
+    public static final String CREATE_ACCOUNT_URL = "/rest/ws/registration/v1/register";
+    public static final Short MOBICOMKIT_VERSION_CODE = 71;
+
+
     private HttpRequestUtils httpRequestUtils;
 
     public RegisterUserClientService(Context context) {
@@ -33,11 +36,15 @@ public class RegisterUserClientService extends MobiComKitClientService {
         this.httpRequestUtils = new HttpRequestUtils(context);
     }
 
+    public String getCreateAccountUrl() {
+        return getBaseUrl() + CREATE_ACCOUNT_URL;
+    }
+
     public RegistrationResponse createAccount(User user) throws Exception {
         MobiComUserPreference mobiComUserPreference = MobiComUserPreference.getInstance(context);
 
         Gson gson = new Gson();
-        user.setAppVersionCode(MobiComKitServer.MOBICOMKIT_VERSION_CODE);
+        user.setAppVersionCode(MOBICOMKIT_VERSION_CODE);
         user.setApplicationId(getApplicationKey(context));
         user.setRegistrationId(mobiComUserPreference.getDeviceRegistrationId());
 
@@ -49,7 +56,7 @@ public class RegisterUserClientService extends MobiComKitClientService {
 
 //        Log.i(TAG, "App Id is: " + getApplicationKey(context));
 
-        String response = httpRequestUtils.postJsonToServer(new MobiComKitServer(context).getCreateAccountUrl(), gson.toJson(user));
+        String response = httpRequestUtils.postJsonToServer(getCreateAccountUrl(), gson.toJson(user));
 
         Log.i(TAG, "Registration response is: " + response);
 

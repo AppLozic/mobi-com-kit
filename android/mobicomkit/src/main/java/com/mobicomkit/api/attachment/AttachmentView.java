@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.mobicomkit.api.MobiComKitServer;
+import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.conversation.Message;
 
 /**
@@ -41,7 +41,6 @@ public class AttachmentView extends ImageView {
 
     // Status flag that indicates if onDraw has completed
     private boolean mIsDrawn;
-    private Context context;
     /*
      * Creates a weak reference to the ImageView in this object. The weak
      * reference prevents memory leaks and crashes, because it automatically tracks the "state" of
@@ -62,6 +61,7 @@ public class AttachmentView extends ImageView {
     // The Thread that will be used to download the file for this attachmentView
     // will be used to cancle it ,once the user will require it
     private AttachmentTask mDownloadThread;
+    private Context context;
 
     /**
      * Creates an ImageDownloadView with no settings
@@ -70,7 +70,7 @@ public class AttachmentView extends ImageView {
      */
     public AttachmentView(Context context) {
         super(context);
-        this.context=context;
+        this.context = context;
     }
 
     /**
@@ -190,7 +190,7 @@ public class AttachmentView extends ImageView {
         if (message == null || message.getFileMetas() == null || message.getFileMetas().isEmpty()) {
             return null;
         }
-        return new MobiComKitServer(context).getFileUrl()  + message.getFileMetas().get(0).getKeyString();
+        return new MobiComKitClientService(context).getFileUrl() + message.getFileMetas().get(0).getKeyString();
     }
 
     public String getLocalPath() {

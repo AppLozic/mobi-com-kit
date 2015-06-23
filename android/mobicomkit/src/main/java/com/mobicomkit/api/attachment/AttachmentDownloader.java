@@ -20,7 +20,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.mobicomkit.api.MobiComKitClientService;
-import com.mobicomkit.api.MobiComKitServer;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 
@@ -151,7 +150,7 @@ class AttachmentDownloader implements Runnable {
             FileMeta fileMeta = message.getFileMetas().get(0);
             String contentType = fileMeta.getContentType();
             String fileKey = fileMeta.getKeyString();
-            HttpURLConnection connection = new MobiComKitClientService(context).openHttpConnection( new MobiComKitServer(context).getFileUrl()+ fileKey);
+            HttpURLConnection connection = new MobiComKitClientService(context).openHttpConnection( new MobiComKitClientService(context).getFileUrl()+ fileKey);
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = connection.getInputStream();
             } else {

@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
-import com.mobicomkit.api.MobiComKitServer;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -21,10 +20,16 @@ public class MTUserClientService extends MobiComKitClientService {
         super(context);
     }
 
+    public static final String CHECK_FOR_MT_USER = "/rest/ws/contact/v2/ismtexter";
+
+    public String getCheckForMtUser(){
+        return getBaseUrl() + CHECK_FOR_MT_USER;
+    }
+
     public ContactContent getContactContent(String contactNumber) {
         String response = null;
         try {
-            response = new HttpRequestUtils(context).getResponse(credentials, new MobiComKitServer(context).getCheckForMtUser() + "?requestSource=1&contactNumber=" + URLEncoder.encode(contactNumber, "UTF-8"), "text/plain", "application/json");
+            response = new HttpRequestUtils(context).getResponse(credentials, getCheckForMtUser()+ "?requestSource=1&contactNumber=" + URLEncoder.encode(contactNumber, "UTF-8"), "text/plain", "application/json");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
