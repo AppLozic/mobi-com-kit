@@ -43,6 +43,7 @@ public class FileClientService extends MobiComKitClientService {
     public static final String MOBI_TEXTER_VIDEOS_FOLDER = "/MobiCom/video";
     public static final String MOBI_TEXTER_OTHER_FILES_FOLDER = "/MobiCom/other";
     public static final String MOBI_TEXTER_THUMBNAIL_SUFIX = "/Thumbnail";
+    public static final String FILE_UPLOAD_URL =  "/rest/ws/file/url";
     public static final String IMAGE_DIR = "image";
     private static final String TAG = "FileClientService";
     private HttpRequestUtils httpRequestUtils;
@@ -52,6 +53,8 @@ public class FileClientService extends MobiComKitClientService {
         this.httpRequestUtils = new HttpRequestUtils(context);
     }
 
+
+    public String getFileUploadUrl(){ return getBaseUrl() + FILE_UPLOAD_URL; }
     public static File getFilePath(String fileName, Context context, String contentType, boolean isThumbnail) {
         File filePath;
         File dir;
@@ -168,6 +171,6 @@ public class FileClientService extends MobiComKitClientService {
     }
 
     public String getUploadKey() {
-        return httpRequestUtils.getResponse(credentials, MobiComKitServer.FILE_UPLOAD_URL + "?" + new Date().getTime(), "text/plain", "text/plain");
+        return httpRequestUtils.getResponse(credentials, FILE_UPLOAD_URL + "?" + new Date().getTime(), "text/plain", "text/plain");
     }
 }

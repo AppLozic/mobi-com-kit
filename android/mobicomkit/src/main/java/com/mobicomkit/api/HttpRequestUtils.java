@@ -42,6 +42,8 @@ public class HttpRequestUtils {
 
     private static String SOURCE_HEADER_VALUE = "1";
 
+    public static String APPLICATION_KEY_HEADER = "Application-Key";
+
     public HttpRequestUtils(Context context) {
         this.context = context;
     }
@@ -197,7 +199,7 @@ public class HttpRequestUtils {
     }
 
     public void addGlobalHeaders(HttpRequest request) {
-        request.addHeader(MobiComKitServer.APPLICATION_KEY_HEADER, MobiComKitClientService.getApplicationKey(context));
+        request.addHeader(APPLICATION_KEY_HEADER, MobiComKitClientService.getApplicationKey(context));
         request.addHeader(SOURCE_HEADER, SOURCE_HEADER_VALUE);
     }
 
