@@ -151,7 +151,7 @@ class AttachmentDownloader implements Runnable {
             FileMeta fileMeta = message.getFileMetas().get(0);
             String contentType = fileMeta.getContentType();
             String fileKey = fileMeta.getKeyString();
-            HttpURLConnection connection = new MobiComKitClientService(context).openHttpConnection(MobiComKitServer.FILE_URL + fileKey);
+            HttpURLConnection connection = new MobiComKitClientService(context).openHttpConnection( new MobiComKitServer(context).getFileUrl()+ fileKey);
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = connection.getInputStream();
             } else {

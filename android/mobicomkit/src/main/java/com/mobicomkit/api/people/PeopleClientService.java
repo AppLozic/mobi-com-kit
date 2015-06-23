@@ -20,11 +20,11 @@ public class PeopleClientService extends MobiComKitClientService {
     }
 
     public String getGoogleContacts(int page) {
-        return httpRequestUtils.getResponse(credentials, MobiComKitServer.GOOGLE_CONTACT_URL + "?page=" + page, "application/json", "application/json");
+        return httpRequestUtils.getResponse(credentials, new MobiComKitServer(context).getGoogleContactUrl() + "?page=" + page, "application/json", "application/json");
     }
 
     public String getContactsInCurrentPlatform() {
-        return httpRequestUtils.getResponse(credentials, MobiComKitServer.PLATFORM_CONTACT_URL + "?mtexter=true", "application/json", "application/json");
+        return httpRequestUtils.getResponse(credentials, new MobiComKitServer(context).getPlatformContactUrl() + "?mtexter=true", "application/json", "application/json");
     }
 
     public void addContacts(String url, ContactList contactList, boolean completed) throws Exception {

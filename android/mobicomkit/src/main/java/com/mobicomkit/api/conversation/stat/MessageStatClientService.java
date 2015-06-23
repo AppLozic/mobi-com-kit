@@ -20,7 +20,7 @@ public class MessageStatClientService extends MobiComKitClientService {
     }
 
     public String sendMessageStat(MessageStat messageStat) {
-        return new HttpRequestUtils(context).postData(credentials, MobiComKitServer.MESSAGE_STAT_URL, "application/json", null, GsonUtils.getJsonFromObject(messageStat, MessageStat.class));
+        return new HttpRequestUtils(context).postData(credentials, new MobiComKitServer(context).getMessageStatUrl(), "application/json", null, GsonUtils.getJsonFromObject(messageStat, MessageStat.class));
     }
 
 }

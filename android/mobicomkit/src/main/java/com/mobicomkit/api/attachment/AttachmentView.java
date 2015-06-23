@@ -41,7 +41,7 @@ public class AttachmentView extends ImageView {
 
     // Status flag that indicates if onDraw has completed
     private boolean mIsDrawn;
-    
+    private Context context;
     /*
      * Creates a weak reference to the ImageView in this object. The weak
      * reference prevents memory leaks and crashes, because it automatically tracks the "state" of
@@ -70,6 +70,7 @@ public class AttachmentView extends ImageView {
      */
     public AttachmentView(Context context) {
         super(context);
+        this.context=context;
     }
 
     /**
@@ -189,7 +190,7 @@ public class AttachmentView extends ImageView {
         if (message == null || message.getFileMetas() == null || message.getFileMetas().isEmpty()) {
             return null;
         }
-        return MobiComKitServer.FILE_URL + message.getFileMetas().get(0).getKeyString();
+        return new MobiComKitServer(context).getFileUrl()  + message.getFileMetas().get(0).getKeyString();
     }
 
     public String getLocalPath() {
@@ -220,6 +221,5 @@ public class AttachmentView extends ImageView {
         AttachmentManager.removeDownload(mDownloadThread);
         getDownloadProgressLayout().setVisibility(GONE);
     }
-
 
 }

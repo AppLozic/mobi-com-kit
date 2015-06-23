@@ -49,7 +49,7 @@ public class RegisterUserClientService extends MobiComKitClientService {
 
 //        Log.i(TAG, "App Id is: " + getApplicationKey(context));
 
-        String response = httpRequestUtils.postJsonToServer(MobiComKitServer.CREATE_ACCOUNT_URL, gson.toJson(user));
+        String response = httpRequestUtils.postJsonToServer(new MobiComKitServer(context).getCreateAccountUrl(), gson.toJson(user));
 
         Log.i(TAG, "Registration response is: " + response);
 
