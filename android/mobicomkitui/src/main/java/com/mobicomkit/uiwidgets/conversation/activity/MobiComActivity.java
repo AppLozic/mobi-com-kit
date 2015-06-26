@@ -144,6 +144,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         }
     }
 
+    @Override
     public abstract void startContactActivityForResult();
 
     public void startContactActivityForResult(Intent intent, Message message, String messageContent) {

@@ -11,4 +11,6 @@ public interface MobiComKitActivityInterface {
 
     void onQuickConversationFragmentItemClick(View view, Contact contact);
 
+    void startContactActivityForResult();
+
 }

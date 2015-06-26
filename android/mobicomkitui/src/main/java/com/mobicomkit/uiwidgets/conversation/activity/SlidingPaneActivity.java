@@ -149,6 +149,7 @@ public class SlidingPaneActivity extends MobiComActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
     public void startContactActivityForResult() {
         startContactActivityForResult(null, null);
     }
