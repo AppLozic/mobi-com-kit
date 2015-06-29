@@ -171,6 +171,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         slidingPaneLayout.closePane();
         InstructionUtil.hideInstruction(this, R.string.info_message_sync);
         InstructionUtil.hideInstruction(this, R.string.instruction_open_conversation_thread);
+        conversationFragment.resetlastConversationTime();
         conversationFragment.loadConversation(contact);
     }
 
