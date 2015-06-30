@@ -46,11 +46,13 @@ public class LoginActivity extends Activity {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
+    private EditText mUserIdView;
     private EditText mPhoneNumberView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
     private Button mEmailSignInButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,7 @@ public class LoginActivity extends Activity {
         populateAutoComplete();
 
         mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        mUserIdView = (EditText) findViewById(R.id.userId);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -136,6 +139,7 @@ public class LoginActivity extends Activity {
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String phoneNumber = mPhoneNumberView.getText().toString();
+        String userId = mUserIdView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -167,7 +171,7 @@ public class LoginActivity extends Activity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password, phoneNumber);
+            mAuthTask = new UserLoginTask(userId, email, password, phoneNumber);
             mEmailSignInButton.setVisibility(View.INVISIBLE);
             mAuthTask.execute((Void) null);
 
@@ -265,12 +269,14 @@ public class LoginActivity extends Activity {
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+        private final String mUserId;
         private final String mEmail;
         private final String mPassword;
         private final String mPhoneNumber;
         private Exception mException;
 
-        UserLoginTask(String email, String password, String phoneNumber) {
+        UserLoginTask(String userId, String email, String password, String phoneNumber) {
+            mUserId = userId;
             mEmail = email;
             mPassword = password;
             mPhoneNumber = phoneNumber;
@@ -279,7 +285,7 @@ public class LoginActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                new RegisterUserClientService(LoginActivity.this).createAccount(mEmail, mEmail, mPhoneNumber, "");
+                new RegisterUserClientService(LoginActivity.this).createAccount(mEmail, mUserId, mPhoneNumber, "");
             } catch (Exception e) {
                 e.printStackTrace();
                 mException = e;

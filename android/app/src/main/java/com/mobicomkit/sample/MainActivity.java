@@ -115,7 +115,7 @@ public class MainActivity extends MobiComActivityForFragment
 
     public void startChat(View v) {
         Intent i = new Intent(this, SlidingPaneActivity.class);
-        i.putExtra("userId", "devashish.mamgain@gmail.com");
+        i.putExtra("userId", "mobicomkit");
         startActivity(i);
     }
 
