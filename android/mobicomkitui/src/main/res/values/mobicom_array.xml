@@ -39,6 +39,7 @@
         <item>Current location</item>
         <item>Take photo</item>
         <item>Attach file</item>
+        <item>Record Audio</item>
     </string-array>
 
 </resources>

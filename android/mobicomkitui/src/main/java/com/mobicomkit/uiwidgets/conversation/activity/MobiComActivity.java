@@ -122,25 +122,28 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode == RESULT_OK) {
+            if ((requestCode == MultimediaOptionFragment.REQUEST_CODE_ATTACH_PHOTO ||
+                    requestCode == MultimediaOptionFragment.REQUEST_CODE_TAKE_PHOTO)) {
+                Uri selectedFileUri = (intent == null ? null : intent.getData());
+                if (selectedFileUri == null) {
+                    selectedFileUri = conversationFragment.getMultimediaOptionFragment().getCapturedImageUri();
+                    ImageUtils.addImageToGallery(FilePathFinder.getPath(this, selectedFileUri), this);
+                }
 
-        if ((requestCode == MultimediaOptionFragment.REQUEST_CODE_ATTACH_PHOTO ||
-                requestCode == MultimediaOptionFragment.REQUEST_CODE_TAKE_PHOTO)
-                && resultCode == RESULT_OK) {
-            Uri selectedFileUri = (intent == null ? null : intent.getData());
-            if (selectedFileUri == null) {
-                selectedFileUri = conversationFragment.getMultimediaOptionFragment().getCapturedImageUri();
-                ImageUtils.addImageToGallery(FilePathFinder.getPath(this, selectedFileUri), this);
+                if (selectedFileUri == null) {
+                    Bitmap photo = (Bitmap) intent.getExtras().get("data");
+                    selectedFileUri = ImageUtils.getImageUri(getApplicationContext(), photo);
+                }
+                conversationFragment.loadFile(selectedFileUri);
+
+                Log.i(TAG, "File uri: " + selectedFileUri);
+            } else if (requestCode == REQUEST_CODE_CONTACT_GROUP_SELECTION) {
+                checkForStartNewConversation(intent);
+            } else if (requestCode == MultimediaOptionFragment.REQUEST_CODE_RECORD_AUDIO){
+                Uri selectedFileUri = intent.getData();
+                conversationFragment.loadFile(selectedFileUri);
             }
-
-            if (selectedFileUri == null) {
-                Bitmap photo = (Bitmap) intent.getExtras().get("data");
-                selectedFileUri = ImageUtils.getImageUri(getApplicationContext(), photo);
-            }
-            conversationFragment.loadFile(selectedFileUri);
-
-            Log.i(TAG, "File uri: " + selectedFileUri);
-        } else if (requestCode == REQUEST_CODE_CONTACT_GROUP_SELECTION && resultCode == RESULT_OK) {
-            checkForStartNewConversation(intent);
         }
     }
 

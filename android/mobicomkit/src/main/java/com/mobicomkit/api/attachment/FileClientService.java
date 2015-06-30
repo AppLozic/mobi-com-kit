@@ -31,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -43,6 +44,8 @@ public class FileClientService extends MobiComKitClientService {
     public static final String MOBI_TEXTER_VIDEOS_FOLDER = "/MobiCom/video";
     public static final String MOBI_TEXTER_OTHER_FILES_FOLDER = "/MobiCom/other";
     public static final String MOBI_TEXTER_THUMBNAIL_SUFIX = "/Thumbnail";
+    public static final String MOBI_TEXTER_AUDIO_FOLDER = "/MobiCom/audio";
+
     public static final String IMAGE_DIR = "image";
     private static final String TAG = "FileClientService";
     private HttpRequestUtils httpRequestUtils;
@@ -53,18 +56,9 @@ public class FileClientService extends MobiComKitClientService {
     }
 
     public static File getFilePath(String fileName, Context context, String contentType, boolean isThumbnail) {
-        File filePath;
-        File dir;
+        File filePath, dir;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            String folder = MOBI_TEXTER_OTHER_FILES_FOLDER;
-            if (contentType.startsWith("image")) {
-                folder = MOBI_TEXTER_IMAGES_FOLDER;
-            } else if (contentType.startsWith("video")) {
-                folder = MOBI_TEXTER_VIDEOS_FOLDER;
-            }
-            if (isThumbnail) {
-                folder = folder + MOBI_TEXTER_THUMBNAIL_SUFIX;
-            }
+            String folder = getContentTypeFolder(contentType, isThumbnail);
             dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + folder);
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -80,6 +74,28 @@ public class FileClientService extends MobiComKitClientService {
         return filePath;
     }
 
+    public static String getContentTypeFolder(String contentType, boolean isThumbnail) {
+        String folder;
+        if (contentType.startsWith("image")) {
+            folder = MOBI_TEXTER_IMAGES_FOLDER;
+        } else if (contentType.startsWith("audio")) {
+            folder = MOBI_TEXTER_AUDIO_FOLDER;
+        } else if (contentType.startsWith("video")) {
+            folder = MOBI_TEXTER_VIDEOS_FOLDER;
+        }
+        folder = MOBI_TEXTER_OTHER_FILES_FOLDER;
+        if (isThumbnail) {
+            folder += MOBI_TEXTER_THUMBNAIL_SUFIX;
+        }
+        return folder;
+    }
+
+    public static String getFileName(String fileFormat) {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String initial = fileFormat.toUpperCase();
+        fileFormat = fileFormat.toLowerCase();
+        return initial + "_" + timeStamp + "_" + "." + fileFormat;
+    }
     public static String saveImageToInternalStorage(Bitmap bitmapImage, String fileName, Context context, String contentType) {
         File filePath = getFilePath(fileName, context, contentType, true);
         FileOutputStream fos = null;

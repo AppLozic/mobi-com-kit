@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.mobicomkit.api.attachment.FileClientService;
 import com.mobicomkit.uiwidgets.R;
@@ -30,6 +31,7 @@ public class MultimediaOptionFragment extends DialogFragment {
     public static final int RESULT_OK = -1;
     public static final int REQUEST_CODE_TAKE_PHOTO = 11;
     public static final int REQUEST_CODE_ATTACH_PHOTO = 12;
+    public static final int REQUEST_CODE_RECORD_AUDIO = 13;
 
     private Uri capturedImageUri;
     private int menuOptionsResourceId = R.array.multimediaOptions_sms;
@@ -78,6 +80,9 @@ public class MultimediaOptionFragment extends DialogFragment {
                     case 0:
                         ((MobiComActivity) getActivity()).processLocation();
                         break;
+                    case 3:
+                        Intent recordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+                        getActivity().startActivityForResult(recordAudioIntent, REQUEST_CODE_RECORD_AUDIO);
                     default:
                 }
             }

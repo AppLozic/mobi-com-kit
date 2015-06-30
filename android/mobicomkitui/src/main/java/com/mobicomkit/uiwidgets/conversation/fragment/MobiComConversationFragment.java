@@ -262,6 +262,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             public void onClick(View v) {
                 filePath = null;
                 attachmentLayout.setVisibility(View.GONE);
+                ((ImageView) v).setImageResource(0);
             }
         });
 
@@ -592,7 +593,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
 
         attachmentLayout.setVisibility(View.VISIBLE);
-
+//        attachmentLayout.findViewById(R.id)
         String mimeType = FileUtils.getMimeType(getActivity(), uri);
 
         if (mimeType != null && mimeType.startsWith("image")) {

@@ -76,5 +76,7 @@ public class ConversationFragment extends MobiComConversationFragment {
         ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
         super.updateTitle();
     }
+    public void recordVoice(String fileName){
 
+    }
 }
