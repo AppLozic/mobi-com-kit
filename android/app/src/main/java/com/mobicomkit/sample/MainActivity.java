@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,16 +16,8 @@ import android.view.ViewGroup;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.quickconversion.ConversionActivity;
-import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
-import com.mobicomkit.uiwidgets.conversation.UIService;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
-import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
-import com.mobicomkit.uiwidgets.conversation.fragment.QuickConversationFragment;
-import net.mobitexter.mobiframework.people.contact.Contact;
 
 public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
