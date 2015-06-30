@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -16,9 +18,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
+import com.mobicomkit.api.conversation.Message;
+import com.mobicomkit.quickconversion.ConversionActivity;
+import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
+import com.mobicomkit.uiwidgets.conversation.UIService;
+import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
+import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
+import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
+import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
+import com.mobicomkit.uiwidgets.conversation.fragment.QuickConversationFragment;
+import net.mobitexter.mobiframework.people.contact.Contact;
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
 
     public static final String DATABASE_NAME = "yourappdb";
@@ -32,7 +44,12 @@ public class MainActivity extends ActionBarActivity
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
+
     private CharSequence mTitle;
+
+    public MainActivity(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +83,23 @@ public class MainActivity extends ActionBarActivity
             startActivity(intent);
             return;
         }
-        if (position == 0) {
+       /* this two are ConversionActivity and And ConversionFragment
+        if (position == 3) {
+            Intent intent = new Intent(this, ConversionActivity.class);
+            startActivity(intent);
+            return;
+        }
+        if(position==1){
+            ConversationFragment conversationFragment = new ConversationFragment();
+            Contact contact = new Contact();
+            contact.setUserId("devashish.mamgain@gmail.com");
+            mTitle=(contact.toString());
+            UIService.addFragment(this,conversationFragment, "conversationFragment");
+            conversationFragment.loadConversation(contact);
+            return;
+
+        }
+       */ if (position == 0) {
             mTitle = getString(R.string.ecommerce);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
@@ -91,10 +124,10 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 mTitle = getString(R.string.title_section1);
                 break;
-            case 2:
+         /* This one is for conversation using fragments   case 2:
                 mTitle = getString(R.string.title_section2);
                 break;
-            case 3:
+         */   case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
         }
@@ -122,6 +155,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
+    public void processLocation() {
+
+    }
+
+    @Override
+    public void startContactActivityForResult() {
+
+    }
+
+    @Override
+    public void startContactActivityForResult(Message message, String messageContent) {
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -138,6 +186,16 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void updateLatestMessage(Message message, String formattedContactNumber) {
+
+    }
+
+    @Override
+    public void removeConversation(Message message, String formattedContactNumber) {
 
     }
 
@@ -181,5 +239,4 @@ public class MainActivity extends ActionBarActivity
         }
 
     }
-
 }
