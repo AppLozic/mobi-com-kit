@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
 import com.mobicomkit.api.MobiComKitConstants;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
@@ -24,13 +25,13 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterfac
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
 import com.mobicomkit.uiwidgets.conversation.fragment.MultimediaOptionFragment;
+import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.file.FilePathFinder;
 import net.mobitexter.mobiframework.json.GsonUtils;
-import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
 import net.mobitexter.mobiframework.people.group.Group;
@@ -45,7 +46,7 @@ public class ConversationUIService {
     public static final int INSTRUCTION_DELAY = 5000;
 
     private Context context;
-    FragmentActivity  fragmentActivity;
+    FragmentActivity fragmentActivity;
 
     public ConversationUIService(Context context) {
         this.context = context;
@@ -54,8 +55,9 @@ public class ConversationUIService {
     public ConversationUIService(FragmentActivity fragmentActivity) {
         this.fragmentActivity = fragmentActivity;
     }
+
     public MobiComQuickConversationFragment getQuickConversationFragment() {
-        return (MobiComQuickConversationFragment)UIService .getActiveFragment(fragmentActivity);
+        return (MobiComQuickConversationFragment) UIService.getActiveFragment(fragmentActivity);
     }
 
     public ConversationFragment getConversationFragment() {
@@ -82,13 +84,11 @@ public class ConversationUIService {
 
     public void openConversationFragment(Group group) {
         ConversationFragment conversationFragment = new ConversationFragment();
-        //UIService.addFragment(fragmentActivity,conversationFragment,"Conversation");
         ((MobiComKitActivityInterface) fragmentActivity).addFragment(conversationFragment);
         conversationFragment.loadConversation(group);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        //if (BroadcastService.isIndividual() && (requestCode == MultimediaOptionFragment.REQUEST_CODE_ATTACH_PHOTO ||
         if ((requestCode == MultimediaOptionFragment.REQUEST_CODE_ATTACH_PHOTO ||
                 requestCode == MultimediaOptionFragment.REQUEST_CODE_TAKE_PHOTO)
                 && resultCode == Activity.RESULT_OK) {
@@ -151,8 +151,7 @@ public class ConversationUIService {
         }
 
         MobiComQuickConversationFragment fragment = (MobiComQuickConversationFragment) UIService.getActiveFragment(fragmentActivity);
-           fragment.addMessage(message);
-
+        fragment.addMessage(message);
 
     }
 
