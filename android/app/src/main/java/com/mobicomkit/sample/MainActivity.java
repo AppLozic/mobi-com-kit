@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
@@ -16,8 +18,10 @@ import android.view.ViewGroup;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
+import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
+import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
 public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
@@ -72,8 +76,7 @@ public class MainActivity extends MobiComActivityForFragment
             startActivity(intent);
             return;
         }
-       /* this two are ConversionActivity and And ConversionFragment
-        if (position == 3) {
+       /* if (position == 3) {
             Intent intent = new Intent(this, ConversionActivity.class);
             startActivity(intent);
             return;
@@ -82,13 +85,14 @@ public class MainActivity extends MobiComActivityForFragment
             ConversationFragment conversationFragment = new ConversationFragment();
             Contact contact = new Contact();
             contact.setUserId("devashish.mamgain@gmail.com");
-            mTitle=(contact.toString());
-            UIService.addFragment(this,conversationFragment, "conversationFragment");
+            mTitle="devashish.mamgain@gmail.com";
+            addFragment(this, conversationFragment, "conversationFragment");
             conversationFragment.loadConversation(contact);
             return;
 
-        }
-       */ if (position == 0) {
+        }*/
+
+        if (position == 0) {
             mTitle = getString(R.string.ecommerce);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
@@ -113,10 +117,10 @@ public class MainActivity extends MobiComActivityForFragment
             case 1:
                 mTitle = getString(R.string.title_section1);
                 break;
-         /* This one is for conversation using fragments   case 2:
+        /*    case 2:
                 mTitle = getString(R.string.title_section2);
                 break;
-         */   case 3:
+          */  case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
         }
@@ -151,6 +155,11 @@ public class MainActivity extends MobiComActivityForFragment
     @Override
     public void startContactActivityForResult() {
 
+    }
+
+    @Override
+    public void addFragment(ConversationFragment conversationFragment) {
+        addFragment(this,conversationFragment, "conversationFragment");
     }
 
     @Override
@@ -228,4 +237,27 @@ public class MainActivity extends MobiComActivityForFragment
         }
 
     }
+
+    public static void addFragment(FragmentActivity fragmentActivity, Fragment fragmentToAdd, String fragmentTag) {
+        FragmentManager supportFragmentManager = fragmentActivity.getSupportFragmentManager();
+
+        Fragment activeFragment = UIService.getActiveFragment(fragmentActivity);
+        FragmentTransaction fragmentTransaction = supportFragmentManager
+                .beginTransaction();
+        if (null != activeFragment) {
+            fragmentTransaction.hide(activeFragment);
+        }
+
+        fragmentTransaction.replace(R.id.container, fragmentToAdd,
+                fragmentTag);
+
+        if (supportFragmentManager.getBackStackEntryCount() > 1) {
+            supportFragmentManager.popBackStack();
+        }
+        fragmentTransaction.addToBackStack(fragmentTag);
+        fragmentTransaction.commit();
+        supportFragmentManager.executePendingTransactions();
+        //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
+    }
+
 }
