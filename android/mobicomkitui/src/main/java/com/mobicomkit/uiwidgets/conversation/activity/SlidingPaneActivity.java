@@ -155,6 +155,11 @@ public class SlidingPaneActivity extends MobiComActivity {
     }
 
     @Override
+    public void addFragment(ConversationFragment conversationFragment) {
+
+    }
+
+    @Override
     public void startContactActivityForResult(Message message, String messageContent) {
         Intent intent = new Intent(this, MobiComKitPeopleActivity.class);
         super.startContactActivityForResult(intent, message, messageContent);
