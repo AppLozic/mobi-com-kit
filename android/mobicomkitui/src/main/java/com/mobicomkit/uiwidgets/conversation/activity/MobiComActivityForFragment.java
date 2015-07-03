@@ -312,9 +312,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
 
         String userId = intent.getStringExtra("userId");
         if (!TextUtils.isEmpty(userId)) {
-            contact = new Contact();
-            contact.setUserId(userId);
-            contact.setContactNumber(userId);
+            contact = new Contact(this, userId);
             //Todo: Load contact details from server.
         }
 

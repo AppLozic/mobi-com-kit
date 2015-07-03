@@ -65,6 +65,12 @@ public class Contact {
         this.userId = userId;
     }
 
+    public Contact(Context context, String userId) {
+        this.userId = userId;
+        this.setContactNumber(userId);
+        this.processContactNumbers(context);
+    }
+
     public void processContactNumbers(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = telephonyManager.getSimCountryIso().toUpperCase();
@@ -114,12 +120,12 @@ public class Contact {
         setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(getContactNumber(), countryCode));
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
     public String getContactNumber() {
         return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public String getFormattedContactNumber() {
@@ -170,12 +176,12 @@ public class Contact {
         this.middleName = middleName;
     }
 
-    public void setContactId(long contactId) {
-        this.contactId = contactId;
-    }
-
     public long getContactId() {
         return contactId;
+    }
+
+    public void setContactId(long contactId) {
+        this.contactId = contactId;
     }
 
     public String getFullName() {
@@ -236,12 +242,12 @@ public class Contact {
                 '}';
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getContactIds() {

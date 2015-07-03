@@ -40,13 +40,12 @@ import net.mobitexter.mobiframework.people.group.GroupUtils;
 
 public class ConversationUIService {
 
-    private static final String TAG = "ConversationUIService";
     public static final int REQUEST_CODE_FULL_SCREEN_ACTION = 301;
     public static final int REQUEST_CODE_CONTACT_GROUP_SELECTION = 101;
     public static final int INSTRUCTION_DELAY = 5000;
-
-    private Context context;
+    private static final String TAG = "ConversationUIService";
     FragmentActivity fragmentActivity;
+    private Context context;
 
     public ConversationUIService(Context context) {
         this.context = context;
@@ -316,8 +315,7 @@ public class ConversationUIService {
 
         String userId = intent.getStringExtra("userId");
         if (!TextUtils.isEmpty(userId)) {
-            contact = new Contact();
-            contact.setUserId(userId);
+            contact = new Contact(context, userId);
             //Todo: Load contact details from server.
         }
 
