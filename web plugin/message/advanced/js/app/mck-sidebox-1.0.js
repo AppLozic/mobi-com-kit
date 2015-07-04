@@ -1161,6 +1161,7 @@ function MobiComKit() {
         var $mck_sidebox = $("#mck-sidebox");
         var $mck_msg_preview = $("#mck-msg-preview");
         var $mck_sidebox_launcher = $("#mck-sidebox-launcher");
+        var $mck_preview_icon =$("#mck-msg-preview .mck-preview-icon");
         var $mck_preview_content = $("#mck-msg-preview .mck-preview-content");
         var $mck_preview_name = $("#mck-msg-preview .mck-preview-cont-name");
         var notificationTimeout = 60;
@@ -1255,6 +1256,7 @@ function MobiComKit() {
 
                 $mck_preview_content.html(msg);
                 $mck_preview_name.html(contact.displayName);
+                $mck_preview_icon.html(imgsrctag);
                 $mck_msg_preview.data('mck-id', contact.displayName);
                 $mck_sidebox_launcher.addClass('mck-sidebox-launcher-with-preview');
 
