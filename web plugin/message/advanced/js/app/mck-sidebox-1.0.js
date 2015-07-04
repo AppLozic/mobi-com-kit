@@ -64,12 +64,12 @@ function MobiComKit() {
         _this.appId = options.appId;
         _this.baseUrl = options.baseUrl;
         _this.launcher = options.launcher;
-        _this.callback = options.callback;
-        _this.getUserName = options.usersNameCallback;
+        _this.callback = options.readConversation;
+        _this.getUserName = options.contactDisplayName;
         APPLICATION_ID = options.appId;
         MCK_BASE_URL = options.baseUrl;
-        MCK_CALLBACK = options.callback;
-        MCK_GETUSERNAME = options.usersNameCallback;
+        MCK_CALLBACK = options.readConversation;
+        MCK_GETUSERNAME = options.contactDisplayName;
 
 
         MckUtils.initializeApp(options);

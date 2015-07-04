@@ -157,16 +157,17 @@
                 mobiComKitSideBox.load();
 
             });
-              function readMessage(userId) {
+			
+            function readMessage(userId) {
                 console.log(userId);
             }
-             function getUsersName(userId) {
-                 
+			
+             function getUsersName(userId) {                 
                  //Todo: replace this with users display users name
                  return userId;
             }
             function MobiComKitSidebox() {
-                var mckClientId = "shanki.connect";
+                var mckClientId = "mobicomkit";
                 var mckClientAppId = "mobicomkit-sample-app";
 
                 this.load = function () {
