@@ -208,6 +208,7 @@ function MobiComKit() {
         var $mck_text_box = $("#mck-text-box");
         var $mck_minimize_icon = $(".mck-minimize-icon");
         var $mck_show_more_icon = $("#mck-show-more-icon");
+        var $mck_sidebox_content = $(".mck-sidebox-content");
         var $messageModalLink;
 
 
@@ -278,6 +279,7 @@ function MobiComKit() {
                             data: "userId=" + userId,
                             success: function (result) {
                                 $mck_msg_inner.html("");
+                                $("#mck-message-cell").removeClass('n-vis').addClass('vis');
                             },
                             error: function (result) {
                             }
@@ -980,9 +982,7 @@ function MobiComKit() {
             sessionStorage.removeItem("mckMessageArray");
             var contact = mckMessageLayout.getContact(userId);
             var currentTabId = $("#mck-message-cell .mck-message-inner").data('mck-id');
-            if (typeof currentTabId !== 'undefined' && ((typeof contact !== 'undefined' && currentTabId === contact.displayName) || currentTabId === userId)) {
-                $(".mck-conversation-tab-link").trigger('click');
-            } else if (typeof currentTabId === 'undefined') {
+            if (typeof currentTabId === 'undefined') {
                 if (typeof contact !== 'undefined') {
                     $("#li-" + contact.htmlId).remove();
                 } else {

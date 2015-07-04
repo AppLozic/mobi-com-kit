@@ -18,10 +18,13 @@ import android.view.ViewGroup;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
+import com.mobicomkit.quickconversion.ConversionActivity;
 import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
+
+import net.mobitexter.mobiframework.people.contact.Contact;
 
 public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
@@ -40,7 +43,7 @@ public class MainActivity extends MobiComActivityForFragment
 
     private CharSequence mTitle;
 
-    public MainActivity(){
+    public MainActivity() {
 
     }
 
@@ -76,22 +79,20 @@ public class MainActivity extends MobiComActivityForFragment
             startActivity(intent);
             return;
         }
-       /* if (position == 3) {
+        if (position == 3) {
             Intent intent = new Intent(this, ConversionActivity.class);
             startActivity(intent);
             return;
         }
-        if(position==1){
+        if (position == 1) {
             ConversationFragment conversationFragment = new ConversationFragment();
-            Contact contact = new Contact();
-            contact.setUserId("devashish.mamgain@gmail.com");
-            mTitle="devashish.mamgain@gmail.com";
+            Contact contact = new Contact(this,"devashish.mamgain@gmail.com");
+            mTitle = getString(R.string.user_id);
             addFragment(this, conversationFragment, "conversationFragment");
             conversationFragment.loadConversation(contact);
             return;
 
-        }*/
-
+        }
         if (position == 0) {
             mTitle = getString(R.string.ecommerce);
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -117,10 +118,10 @@ public class MainActivity extends MobiComActivityForFragment
             case 1:
                 mTitle = getString(R.string.title_section1);
                 break;
-        /*    case 2:
+            case 2:
                 mTitle = getString(R.string.title_section2);
                 break;
-          */  case 3:
+            case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
         }
@@ -159,7 +160,7 @@ public class MainActivity extends MobiComActivityForFragment
 
     @Override
     public void addFragment(ConversationFragment conversationFragment) {
-        addFragment(this,conversationFragment, "conversationFragment");
+        addFragment(this, conversationFragment, "conversationFragment");
     }
 
     @Override

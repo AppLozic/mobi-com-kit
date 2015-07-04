@@ -40,12 +40,17 @@ import net.mobitexter.mobiframework.people.group.GroupUtils;
 
 public class ConversationUIService {
 
+    private static final String TAG = "ConversationUIService";
     public static final int REQUEST_CODE_FULL_SCREEN_ACTION = 301;
     public static final int REQUEST_CODE_CONTACT_GROUP_SELECTION = 101;
     public static final int INSTRUCTION_DELAY = 5000;
-    private static final String TAG = "ConversationUIService";
-    FragmentActivity fragmentActivity;
+
     private Context context;
+    private FragmentActivity fragmentActivity;
+
+    public ConversationUIService() {
+
+    }
 
     public ConversationUIService(Context context) {
         this.context = context;
@@ -102,7 +107,6 @@ public class ConversationUIService {
                 selectedFileUri = ImageUtils.getImageUri(context, photo);
             }
             getConversationFragment().loadFile(selectedFileUri);
-
             Log.i(TAG, "File uri: " + selectedFileUri);
         }
 
@@ -260,16 +264,18 @@ public class ConversationUIService {
             intent.putExtra(MobiComKitPeopleActivity.SHARED_TEXT, messageContent);
         }
 
-        ((Activity) context).startActivityForResult(intent, REQUEST_CODE_CONTACT_GROUP_SELECTION);
+        ((FragmentActivity) fragmentActivity).startActivityForResult(intent, REQUEST_CODE_CONTACT_GROUP_SELECTION);
     }
 
     public void startContactActivityForResult() {
+        Log.d("Inside ", "StartContactForResult");
         startContactActivityForResult(null, null);
     }
 
     public void startContactActivityForResult(Message message, String messageContent) {
         //Todo: Change this to driver list fragment or activity
-        Intent intent = new Intent(context, MobiComKitPeopleActivity.class);
+        Intent intent = new Intent(fragmentActivity, MobiComKitPeopleActivity.class);
+
         startContactActivityForResult(intent, message, messageContent);
     }
 
@@ -315,7 +321,8 @@ public class ConversationUIService {
 
         String userId = intent.getStringExtra("userId");
         if (!TextUtils.isEmpty(userId)) {
-            contact = new Contact(context, userId);
+            contact = new Contact(fragmentActivity, userId);
+            contact.setUserId(userId);
             //Todo: Load contact details from server.
         }
 

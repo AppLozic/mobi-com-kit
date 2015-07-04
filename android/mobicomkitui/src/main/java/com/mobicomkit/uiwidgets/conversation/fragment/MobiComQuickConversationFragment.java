@@ -5,9 +5,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationListView;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
+import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.adapter.ConversationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
@@ -76,6 +79,8 @@ public class MobiComQuickConversationFragment extends Fragment {
         conversationService = new MobiComConversationService(getActivity());
         conversationAdapter = new ConversationAdapter(getActivity(),
                 R.layout.mobicom_message_row_view, messageList, null, true, MessageIntentService.class, null);
+        setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -114,10 +119,12 @@ public class MobiComQuickConversationFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MobiComActivity) getActivity()).startContactActivityForResult();
+                ((MobiComKitActivityInterface) getActivity()).startContactActivityForResult();
+
             }
         };
     }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -146,6 +153,14 @@ public class MobiComQuickConversationFragment extends Fragment {
                 return super.onContextItemSelected(item);
         }
         return true;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        menu.removeItem(R.id.dial);
+        menu.removeItem(R.id.deleteConversation);
     }
 
     public void addMessage(final Message message) {
@@ -278,7 +293,7 @@ public class MobiComQuickConversationFragment extends Fragment {
             }
         }
         downloadConversations();
-      }
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

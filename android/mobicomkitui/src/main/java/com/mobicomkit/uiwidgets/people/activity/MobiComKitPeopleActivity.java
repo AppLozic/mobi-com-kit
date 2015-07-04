@@ -111,7 +111,7 @@ public class MobiComKitPeopleActivity extends ActionBarActivity implements OnCon
 
     public void startNewConversation(String contactNumber) {
         Intent intent = new Intent();
-        intent.putExtra("contactNumber", contactNumber);
+        intent.putExtra("userId", contactNumber);
         finishActivity(intent);
     }
 
