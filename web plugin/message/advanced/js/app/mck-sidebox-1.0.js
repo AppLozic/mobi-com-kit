@@ -6,7 +6,7 @@
     var default_options = {
         icons: {},
         defaults: {
-            baseUrl: "http://mobi-com.appspot.com",
+            baseUrl: "http://mobi-com-alpha.appspot.com",
             launcher: "mobicomkit-launcher"
         }
     };
@@ -34,9 +34,12 @@ function MobiComKit() {
     var USER_DEVICE_KEY;
     var AUTH_CODE;
     var MCK_LAUNCHER;
+    var MCK_CALLBACK;
+    var MCK_GETUSERNAME;
     var MCK_USER_TIMEZONEOFFSET;
     var FILE_METAS = "";
     var ELEMENT_NODE = 1;
+    var IS_MCK_NOTIFICATION = false;
     var TEXT_NODE = 3;
     var TAGS_BLOCK = ['p', 'div', 'pre', 'form'];
     var CONTACT_MAP = new Array();
@@ -61,8 +64,12 @@ function MobiComKit() {
         _this.appId = options.appId;
         _this.baseUrl = options.baseUrl;
         _this.launcher = options.launcher;
+        _this.callback = options.callback;
+        _this.getUserName = options.usersNameCallback;
         APPLICATION_ID = options.appId;
         MCK_BASE_URL = options.baseUrl;
+        MCK_CALLBACK = options.callback;
+        MCK_GETUSERNAME = options.usersNameCallback;
 
 
         MckUtils.initializeApp(options);
@@ -73,6 +80,7 @@ function MobiComKit() {
         var INITIALIZE_APP_URL = "/tab/initialize.page";
 
         _this.initializeApp = function initializeApp(options) {
+
             var data = "applicationId=" + options.appId + "&userId=" + options.userId;
             $.getJSON(MCK_BASE_URL + INITIALIZE_APP_URL + "?" + data, function (result, status) {
                 if (result === "INVALID_APPID") {
@@ -93,9 +101,14 @@ function MobiComKit() {
                             };
                         }
                     });
-
-                    $("." + MCK_LAUNCHER).show();
+                    $(".mobicomkit-launcher").each(function () {
+                        if (!$(this).hasClass("mck-msg-preview")) {
+                            $(this).show();
+                        }
+                    });
+                    //$("." + MCK_LAUNCHER).removeClass("hide");
                     MckInitializeChannel(MCK_TOKEN);
+
                 } else {
                     alert("Unable to initiate app");
                 }
@@ -215,10 +228,7 @@ function MobiComKit() {
         $(".mck-minimize-icon").click(function () {
             $(".modal-body,.modal-footer").animate({
                 height: "toggle"
-            }, function () {
-
-            }
-            );
+            });
 
             if ($(".mck-sidebox-content").hasClass("minimized")) {
                 $(".mck-sidebox-content").css('height', '100%');
@@ -234,6 +244,9 @@ function MobiComKit() {
             sessionStorage.removeItem("mckMessageArray");
             $messageModalLink = $("." + MCK_LAUNCHER);
             $messageModalLink.on("click", function (e) {
+                if ($(this).hasClass('mck-msg-preview')) {
+                    $(this).hide();
+                }
                 $mck_msg_error.html("");
                 $mck_msg_error.removeClass('vis').addClass('n-vis');
                 $mck_response_text.html("");
@@ -440,7 +453,14 @@ function MobiComKit() {
                 $mck_show_more.data('userId', userId);
                 $mck_msg_to.parent('.form-group').removeClass('vis').addClass('n-vis');
                 $mck_delete_button.removeClass('n-vis').addClass('vis');
-                $mck_conversation_title.html('<a href="#" role="link" class="mck-conversation-tab-link"><img src="' + MCK_BASE_URL + '/resources/sidebox/images/ic_action_backward.png" alt="Back"></a>&nbsp ' + userId);
+                var displayName = "";
+                if (typeof (MCK_GETUSERNAME) === "function") {
+                    displayName = MCK_GETUSERNAME(userId);
+                }
+                if (!displayName) {
+                    displayName = userId;
+                }
+                $mck_conversation_title.html('<a href="#" role="link" class="mck-conversation-tab-link"><img src="' + MCK_BASE_URL + '/resources/sidebox/images/ic_action_backward.png" alt="Back"></a>&nbsp ' + displayName);
             } else {
                 individual = false;
                 pageSize = 50;
@@ -460,6 +480,7 @@ function MobiComKit() {
                     }
                 }
             }
+
             $mck_msg_inner.html("");
             $mck_loading.removeClass('n-vis').addClass('vis');
             $.ajax({
@@ -483,6 +504,9 @@ function MobiComKit() {
                             mckMessageLayout.processMessageList(data);
                             $mck_top_btn_panel.removeClass('n-vis').addClass('vis');
                             $mck_msg_inner.addClass('mck-msg-w-panel');
+                            if (typeof (MCK_CALLBACK) === "function") {
+                                MCK_CALLBACK(userId);
+                            }
                         } else {
                             $mck_msg_inner.data('mck-id', "");
                             mckMessageLayout.addContactsFromMessageList(data);
@@ -556,6 +580,7 @@ function MobiComKit() {
         var $mck_msg_sbmt = $("#mck-msg-sbmt");
         var $mck_sidebox = $("#mck-sidebox");
         var $mck_msg_to = $("#mck-msg-to");
+
         var $mck_msg_inner = $("#mck-message-cell .mck-message-inner");
         var $mck_textbox_container = $("#mck-textbox-container");
 
@@ -565,8 +590,8 @@ function MobiComKit() {
                 '</div></div>' +
                 '<div class="${msgFloatExpr}-muted mck-text-light mck-text-muted text-xs m-t-xs">${createdAtTimeExpr} <i class="${statusIconExpr} mck-message-status"></i></div>' +
                 '</div></div>';
-        var contactbox = '<li id="li-${contIdExpr}" class="${contNameExpr}" data-msg-time="${msgCreatedAtTimeExpr}">' +
-                '<a class="${mckLauncherExpr}" href="#" data-mck-id="${contNameExpr}">' +
+        var contactbox = '<li id="li-${contHtmlExpr}" class="${contIdExpr}" data-msg-time="${msgCreatedAtTimeExpr}">' +
+                '<a class="${mckLauncherExpr}" href="#" data-mck-id="${contIdExpr}">' +
                 '<div class="mck-row" title="${contNameExpr}">' +
                 '<div class="blk-lg-3">{{html contImgExpr}}</div>' +
                 '<div class="blk-lg-9">' +
@@ -688,19 +713,7 @@ function MobiComKit() {
                     var contact;
                     if (typeof contact === 'undefined') {
                         var contactId = contactIdsArray[i];
-                        contact = {
-                            'contactId': contactId,
-                            'htmlId': mckContactUtils.formatContactId(contactId),
-                            'displayName': contactId,
-                            'name': contactId + " <" + contactId + ">" + " [" + "Main" + "]",
-                            'value': contactId,
-                            'rel': '',
-                            'photoLink': '',
-                            'email': '',
-                            'unsaved': true,
-                            'appVersion': null
-                        };
-                        CONTACT_MAP[contactId] = contact;
+                        mckMessageLayout.createContact(contactId);
                     }
 
                     if (typeof contact !== 'undefined') {
@@ -788,6 +801,17 @@ function MobiComKit() {
             this.addTooltip(msg.keyString);
         };
 
+        _this.getDisplayNameFromMessage = function getDisplayNameFromMessage(message) {
+            var contact = this.getContact('' + message.contactIds.split(",")[0]);
+            var name = "";
+            if (typeof contact === "undefined") {
+                name = message.to;
+            } else {
+                name = typeof contact.displayName === "undefined" ? contact.value : contact.displayName;
+            }
+            return name;
+        };
+
         _this.getImagePath = function getImagePath(msg) {
             if (msg.fileMetaKeyStrings && typeof msg.fileMetas !== "undefined") {
                 if (typeof msg.fileMetas.length === "undefined") {
@@ -829,7 +853,7 @@ function MobiComKit() {
 
         _this.getContactImageByAlphabet = function getContactImageByAlphabet(name) {
             if (typeof name === 'undefined' || name === "") {
-                return '<div class="mck-alpha-contact-image mck-alpha-user"><span class="mck-contact-icon"><img src="' + MCK_BASE_URL + USER_ICON_URL + '" alt=""></span></div>';
+                return '<div class="mck-alpha-contact-image mck-alpha-user"><span class="mck-contact-icon"><img src="' + USER_ICON_URL + '" alt=""></span></div>';
             }
             var first_alpha = name.charAt(0);
             var letters = /^[a-zA-Z]+$/;
@@ -837,7 +861,7 @@ function MobiComKit() {
                 first_alpha = first_alpha.toUpperCase();
                 return '<div class="mck-alpha-contact-image alpha_' + first_alpha + '"><span class="mck-contact-icon">' + first_alpha + '</span></div>';
             } else {
-                return '<div class="mck-alpha-contact-image alpha_user"><span class="mck-contact-icon"><img src="' + MCK_BASE_URL + USER_ICON_URL + '" alt=""></span></div>';
+                return '<div class="mck-alpha-contact-image alpha_user"><span class="mck-contact-icon"><img src="' + USER_ICON_URL + '" alt=""></span></div>';
             }
         };
 
@@ -858,6 +882,24 @@ function MobiComKit() {
             }
         };
 
+        _this.createContact = function createContact(contactId) {
+
+            var contact = {
+                'contactId': contactId,
+                'htmlId': mckContactUtils.formatContactId(contactId),
+                'displayName': contactId,
+                'name': contactId + " <" + contactId + ">" + " [" + "Main" + "]",
+                'value': contactId,
+                'rel': '',
+                'photoLink': '',
+                'email': '',
+                'unsaved': true,
+                'appVersion': null
+            };
+            CONTACT_MAP[contactId] = contact;
+            return contact;
+        };
+
         _this.addContactsFromMessage = function addContactsFromMessage(message, update) {
             var data = message;
             var contactIds = data.contactIds;
@@ -871,19 +913,7 @@ function MobiComKit() {
                     var contact = _this.getContact('' + contactIdsArray[i]);
                     if (typeof contact === 'undefined') {
                         var contactId = contactIdsArray[i];
-                        contact = {
-                            'contactId': contactId,
-                            'htmlId': mckContactUtils.formatContactId(contactId),
-                            'displayName': contactId,
-                            'name': contactId + " <" + contactId + ">" + " [" + "Main" + "]",
-                            'value': contactId,
-                            'rel': '',
-                            'photoLink': '',
-                            'email': '',
-                            'unsaved': true,
-                            'appVersion': null
-                        };
-                        CONTACT_MAP[contactId] = contact;
+                        contact = mckMessageLayout.createContact(contactId);
                     }
                     this.updateRecentConversationList(contact, data, update);
                 }
@@ -922,13 +952,21 @@ function MobiComKit() {
                 var emoji_template = emoji.replace_unified(msg.message.substring(0, 15));
                 emoji_template = emoji.replace_colons(emoji_template);
             }
+            var displayName = "";
+            if (typeof (MCK_GETUSERNAME) === "function") {
+                displayName = MCK_GETUSERNAME(contact.value);
+            }
+            if (!displayName) {
+                displayName = contact.displayName;
+            }
             var contactList = [
                 {
-                    contIdExpr: contact.htmlId,
+                    contHtmlExpr: contact.htmlId,
+                    contIdExpr: contact.value,
                     msgCreatedAtTimeExpr: msg.createdAtTime,
                     mckLauncherExpr: MCK_LAUNCHER,
                     contImgExpr: imgsrctag,
-                    contNameExpr: contact.displayName,
+                    contNameExpr: displayName,
                     msgCreatedDateExpr: msg ? mckDateUtils.getTimeOrDate(msg.createdAtTime, true) : "",
                     msgTextExpr: msg ? emoji_template : ""
 
@@ -991,6 +1029,7 @@ function MobiComKit() {
                 }
             }
         };
+
 
     }
 
@@ -1119,6 +1158,12 @@ function MobiComKit() {
 
 
     function MckNotificationService() {
+        var $mck_sidebox = $("#mck-sidebox");
+        var $mck_msg_preview = $("#mck-msg-preview");
+        var $mck_sidebox_launcher = $("#mck-sidebox-launcher");
+        var $mck_preview_content = $("#mck-msg-preview .mck-preview-content");
+        var $mck_preview_name = $("#mck-msg-preview .mck-preview-cont-name");
+        var notificationTimeout = 60;
         var _this = this;
         _this.getChannelToken = function getChannelToken() {
             $.ajax({
@@ -1128,8 +1173,8 @@ function MobiComKit() {
                 headers: {"UserId-Enabled": true, 'Authorization': "Basic " + AUTH_CODE,
                     'Application-Key': APPLICATION_ID},
                 success: function (data, status) {
-                    if (data == "error") {
-                        alert("Unable to process your request. Please try refreshing the page.")
+                    if (data === "error") {
+                        alert("Unable to process your request. Please try refreshing the page.");
                     } else {
                         MckInitializeChannel(data);
                     }
@@ -1138,6 +1183,102 @@ function MobiComKit() {
                 }
             });
         };
+
+        _this.notifyUser = function notifyUser(message) {
+            var notificationTimeout = 60;
+            if (message.type === 7) {
+                return;
+            }
+
+            if (!IS_MCK_NOTIFICATION) {
+                mckNotificationService.showNewMessageNotification(message);
+                return;
+            } else {
+                var name = mckMessageLayout.getDisplayNameFromMessage(message);
+                if ($.browser.chrome) {
+                    var c_version = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+                    if (c_version >= 35) {
+                        if (!Notification) {
+                            return;
+                        }
+                        if (Notification.permission !== "granted") {
+                            Notification.requestPermission();
+                        }
+                        var notification = new Notification(name, {
+                            body: message
+                        });
+                        notification.onclick = function (x) {
+                            window.focus();
+                            this.close();
+                        };
+                        setTimeout(function () {
+                            notification.close();
+                        }, notificationTimeout * 1000);
+                    } else {
+                        if (typeof window.webkitNotifications === "undefined") {
+                            mckNotificationService.showNewMessageNotification(message);
+                            return;
+                        }
+                        if (window.webkitNotifications.checkPermission() === 0) {
+                            var notification = window.webkitNotifications.createNotification(name, message);
+                            mckNotificationService.showNotification(notification);
+                        }
+                    }
+                } else {
+                    if (typeof window.webkitNotifications === "undefined") {
+                        mckNotificationService.showNewMessageNotification(message);
+                        return;
+                    }
+                    if (window.webkitNotifications.checkPermission() === 0) {
+                        var notification = window.webkitNotifications.createNotification("/favicon.ico", name, message);
+                        mckNotificationService.showNotification(notification);
+                    }
+                }
+            }
+
+        };
+
+        _this.showNewMessageNotification = function showNewMessageNotification(message) {
+
+            if ($mck_sidebox.css('display') === 'none') {
+                var contact = mckMessageLayout.getContact('' + message.contactIds.split(",")[0]);
+                if (typeof contact === 'undefined') {
+                    contact = mckMessageLayout.createContact('' + message.contactIds.split(",")[0]);
+                }
+                var imgsrctag = mckMessageLayout.getContactImageLink(contact);
+                if (typeof message !== 'undefined') {
+                    var emoji_template = emoji.replace_unified(message.message);
+                    emoji_template = emoji.replace_colons(emoji_template);
+                }
+                var msg = message ? emoji_template : "";
+
+
+                $mck_preview_content.html(msg);
+                $mck_preview_name.html(contact.displayName);
+                $mck_msg_preview.data('mck-id', contact.displayName);
+                $mck_sidebox_launcher.addClass('mck-sidebox-launcher-with-preview');
+
+            }
+            $mck_msg_preview.show();
+            setTimeout(function () {
+                $mck_msg_preview.fadeOut(3000);
+                $mck_sidebox_launcher.removeClass('mck-sidebox-launcher-with-preview');
+            }, 10000);
+        };
+
+        _this.showNotification = function showNotification(notification) {
+            if ($.browser.chrome) {
+                notification.onclick = function (x) {
+                    window.focus();
+                    this.cancel();
+                };
+            }
+            notification.show();
+            setTimeout(function () {
+                notification.cancel();
+            }, notificationTimeout * 1000);
+        };
+
     }
 
     function MckInitializeChannel(token) {
@@ -1172,12 +1313,12 @@ function MobiComKit() {
         } else if (messageType.indexOf("SMS") != -1) {
             var message = JSON.parse(resp.message);
             var mckMessageArray = new Array();
-            mckMessageLayout.openConversation();
+            //  mckMessageLayout.openConversation();
 
             var mckContactListLength = $("#mck-contact-list").length;
             var userId = $("#mck-message-cell .mck-message-inner").data('mck-id');
 
-            if (mckContactListLength == 0 && (typeof userId == "undefined" || userId == "")) {
+            if (mckContactListLength === 0 && (typeof userId === "undefined" || userId == "")) {
                 var data = new Object();
                 var messageArray = new Array();
                 messageArray.push(message);
@@ -1187,6 +1328,9 @@ function MobiComKit() {
 
             if (mckContactListLength > 0) {
                 mckMessageLayout.addContactsFromMessage(message, true);
+                if (messageType === "SMS_RECEIVED" && resp.notifyUser) {
+                    mckNotificationService.notifyUser(message);
+                }
             } else {
                 if (messageType === "SMS_RECEIVED") {
                     var contactId = message.contactIds.replace(",", "");
@@ -1199,9 +1343,10 @@ function MobiComKit() {
                             mckMessageLayout.addMessage(message, true);
                             //Todo: use contactNumber instead of contactId for Google Contacts API.
 
-                            if (resp.notifyUser) {
-                                //notificationService.notifyUser(msg);
-                            }
+
+                        }
+                        if (resp.notifyUser) {
+                            mckNotificationService.notifyUser(message);
                         }
                     }
                 } else if (messageType === "SMS_SENDING") {
