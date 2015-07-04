@@ -6,7 +6,7 @@
     var default_options = {
         icons: {},
         defaults: {
-            baseUrl: "http://mobi-com-alpha.appspot.com",
+            baseUrl: "http://mobi-com.appspot.com",
             launcher: "mobicomkit-launcher"
         }
     };
