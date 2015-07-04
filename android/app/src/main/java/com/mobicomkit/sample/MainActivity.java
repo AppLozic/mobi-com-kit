@@ -86,7 +86,7 @@ public class MainActivity extends MobiComActivityForFragment
         }
         if (position == 1) {
             ConversationFragment conversationFragment = new ConversationFragment();
-            Contact contact = new Contact(this,"devashish.mamgain@gmail.com");
+            Contact contact = new Contact(this,"mobicomkit");
             mTitle = getString(R.string.user_id);
             addFragment(this, conversationFragment, "conversationFragment");
             conversationFragment.loadConversation(contact);
@@ -118,9 +118,9 @@ public class MainActivity extends MobiComActivityForFragment
             case 1:
                 mTitle = getString(R.string.title_section1);
                 break;
-            case 2:
+           /* case 2:
                 mTitle = getString(R.string.title_section2);
-                break;
+                break;*/
             case 3:
                 mTitle = getString(R.string.title_section3);
                 break;

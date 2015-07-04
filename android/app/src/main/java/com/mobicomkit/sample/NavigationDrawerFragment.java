@@ -105,7 +105,7 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.id.text1,
                 new String[]{
                         getString(R.string.ecommerce),
-                        getString(R.string.title_section2),
+                     //   getString(R.string.title_section2),
                         getString(R.string.title_section5),
                         getString(R.string.title_section6)
                 }));
