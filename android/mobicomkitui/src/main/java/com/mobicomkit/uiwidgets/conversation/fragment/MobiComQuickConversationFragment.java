@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,12 +17,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.api.conversation.MessageIntentService;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.broadcast.BroadcastService;
@@ -32,7 +28,7 @@ import com.mobicomkit.uiwidgets.conversation.ConversationListView;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
-import com.mobicomkit.uiwidgets.conversation.adapter.ConversationAdapter;
+import com.mobicomkit.uiwidgets.conversation.adapter.QuickConversationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
@@ -63,7 +59,7 @@ public class MobiComQuickConversationFragment extends Fragment {
 
     protected Map<String, Message> latestSmsForEachContact = new HashMap<String, Message>();
     protected List<Message> messageList = new ArrayList<Message>();
-    protected ConversationAdapter conversationAdapter = null;
+    protected QuickConversationAdapter conversationAdapter = null;
 
     protected boolean loadMore = true;
     private Long minCreatedAtTime;
@@ -77,8 +73,9 @@ public class MobiComQuickConversationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         conversationService = new MobiComConversationService(getActivity());
-        conversationAdapter = new ConversationAdapter(getActivity(),
-                R.layout.mobicom_message_row_view, messageList, null, true, MessageIntentService.class, null);
+        conversationAdapter = new QuickConversationAdapter(getActivity(),
+                messageList, null);
+
         setHasOptionsMenu(true);
 
     }
