@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.quickconversion.ConversionActivity;
+import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
@@ -190,6 +191,8 @@ public class MainActivity extends MobiComActivityForFragment
 
     @Override
     public void updateLatestMessage(Message message, String formattedContactNumber) {
+        new ConversationUIService(this).updateLatestMessage(message,formattedContactNumber);
+
 
     }
 
