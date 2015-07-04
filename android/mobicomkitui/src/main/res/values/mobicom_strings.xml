@@ -101,5 +101,7 @@
     <string name="confirm">Confirm</string>
     <string name="skip">Skip</string>
 
+    <string name="quick_conversation_loading">loading conversation..</string>
+
 
 </resources>

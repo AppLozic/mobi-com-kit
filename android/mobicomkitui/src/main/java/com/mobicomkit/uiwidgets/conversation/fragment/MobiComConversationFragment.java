@@ -149,8 +149,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             emoticonsBtn.setVisibility(View.GONE);
         }
         spinnerLayout = inflater.inflate(R.layout.mobicom_message_list_header_footer, null);
-        ProgressBar spinner = (ProgressBar) spinnerLayout.findViewById(R.id.spinner);
-        spinner.setVisibility(View.GONE);
         infoBroadcast = (TextView) spinnerLayout.findViewById(R.id.info_broadcast);
         emptyTextView = (TextView) spinnerLayout.findViewById(R.id.noConversations);
         emoticonsBtn.setOnClickListener(this);
@@ -904,10 +902,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                }
 
                loadnewMessageOnResume(contact,group);
-//            if (contact!=null) {
-//                loadConversation(contact);
-//            }else if (group !=null ){
-//                loadConversation(group);
             } else {
                 ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
             }
@@ -1048,7 +1042,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                     }
                 }
             }
-            //spinner.setVisibility(View.GONE);
             swipeLayout.setRefreshing(false);
             loadMore = !nextSmsList.isEmpty();
         }

@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MessageIntentService;
@@ -48,7 +49,6 @@ public class MobiComQuickConversationFragment extends Fragment {
     protected ImageButton fabButton;
     protected TextView emptyTextView;
     protected Button startNewButton;
-    protected ProgressBar spinner;
     protected SwipeRefreshLayout swipeLayout;
     protected int listIndex;
 
@@ -58,6 +58,7 @@ public class MobiComQuickConversationFragment extends Fragment {
 
     protected boolean loadMore = true;
     private Long minCreatedAtTime;
+    private DownloadConversation downloadConversation;
 
     public ConversationListView getListView() {
         return listView;
@@ -90,7 +91,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         View spinnerLayout = inflater.inflate(R.layout.mobicom_message_list_header_footer, null);
         listView.addFooterView(spinnerLayout);
 
-        spinner = (ProgressBar) spinnerLayout.findViewById(R.id.spinner);
+        //spinner = (ProgressBar) spinnerLayout.findViewById(R.id.spinner);
         emptyTextView = (TextView) spinnerLayout.findViewById(R.id.noConversations);
         startNewButton = (Button) spinnerLayout.findViewById(R.id.start_new_conversation);
 
@@ -205,7 +206,8 @@ public class MobiComQuickConversationFragment extends Fragment {
     }
 
     public void checkForEmptyConversations() {
-        if (latestSmsForEachContact.isEmpty() && spinner.getVisibility() == View.GONE) {
+        boolean isLodingConversation = ( downloadConversation!=null && downloadConversation.getStatus() == AsyncTask.Status.RUNNING);
+        if (latestSmsForEachContact.isEmpty() && !isLodingConversation ) {
             emptyTextView.setVisibility(View.VISIBLE);
             startNewButton.setVisibility(View.VISIBLE);
         } else {
@@ -274,7 +276,8 @@ public class MobiComQuickConversationFragment extends Fragment {
 
     public void downloadConversations(boolean showInstruction) {
         minCreatedAtTime = null;
-        new DownloadConversation(listView, true, 1, 0, 0, showInstruction).execute();
+        downloadConversation =  new DownloadConversation(listView, true, 1, 0, 0, showInstruction);
+        downloadConversation.execute();
     }
 
     public class DownloadConversation extends AsyncTask<Void, Integer, Long> {
@@ -306,7 +309,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             loadMore = false;
-            spinner.setVisibility(View.VISIBLE);
+           // Toast.makeText(context,R.string.quick_conversation_loading, Toast.LENGTH_SHORT).show();
         }
 
         protected Long doInBackground(Void... voids) {
@@ -357,7 +360,6 @@ public class MobiComQuickConversationFragment extends Fragment {
             } else {
                 listView.setSelection(firstVisibleItem);
             }
-            spinner.setVisibility(View.GONE);
             String errorMessage = getResources().getString(R.string.internet_connection_not_available);
             Utils.isNetworkAvailable(getActivity(), errorMessage);
             loadMore = !nextMessageList.isEmpty();

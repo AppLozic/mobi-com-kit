@@ -6,14 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical|center_horizontal">
     <!-- simplified -->
-    <ProgressBar
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:visibility="gone" />
-
-    <TextView
+  <TextView
         android:id="@+id/noConversations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
