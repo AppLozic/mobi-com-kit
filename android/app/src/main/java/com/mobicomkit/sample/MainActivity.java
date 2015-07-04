@@ -86,9 +86,8 @@ public class MainActivity extends MobiComActivityForFragment
         }
         if (position == 1) {
             ConversationFragment conversationFragment = new ConversationFragment();
-            Contact contact = new Contact();
-            contact.setUserId("devashish.mamgain@gmail.com");
-            mTitle = "devashish.mamgain@gmail.com";
+            Contact contact = new Contact(this,"devashish.mamgain@gmail.com");
+            mTitle = getString(R.string.user_id);
             addFragment(this, conversationFragment, "conversationFragment");
             conversationFragment.loadConversation(contact);
             return;

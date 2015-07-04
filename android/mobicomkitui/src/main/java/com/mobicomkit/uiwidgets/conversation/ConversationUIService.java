@@ -268,7 +268,7 @@ public class ConversationUIService {
     }
 
     public void startContactActivityForResult() {
-        Log.i("Inside ", "StartContactForResult");
+        Log.d("Inside ", "StartContactForResult");
         startContactActivityForResult(null, null);
     }
 
@@ -311,7 +311,6 @@ public class ConversationUIService {
         }
 
         String contactNumber = intent.getStringExtra("contactNumber");
-        System.out.println("#####contactNumber: " + contactNumber);
         boolean firstTimeMTexterFriend = intent.getBooleanExtra("firstTimeMTexterFriend", false);
         if (!TextUtils.isEmpty(contactNumber)) {
             contact = ContactUtils.getContact(context, contactNumber);
@@ -322,7 +321,7 @@ public class ConversationUIService {
 
         String userId = intent.getStringExtra("userId");
         if (!TextUtils.isEmpty(userId)) {
-            contact = new Contact();
+            contact = new Contact(fragmentActivity, userId);
             contact.setUserId(userId);
             //Todo: Load contact details from server.
         }
