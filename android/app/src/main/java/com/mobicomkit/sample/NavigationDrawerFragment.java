@@ -107,7 +107,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.ecommerce),
                         getString(R.string.title_section2),
                         "Messages",
-//                        "ECommerce"
+                        "Messages normal "
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

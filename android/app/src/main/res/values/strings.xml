@@ -5,7 +5,7 @@
     <string name="mobicomkit_label">MobiComKit</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
+    <string name="title_section2">Chat using Fragment </string>
     <string name="title_section3">Messages</string>
     <string name="title_section4">ECommerce</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
