@@ -73,7 +73,7 @@ public class ConversationFragment extends MobiComConversationFragment {
     }
 
     public void updateTitle() {
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
+        //((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
         super.updateTitle();
     }
 

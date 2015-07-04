@@ -171,6 +171,6 @@ public class FileClientService extends MobiComKitClientService {
     }
 
     public String getUploadKey() {
-        return httpRequestUtils.getResponse(credentials, FILE_UPLOAD_URL + "?" + new Date().getTime(), "text/plain", "text/plain");
+        return httpRequestUtils.getResponse(credentials, getFileUploadUrl() + "?" + new Date().getTime(), "text/plain", "text/plain");
     }
 }

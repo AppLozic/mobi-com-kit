@@ -306,7 +306,8 @@ public class MessageClientService extends MobiComKitClientService {
         }
         try {
             String url = getMessageThreadDeleteUrl() + "?contactNumber=" + URLEncoder.encode(contact.getFormattedContactNumber(), "UTF-8");
-            httpRequestUtils.getResponse(credentials, url, "text/plain", "text/plain");
+            String response = httpRequestUtils.getResponse(credentials, url, "text/plain", "text/plain");
+            Log.i(TAG, "Delete messages response from server: " + response+contact.getFormattedContactNumber());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

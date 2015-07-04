@@ -17,8 +17,6 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,6 +25,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +45,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobicomkit.uiwidgets.R;
+
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.api.conversation.Message;
@@ -53,8 +54,8 @@ import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.api.conversation.selfdestruct.DisappearingMessageTask;
 import com.mobicomkit.broadcast.BroadcastService;
-import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationListView;
+import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.DeleteConversationAsyncTask;
 import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
@@ -79,6 +80,7 @@ import java.util.List;
 import java.util.Timer;
 
 /**
+ * reg
  * Created by devashish on 10/2/15.
  */
 abstract public class MobiComConversationFragment extends Fragment implements View.OnClickListener {
@@ -130,6 +132,12 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         this.emojiIconHandler = emojiIconHandler;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View list = inflater.inflate(R.layout.mobicom_message_list, container, false);
@@ -149,8 +157,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             emoticonsBtn.setVisibility(View.GONE);
         }
         spinnerLayout = inflater.inflate(R.layout.mobicom_message_list_header_footer, null);
-        ProgressBar spinner = (ProgressBar) spinnerLayout.findViewById(R.id.spinner);
-        spinner.setVisibility(View.GONE);
         infoBroadcast = (TextView) spinnerLayout.findViewById(R.id.info_broadcast);
         emptyTextView = (TextView) spinnerLayout.findViewById(R.id.noConversations);
         emoticonsBtn.setOnClickListener(this);
@@ -440,6 +446,13 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                 menu.add(Menu.NONE, i, i, menuItems[i]);
             }
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.removeItem(R.id.start_new);
+
     }
 
     public void loadConversation(Contact contact, Group group) {
@@ -793,15 +806,15 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
 
     public void updateTitle() {
         String title = null;
-        if (!((MobiComActivity) getActivity()).getSlidingPaneLayout().isOpen()) {
-            if (contact != null) {
-                title = TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName();
-            } else if (group != null) {
-                title = group.getName();
-            }
+        //  if (!((MobiComActivity) getActivity()).getSlidingPaneLayout().isOpen()) {
+        if (contact != null) {
+            title = TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName();
+        } else if (group != null) {
+            title = group.getName();
         }
+        //}
         if (title != null) {
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
+            //((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
         }
     }
 
@@ -847,14 +860,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             TitleNavigationAdapter adapter = new TitleNavigationAdapter(getActivity().getApplicationContext(), navSpinner);
             activity.setNavSpinner(navSpinner);
             activity.setAdapter(adapter);
-
-            // assigning the spinner navigation
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setListNavigationCallbacks(adapter, activity);
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setNavigationMode(!activity.getSlidingPaneLayout().isOpen() ? ActionBar.NAVIGATION_MODE_LIST : ActionBar.NAVIGATION_MODE_STANDARD);
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(activity.getSlidingPaneLayout().isOpen());
-        } else {
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
     }
 
@@ -879,7 +884,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                 }
                 break;
             case 1:
-                ((MobiComActivity) getActivity()).startContactActivityForResult(message, null);
+                new ConversationUIService(getActivity()).startContactActivityForResult(message, null);
                 break;
             case 2:
                 Message messageToResend = new Message(message);
@@ -898,25 +903,24 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     @Override
     public void onResume() {
         super.onResume();
-           if ( contact!=null || group !=null ) {
-               if(downloadConversation!=null){
-                   downloadConversation.cancel(true);
-               }
-
-               loadnewMessageOnResume(contact,group);
+        if (contact != null || group != null) {
+            if (downloadConversation != null) {
+                downloadConversation.cancel(true);
+            }
+            loadnewMessageOnResume(contact, group);
 //            if (contact!=null) {
 //                loadConversation(contact);
 //            }else if (group !=null ){
 //                loadConversation(group);
-            } else {
-                ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
+        } else {
+            // ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
+        }
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            public void onRefresh() {
+                downloadConversation = new DownloadConversation(listView, false, 1, 1, 1, contact, group);
+                downloadConversation.execute();
             }
-            swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                public void onRefresh() {
-                    downloadConversation = new DownloadConversation(listView, false, 1, 1, 1, contact, group);
-                    downloadConversation.execute();
-                }
-            });
+        });
     }
 
     public void selfDestructMessage(Message sms) {
@@ -929,7 +933,8 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     public void resetlastConversationTime() {
         lastConversationloadTime = null;
     }
-    public void loadnewMessageOnResume(Contact contact, Group  group){
+
+    public void loadnewMessageOnResume(Contact contact, Group group) {
         downloadConversation = new DownloadConversation(listView, true, 1, 0, 0, contact, group);
         downloadConversation.execute();
     }
@@ -985,8 +990,8 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         @Override
         protected Long doInBackground(Void... voids) {
             if (initial) {
-                Log.i(TAG, " loading conversation with  lastConversationloadTime " + lastConversationloadTime );
-                nextSmsList = conversationService.getMessages(lastConversationloadTime==null ? 1L : lastConversationloadTime+1L, null, contact, group);
+                Log.i(TAG, " loading conversation with  lastConversationloadTime " + lastConversationloadTime);
+                nextSmsList = conversationService.getMessages(lastConversationloadTime == null ? 1L : lastConversationloadTime + 1L, null, contact, group);
             } else if (firstVisibleItem == 1 && loadMore && !messageList.isEmpty()) {
                 loadMore = false;
                 Long endTime = messageList.get(0).getCreatedAtTime();
@@ -1003,7 +1008,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         @Override
         protected void onPostExecute(Long result) {
             super.onPostExecute(result);
-            if (this.contact != null && !PhoneNumberUtils.compare(this.contact.getFormattedContactNumber(), this.contact.getFormattedContactNumber())||nextSmsList.isEmpty()) {
+            if (this.contact != null && !PhoneNumberUtils.compare(this.contact.getFormattedContactNumber(), this.contact.getFormattedContactNumber()) || nextSmsList.isEmpty()) {
                 swipeLayout.setRefreshing(false);
                 swipeLayout.setEnabled(false);
                 return;
@@ -1018,7 +1023,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                 nextSmsList.remove(nextSmsList.size() - 1);
             }
             lastConversationloadTime = nextSmsList.get(nextSmsList.size() - 1).getCreatedAtTime();
-            Log.i(TAG,"setting lastConversationload as :" + lastConversationloadTime);
+            Log.i(TAG, "setting lastConversationload as :" + lastConversationloadTime);
 
             for (Message message : nextSmsList) {
                 selfDestructMessage(message);
@@ -1048,11 +1053,8 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                     }
                 }
             }
-            //spinner.setVisibility(View.GONE);
             swipeLayout.setRefreshing(false);
             loadMore = !nextSmsList.isEmpty();
         }
     }
-
-
 }

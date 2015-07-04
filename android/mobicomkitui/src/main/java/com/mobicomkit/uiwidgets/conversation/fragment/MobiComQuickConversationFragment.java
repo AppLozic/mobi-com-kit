@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.api.conversation.MessageIntentService;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.broadcast.BroadcastService;
@@ -28,7 +27,8 @@ import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationListView;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
-import com.mobicomkit.uiwidgets.conversation.adapter.ConversationAdapter;
+import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
+import com.mobicomkit.uiwidgets.conversation.adapter.QuickConversationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
@@ -54,16 +54,16 @@ public class MobiComQuickConversationFragment extends Fragment {
     protected ImageButton fabButton;
     protected TextView emptyTextView;
     protected Button startNewButton;
-    protected ProgressBar spinner;
     protected SwipeRefreshLayout swipeLayout;
     protected int listIndex;
 
     protected Map<String, Message> latestSmsForEachContact = new HashMap<String, Message>();
     protected List<Message> messageList = new ArrayList<Message>();
-    protected ConversationAdapter conversationAdapter = null;
+    protected QuickConversationAdapter conversationAdapter = null;
 
     protected boolean loadMore = true;
     private Long minCreatedAtTime;
+    private DownloadConversation downloadConversation;
 
     public ConversationListView getListView() {
         return listView;
@@ -73,8 +73,11 @@ public class MobiComQuickConversationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         conversationService = new MobiComConversationService(getActivity());
-        conversationAdapter = new ConversationAdapter(getActivity(),
-                R.layout.mobicom_message_row_view, messageList, null, true, MessageIntentService.class, null);
+        conversationAdapter = new QuickConversationAdapter(getActivity(),
+                messageList, null);
+
+        setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -96,7 +99,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         View spinnerLayout = inflater.inflate(R.layout.mobicom_message_list_header_footer, null);
         listView.addFooterView(spinnerLayout);
 
-        spinner = (ProgressBar) spinnerLayout.findViewById(R.id.spinner);
+        //spinner = (ProgressBar) spinnerLayout.findViewById(R.id.spinner);
         emptyTextView = (TextView) spinnerLayout.findViewById(R.id.noConversations);
         startNewButton = (Button) spinnerLayout.findViewById(R.id.start_new_conversation);
 
@@ -113,10 +116,12 @@ public class MobiComQuickConversationFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MobiComActivity) getActivity()).startContactActivityForResult();
+                ((MobiComKitActivityInterface) getActivity()).startContactActivityForResult();
+
             }
         };
     }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -145,6 +150,14 @@ public class MobiComQuickConversationFragment extends Fragment {
                 return super.onContextItemSelected(item);
         }
         return true;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        menu.removeItem(R.id.dial);
+        menu.removeItem(R.id.deleteConversation);
     }
 
     public void addMessage(final Message message) {
@@ -243,7 +256,8 @@ public class MobiComQuickConversationFragment extends Fragment {
     }
 
     public void checkForEmptyConversations() {
-        if (latestSmsForEachContact.isEmpty() && spinner.getVisibility() == View.GONE) {
+        boolean isLodingConversation = ( downloadConversation!=null && downloadConversation.getStatus() == AsyncTask.Status.RUNNING);
+        if (latestSmsForEachContact.isEmpty() && !isLodingConversation ) {
             emptyTextView.setVisibility(View.VISIBLE);
             startNewButton.setVisibility(View.VISIBLE);
         } else {
@@ -276,7 +290,7 @@ public class MobiComQuickConversationFragment extends Fragment {
             }
         }
         downloadConversations();
-      }
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -310,7 +324,8 @@ public class MobiComQuickConversationFragment extends Fragment {
 
     public void downloadConversations(boolean showInstruction) {
         minCreatedAtTime = null;
-        new DownloadConversation(listView, true, 1, 0, 0, showInstruction).execute();
+        downloadConversation =  new DownloadConversation(listView, true, 1, 0, 0, showInstruction);
+        downloadConversation.execute();
     }
 
     public class DownloadConversation extends AsyncTask<Void, Integer, Long> {
@@ -342,7 +357,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             loadMore = false;
-            spinner.setVisibility(View.VISIBLE);
+           // Toast.makeText(context,R.string.quick_conversation_loading, Toast.LENGTH_SHORT).show();
         }
 
         protected Long doInBackground(Void... voids) {
@@ -393,7 +408,6 @@ public class MobiComQuickConversationFragment extends Fragment {
             } else {
                 listView.setSelection(firstVisibleItem);
             }
-            spinner.setVisibility(View.GONE);
             String errorMessage = getResources().getString(R.string.internet_connection_not_available);
             Utils.isNetworkAvailable(getActivity(), errorMessage);
             loadMore = !nextMessageList.isEmpty();

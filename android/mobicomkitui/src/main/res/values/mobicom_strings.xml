@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">mobicomkit</string>
-
+    <string name="conversations">Conversations</string>
     <string name="empty_conversations">No conversations!!!</string>
     <string name="enter_message_hint">enter sms here</string>
     <string name="no_conversation">No past conversations, Start a new one today!</string>
@@ -100,6 +100,8 @@
     <string name="edit">Edit</string>
     <string name="confirm">Confirm</string>
     <string name="skip">Skip</string>
+
+    <string name="quick_conversation_loading">loading conversation..</string>
 
 
 </resources>
