@@ -5,12 +5,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -25,12 +27,16 @@ import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationListView;
+import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.adapter.ConversationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.people.contact.Contact;
+import net.mobitexter.mobiframework.people.contact.ContactUtils;
+
+import org.apache.http.util.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,6 +104,9 @@ public class MobiComQuickConversationFragment extends Fragment {
         swipeLayout = (SwipeRefreshLayout) list.findViewById(R.id.swipe_container);
         swipeLayout.setEnabled(false);
 
+        listView.setLongClickable(true);
+        registerForContextMenu(listView);
+
         return list;
     }
 
@@ -108,6 +117,35 @@ public class MobiComQuickConversationFragment extends Fragment {
                 ((MobiComActivity) getActivity()).startContactActivityForResult();
             }
         };
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle(R.string.messageOptions);
+
+        menu.add(Menu.NONE, Menu.NONE, 0, "Delete");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        if (messageList.size() <= position) {
+            return true;
+        }
+        Message message = messageList.get(position);
+
+        switch (item.getItemId()) {
+            case 0:
+                Contact contact = ContactUtils.getContact(getActivity(), message.getContactIds());
+                new ConversationUIService(getActivity()).deleteConversationThread(contact, TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName());
+                break;
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
     }
 
     public void addMessage(final Message message) {
@@ -240,9 +278,7 @@ public class MobiComQuickConversationFragment extends Fragment {
             }
         }
         downloadConversations();
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
-    }
+      }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

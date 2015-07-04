@@ -29,6 +29,7 @@ import com.mobicomkit.uiwidgets.conversation.fragment.MobiComConversationFragmen
 import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
 import com.mobicomkit.uiwidgets.conversation.fragment.MultimediaOptionFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
+import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
@@ -36,9 +37,6 @@ import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.file.FilePathFinder;
 import net.mobitexter.mobiframework.json.GsonUtils;
-
-import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
-
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
 import net.mobitexter.mobiframework.people.group.Group;
@@ -47,7 +45,7 @@ import net.mobitexter.mobiframework.people.group.GroupUtils;
 import java.util.ArrayList;
 
 
-abstract public class MobiComActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
+abstract public class MobiComActivityForFragment extends ActionBarActivity implements ActionBar.OnNavigationListener,
         MessageCommunicator, MobiComKitActivityInterface {
 
     public static final int REQUEST_CODE_FULL_SCREEN_ACTION = 301;
@@ -64,7 +62,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
     public static String title = "Conversations";
     protected static boolean HOME_BUTTON_ENABLED = false;
     protected ActionBar mActionBar;
-    protected SlidingPaneLayout slidingPaneLayout;
+   // protected SlidingPaneLayout slidingPaneLayout;
     protected MobiComKitBroadcastReceiver mobiComKitBroadcastReceiver;
     protected MobiComQuickConversationFragment quickConversationFragment;
     protected MobiComConversationFragment conversationFragment;
@@ -78,9 +76,9 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         super.onResume();
         InstructionUtil.enabled = true;
         mobiTexterBroadcastReceiverActivated = Boolean.TRUE;
-        if (slidingPaneLayout.isOpen()) {
+      /*  if (slidingPaneLayout.isOpen()) {
             mActionBar.setTitle(title);
-        }
+        }*/
         registerMobiTexterBroadcastReceiver();
     }
 
@@ -89,12 +87,12 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         super.onPause();
         InstructionUtil.enabled = false;
         mobiTexterBroadcastReceiverActivated = Boolean.FALSE;
-        unregisterReceiver(mobiComKitBroadcastReceiver);
+        //unregisterReceiver(mobiComKitBroadcastReceiver);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!slidingPaneLayout.isOpen()) {
+        if (true) {
             menu.removeItem(R.id.start_new);
         } else {
             menu.removeItem(R.id.dial);
@@ -168,15 +166,14 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
     }
 
     public void openConversationFragment(Contact contact) {
-        slidingPaneLayout.closePane();
+       // slidingPaneLayout.closePane();
         InstructionUtil.hideInstruction(this, R.string.info_message_sync);
         InstructionUtil.hideInstruction(this, R.string.instruction_open_conversation_thread);
-        conversationFragment.resetlastConversationTime();
         conversationFragment.loadConversation(contact);
     }
 
     public void openConversationFragment(Group group) {
-        slidingPaneLayout.closePane();
+       // slidingPaneLayout.closePane();
         conversationFragment.loadConversation(group);
     }
 
@@ -184,9 +181,9 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         if (currentOpenedContactNumber != null) {
             InstructionUtil.hideInstruction(this, R.string.instruction_go_back_to_recent_conversation_list);
         }
-        Utils.toggleSoftKeyBoard(MobiComActivity.this, true);
-        conversationFragment.setHasOptionsMenu(!slidingPaneLayout.isSlideable());
-        quickConversationFragment.setHasOptionsMenu(slidingPaneLayout.isSlideable());
+        Utils.toggleSoftKeyBoard(MobiComActivityForFragment.this, true);
+       // conversationFragment.setHasOptionsMenu(!slidingPaneLayout.isSlideable());
+        //quickConversationFragment.setHasOptionsMenu(slidingPaneLayout.isSlideable());
         mActionBar.setHomeButtonEnabled(false);
         mActionBar.setDisplayHomeAsUpEnabled(HOME_BUTTON_ENABLED);
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -362,17 +359,22 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         conversationFragment.loadConversation(contact);
         return false;
     }
+/*
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+       */
+/* switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*//*
+retu
+                f
     }
+*/
 
     //TODO: need to figure it out if this Can be improve by listeners in individual fragments
     @Override
@@ -381,25 +383,25 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
             conversationFragment.emoticonsFrameLayout.setVisibility(View.GONE);
             return;
         }
-        if (!slidingPaneLayout.isOpen()) {
+       /* if (!slidingPaneLayout.isOpen()) {
             slidingPaneLayout.openPane();
             return;
         }
-        super.onBackPressed();
+       */ super.onBackPressed();
         this.finish();
     }
 
-    public SlidingPaneLayout getSlidingPaneLayout() {
+  /*  public SlidingPaneLayout getSlidingPaneLayout() {
         return slidingPaneLayout;
     }
-
+*/
     /**
      * This global layout listener is used to fire an event after first layout
      * occurs and then it is removed. This gives us a chance to configure parts
      * of the UI that adapt based on available space after they have had the
      * opportunity to measure and layout.
      */
-    public class FirstLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+  /*  public class FirstLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
         @Override
         public void onGlobalLayout() {
 
@@ -432,5 +434,5 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         public void onPanelSlide(View view, float v) {
         }
 
-    }
+    }*/
 }

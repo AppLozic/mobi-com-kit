@@ -73,7 +73,7 @@ function MobiComKit() {
         var INITIALIZE_APP_URL = "/tab/initialize.page";
 
         _this.initializeApp = function initializeApp(options) {
-            var data = "applicationId=" + options.appId + "&userId=" + options.userId + "&emailId=" + options.emailId;
+            var data = "applicationId=" + options.appId + "&userId=" + options.userId;
             $.getJSON(MCK_BASE_URL + INITIALIZE_APP_URL + "?" + data, function (result, status) {
                 if (result === "INVALID_APPID") {
                     alert("Oops! looks like incorrect application id.");
@@ -83,10 +83,11 @@ function MobiComKit() {
                     USER_COUNTRY_CODE = result.countryCode;
                     USER_DEVICE_KEY = result.deviceKeyString;
                     MCK_USER_TIMEZONEOFFSET = result.timeZoneOffset;
-                    AUTH_CODE = btoa(result.emailId + ":" + result.deviceKeyString);
+                    AUTH_CODE = btoa(result.userId + ":" + result.deviceKeyString);
                     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
                         if (!options.beforeSend) {
                             options.beforeSend = function (jqXHR) {
+                                jqXHR.setRequestHeader("UserId-Enabled", true);
                                 jqXHR.setRequestHeader("Authorization", "Basic " + AUTH_CODE);
                                 jqXHR.setRequestHeader("Application-Key", APPLICATION_ID);
                             };
@@ -230,7 +231,7 @@ function MobiComKit() {
         });
 
         _this.init = function init(options) {
-            localStorage.removeItem("mckMessageArray");
+            sessionStorage.removeItem("mckMessageArray");
             $messageModalLink = $("." + MCK_LAUNCHER);
             $messageModalLink.on("click", function (e) {
                 $mck_msg_error.html("");
@@ -245,8 +246,23 @@ function MobiComKit() {
 
             $mck_text_box.keydown(function (event) {
                 if (event.keyCode == 13 && (event.shiftKey || event.ctrlKey)) {
-                    $(this).html($(this).html() + "<br/>");
-                    return;
+                    event.preventDefault();
+                    if (window.getSelection) {
+                        var selection = window.getSelection(),
+                                range = selection.getRangeAt(0),
+                                br = document.createElement("br"),
+                                textNode = document.createTextNode("\u00a0"); //Passing " " directly will not end up being shown correctly
+                        range.deleteContents();//required or not?
+                        range.insertNode(br);
+                        range.collapse(false);
+                        range.insertNode(textNode);
+                        range.selectNodeContents(textNode);
+
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+                        return false;
+                    }
+
                 } else if (event.keyCode === 13) {
                     event.preventDefault();
                     $mck_msg_form.submit();
@@ -294,9 +310,9 @@ function MobiComKit() {
                     alert("Unable to initiate app. Please reload page.");
                     return;
                 }
-                var message = MckUtils.textVal();
+                var message = $.trim(MckUtils.textVal());
 
-                if ($.trim(message).length == 0 && !FILE_METAS) {
+                if (message.length === 0 && !FILE_METAS) {
                     $mck_textbox_container.addClass("text-req");
                     return false;
                 }
@@ -376,7 +392,7 @@ function MobiComKit() {
                 global: false,
                 data: JSON.stringify(messagePxy),
                 contentType: 'application/json',
-                headers: {'Authorization': "Basic " + AUTH_CODE,
+                headers: {"UserId-Enabled": true, 'Authorization': "Basic " + AUTH_CODE,
                     'Application-Key': APPLICATION_ID},
                 success: function (data, status, xhr) {
                     if (data === 'error') {
@@ -436,7 +452,7 @@ function MobiComKit() {
                 $mck_delete_button.removeClass('vis').addClass('n-vis');
                 $mck_msg_to.parent('.form-group').removeClass('n-vis').addClass('vis');
                 if (typeof (Storage) !== "undefined") {
-                    var mckMessageArray = JSON.parse(localStorage.getItem('mckMessageArray'));
+                    var mckMessageArray = JSON.parse(sessionStorage.getItem('mckMessageArray'));
                     if (mckMessageArray !== null) {
                         msgData.message = mckMessageArray;
                         mckMessageLayout.addContactsFromMessageList(msgData);
@@ -470,7 +486,7 @@ function MobiComKit() {
                         } else {
                             $mck_msg_inner.data('mck-id', "");
                             mckMessageLayout.addContactsFromMessageList(data);
-                            localStorage.setItem('mckMessageArray', JSON.stringify(data.message));
+                            sessionStorage.setItem('mckMessageArray', JSON.stringify(data.message));
 
                         }
                     }
@@ -813,7 +829,7 @@ function MobiComKit() {
 
         _this.getContactImageByAlphabet = function getContactImageByAlphabet(name) {
             if (typeof name === 'undefined' || name === "") {
-                return '<div class="mck-alpha-contact-image mck-alpha-user"><span class="mck-contact-icon"><img src="' + USER_ICON_URL + '" alt=""></span></div>';
+                return '<div class="mck-alpha-contact-image mck-alpha-user"><span class="mck-contact-icon"><img src="' + MCK_BASE_URL + USER_ICON_URL + '" alt=""></span></div>';
             }
             var first_alpha = name.charAt(0);
             var letters = /^[a-zA-Z]+$/;
@@ -821,7 +837,7 @@ function MobiComKit() {
                 first_alpha = first_alpha.toUpperCase();
                 return '<div class="mck-alpha-contact-image alpha_' + first_alpha + '"><span class="mck-contact-icon">' + first_alpha + '</span></div>';
             } else {
-                return '<div class="mck-alpha-contact-image alpha_user"><span class="mck-contact-icon"><img src="' + USER_ICON_URL + '" alt=""></span></div>';
+                return '<div class="mck-alpha-contact-image alpha_user"><span class="mck-contact-icon"><img src="' + MCK_BASE_URL + USER_ICON_URL + '" alt=""></span></div>';
             }
         };
 
@@ -961,7 +977,7 @@ function MobiComKit() {
         };
 
         _this.removeConversationThread = function removeConversationThread(userId) {
-            localStorage.removeItem("mckMessageArray");
+            sessionStorage.removeItem("mckMessageArray");
             var contact = mckMessageLayout.getContact(userId);
             var currentTabId = $("#mck-message-cell .mck-message-inner").data('mck-id');
             if (typeof currentTabId !== 'undefined' && ((typeof contact !== 'undefined' && currentTabId === contact.displayName) || currentTabId === userId)) {
@@ -1031,7 +1047,7 @@ function MobiComKit() {
                                     global: false,
                                     data: "data=" + new Date().getTime(),
                                     crosDomain: true,
-                                    headers: {'Authorization': "Basic " + AUTH_CODE,
+                                    headers: {"UserId-Enabled": true, 'Authorization': "Basic " + AUTH_CODE,
                                         'Application-Key': APPLICATION_ID},
                                     success: function (result, status, xhr) {
                                         data.url = result;
@@ -1109,7 +1125,7 @@ function MobiComKit() {
                 url: MCK_BASE_URL + '/rest/ws/channel/getToken',
                 type: 'get',
                 global: false,
-                headers: {'Authorization': "Basic " + AUTH_CODE,
+                headers: {"UserId-Enabled": true, 'Authorization': "Basic " + AUTH_CODE,
                     'Application-Key': APPLICATION_ID},
                 success: function (data, status) {
                     if (data == "error") {
@@ -1218,12 +1234,12 @@ function MobiComKit() {
             }
             mckMessageArray.push(message);
             if (typeof (Storage) !== "undefined") {
-                var mckLocalMessageArray = JSON.parse(localStorage.getItem('mckMessageArray'));
+                var mckLocalMessageArray = JSON.parse(sessionStorage.getItem('mckMessageArray'));
                 if (mckLocalMessageArray != null) {
                     mckMessageArray = mckMessageArray.concat(mckLocalMessageArray);
                 }
             }
-            localStorage.setItem('mckMessageArray', JSON.stringify(mckMessageArray));
+            sessionStorage.setItem('mckMessageArray', JSON.stringify(mckMessageArray));
         }
     };
 

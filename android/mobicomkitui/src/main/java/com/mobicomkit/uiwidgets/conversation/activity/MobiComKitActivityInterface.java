@@ -2,6 +2,8 @@ package com.mobicomkit.uiwidgets.conversation.activity;
 
 import android.view.View;
 
+import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
+
 import net.mobitexter.mobiframework.people.contact.Contact;
 
 /**
@@ -12,5 +14,7 @@ public interface MobiComKitActivityInterface {
     void onQuickConversationFragmentItemClick(View view, Contact contact);
 
     void startContactActivityForResult();
+
+    void addFragment(ConversationFragment conversationFragment);
 
 }
