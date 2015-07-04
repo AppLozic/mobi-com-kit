@@ -45,6 +45,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobicomkit.uiwidgets.R;
+
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.api.conversation.Message;
@@ -155,8 +157,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             emoticonsBtn.setVisibility(View.GONE);
         }
         spinnerLayout = inflater.inflate(R.layout.mobicom_message_list_header_footer, null);
-        ProgressBar spinner = (ProgressBar) spinnerLayout.findViewById(R.id.spinner);
-        spinner.setVisibility(View.GONE);
         infoBroadcast = (TextView) spinnerLayout.findViewById(R.id.info_broadcast);
         emptyTextView = (TextView) spinnerLayout.findViewById(R.id.noConversations);
         emoticonsBtn.setOnClickListener(this);
