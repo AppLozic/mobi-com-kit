@@ -162,16 +162,17 @@
                 console.log(userId);
             }
 			
-             function getUsersName(userId) {                 
+             function displayName(userId) {                 
                  //Todo: replace this with users display users name
                  return userId;
             }
+			
             function MobiComKitSidebox() {
                 var mckClientId = "mobicomkit";
                 var mckClientAppId = "mobicomkit-sample-app";
 
                 this.load = function () {
-                    $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId, callback :readMessage, usersNameCallback :getUsersName});
+                    $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId, readConversation: readMessage, contactDisplayName: displayName});
                 };
 
             }
