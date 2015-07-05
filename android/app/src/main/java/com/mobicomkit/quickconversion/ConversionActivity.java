@@ -47,6 +47,28 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
         this.fragmentActivity = fragmentActivity;
     }
 
+    public static void addFragment(FragmentActivity fragmentActivity, Fragment fragmentToAdd, String fragmentTag) {
+        FragmentManager supportFragmentManager = fragmentActivity.getSupportFragmentManager();
+
+        Fragment activeFragment = UIService.getActiveFragment(fragmentActivity);
+        FragmentTransaction fragmentTransaction = supportFragmentManager
+                .beginTransaction();
+        if (null != activeFragment) {
+            fragmentTransaction.hide(activeFragment);
+        }
+
+        fragmentTransaction.replace(R.id.layout_child_activity, fragmentToAdd,
+                fragmentTag);
+
+        if (supportFragmentManager.getBackStackEntryCount() > 1) {
+            supportFragmentManager.popBackStack();
+        }
+        fragmentTransaction.addToBackStack(fragmentTag);
+        fragmentTransaction.commit();
+        supportFragmentManager.executePendingTransactions();
+        //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +105,6 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
         return true;
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         new ConversationUIService(this).onActivityResult(requestCode, resultCode, data);
@@ -112,8 +133,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
             startActivity(Intent.createChooser(intent, "Share Via"));
             return super.onOptionsItemSelected(item);
         } else if (id == R.id.deleteConversation) {
-            //TODO:call delete Method
-            //conversationFragment.deleteConversationThread();
+            conversation.deleteConversationThread();
         }
         return false;
     }
@@ -141,30 +161,9 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
         super.onBackPressed();
     }
 
-    public static void addFragment(FragmentActivity fragmentActivity, Fragment fragmentToAdd, String fragmentTag) {
-        FragmentManager supportFragmentManager = fragmentActivity.getSupportFragmentManager();
-
-        Fragment activeFragment = UIService.getActiveFragment(fragmentActivity);
-        FragmentTransaction fragmentTransaction = supportFragmentManager
-                .beginTransaction();
-        if (null != activeFragment) {
-            fragmentTransaction.hide(activeFragment);
-        }
-
-        fragmentTransaction.replace(R.id.layout_child_activity, fragmentToAdd,
-                fragmentTag);
-
-        if (supportFragmentManager.getBackStackEntryCount() > 1) {
-            supportFragmentManager.popBackStack();
-        }
-        fragmentTransaction.addToBackStack(fragmentTag);
-        fragmentTransaction.commit();
-        supportFragmentManager.executePendingTransactions();
-        //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
-    }
-
     @Override
     public void updateLatestMessage(Message message, String formattedContactNumber) {
+        new ConversationUIService(this).updateLatestMessage(message, formattedContactNumber);
 
     }
 
