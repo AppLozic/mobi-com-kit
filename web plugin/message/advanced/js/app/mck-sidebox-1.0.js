@@ -78,6 +78,7 @@ function MobiComKit() {
     function MckUtils() {
         var _this = this;
         var INITIALIZE_APP_URL = "/tab/initialize.page";
+        var retry = 0;
 
         _this.initializeApp = function initializeApp(options) {
 
@@ -90,6 +91,12 @@ function MobiComKit() {
                     USER_NUMBER = result.contactNumber;
                     USER_COUNTRY_CODE = result.countryCode;
                     USER_DEVICE_KEY = result.deviceKeyString;
+                    if (USER_DEVICE_KEY == "" && retry < 3) {
+                        retry++;
+                        _this.initializeApp(options);
+                        return;
+                    }
+
                     MCK_USER_TIMEZONEOFFSET = result.timeZoneOffset;
                     AUTH_CODE = btoa(result.userId + ":" + result.deviceKeyString);
                     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
