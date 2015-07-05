@@ -70,7 +70,7 @@ function MobiComKit() {
         MCK_BASE_URL = options.baseUrl;
         MCK_CALLBACK = options.readConversation;
         MCK_GETUSERNAME = options.contactDisplayName;
-
+        IS_MCK_NOTIFICATION = options.desktopNotification;
 
         MckUtils.initializeApp(options);
     };
@@ -1173,6 +1173,7 @@ function MobiComKit() {
         var $mck_preview_name = $("#mck-msg-preview .mck-preview-cont-name");
         var notificationTimeout = 60;
         var _this = this;
+
         _this.getChannelToken = function getChannelToken() {
             $.ajax({
                 url: MCK_BASE_URL + '/rest/ws/channel/getToken',
@@ -1192,23 +1193,27 @@ function MobiComKit() {
             });
         };
 
+        _this.isChrome = function isChrome() {
+          return /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
+        }
+
         _this.notifyUser = function notifyUser(message) {
             var notificationTimeout = 60;
             if (message.type === 7) {
                 return;
             }
 
-            if (!IS_MCK_NOTIFICATION) {
-                mckNotificationService.showNewMessageNotification(message);
-                return;
-            } else {
+            mckNotificationService.showNewMessageNotification(message);
+
+            if (IS_MCK_NOTIFICATION) {
                 var name = mckMessageLayout.getDisplayNameFromMessage(message);
-                if ($.browser.chrome) {
+                if (_this.isChrome()) {
                     var c_version = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
                     if (c_version >= 35) {
                         if (!Notification) {
                             return;
                         }
+
                         if (Notification.permission !== "granted") {
                             Notification.requestPermission();
                         }
@@ -1276,7 +1281,7 @@ function MobiComKit() {
         };
 
         _this.showNotification = function showNotification(notification) {
-            if ($.browser.chrome) {
+            if (_this.isChrome()) {
                 notification.onclick = function (x) {
                     window.focus();
                     this.cancel();
