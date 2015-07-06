@@ -62,6 +62,7 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.activity.SpinnerNavItem;
 import com.mobicomkit.uiwidgets.conversation.adapter.ConversationAdapter;
+import com.mobicomkit.uiwidgets.conversation.adapter.DetailedConversationAdapter;
 import com.mobicomkit.uiwidgets.conversation.adapter.TitleNavigationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 import com.mobicomkit.uiwidgets.schedule.ConversationScheduler;
@@ -120,7 +121,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     protected MessageCommunicator messageCommunicator;
     protected ConversationListView listView = null;
     protected List<Message> messageList = new ArrayList<Message>();
-    protected ConversationAdapter conversationAdapter = null;
+    protected DetailedConversationAdapter conversationAdapter = null;
     protected Drawable sentIcon;
     protected Drawable deliveredIcon;
     protected ImageButton emoticonsBtn;
@@ -483,10 +484,10 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
 
         if (contact != null) {
-            conversationAdapter = new ConversationAdapter(getActivity(),
-                    R.layout.mobicom_message_row_view, messageList, contact, false, messageIntentClass, emojiIconHandler);
+            conversationAdapter = new DetailedConversationAdapter(getActivity(),
+                    R.layout.mobicom_message_row_view, messageList, contact, messageIntentClass, emojiIconHandler);
         } else if (group != null) {
-            conversationAdapter = new ConversationAdapter(getActivity(),
+            conversationAdapter = new DetailedConversationAdapter(getActivity(),
                     R.layout.mobicom_message_row_view, messageList, group, messageIntentClass, emojiIconHandler);
         }
 
