@@ -1,8 +1,10 @@
 package com.mobicomkit.uiwidgets.conversation.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import com.mobicomkit.api.conversation.MobiComConversationService;
+import com.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.mobicomkit.uiwidgets.conversation.adapter.QuickConversationAdapter;
 
 public class QuickConversationFragment extends MobiComQuickConversationFragment {
@@ -22,8 +24,7 @@ public class QuickConversationFragment extends MobiComQuickConversationFragment 
     @Override
     public void onResume() {
         super.onResume();
-
-     // ((FragmentActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
     }
 }
 

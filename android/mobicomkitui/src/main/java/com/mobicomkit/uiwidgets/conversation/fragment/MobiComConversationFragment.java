@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -324,7 +325,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                 conversationAdapter.notifyDataSetChanged();
                 if (messageList.isEmpty()) {
                     emptyTextView.setVisibility(View.VISIBLE);
-                    ((MobiComActivity) getActivity()).removeConversation(message, contact.getFormattedContactNumber());
+                    ((MobiComKitActivityInterface) getActivity()).removeConversation(message, contact.getFormattedContactNumber());
                 }
                 break;
             }
@@ -815,7 +816,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
         //}
         if (title != null) {
-            //((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
+            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
         }
     }
 

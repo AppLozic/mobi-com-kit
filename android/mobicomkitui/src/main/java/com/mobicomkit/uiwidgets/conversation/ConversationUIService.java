@@ -311,18 +311,21 @@ public class ConversationUIService {
         }
 
         String contactNumber = intent.getStringExtra("contactNumber");
+        Log.d("UIService:","value is ="+contactNumber);
+
         boolean firstTimeMTexterFriend = intent.getBooleanExtra("firstTimeMTexterFriend", false);
         if (!TextUtils.isEmpty(contactNumber)) {
             contact = ContactUtils.getContact(context, contactNumber);
             if (BroadcastService.isIndividual()) {
+
                 getConversationFragment().setFirstTimeMTexterFriend(firstTimeMTexterFriend);
             }
         }
 
         String userId = intent.getStringExtra("userId");
+        Log.d("userId","UserID="+userId);
         if (!TextUtils.isEmpty(userId)) {
             contact = new Contact(fragmentActivity, userId);
-            contact.setUserId(userId);
             //Todo: Load contact details from server.
         }
 

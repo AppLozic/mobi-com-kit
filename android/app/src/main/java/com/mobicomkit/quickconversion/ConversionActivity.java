@@ -34,9 +34,11 @@ import net.mobitexter.mobiframework.people.contact.Contact;
  */
 public class ConversionActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
 
-    ConversationFragment conversation;
-    QuickConversationFragment quickConversationFragment;
-    MobiComKitBroadcastReceiver mobiComKitBroadcastReceiver;
+    public static boolean mobiTexterBroadcastReceiverActivated;
+    protected ConversationFragment conversation;
+    protected QuickConversationFragment quickConversationFragment;
+    protected MobiComKitBroadcastReceiver mobiComKitBroadcastReceiver;
+    protected ActionBar mActionBar;
     FragmentActivity fragmentActivity;
 
     public ConversionActivity() {
@@ -70,14 +72,30 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mobiTexterBroadcastReceiverActivated = Boolean.TRUE;
+        registerMobiTexterBroadcastReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mobiTexterBroadcastReceiverActivated = Boolean.FALSE;
+        unregisterReceiver(mobiComKitBroadcastReceiver);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mActionBar = getSupportActionBar();
+
         setContentView(R.layout.quickconversion_activity);
         quickConversationFragment = new QuickConversationFragment();
-        conversation = (ConversationFragment) getSupportFragmentManager().findFragmentById(R.id.conversation_fragment_pane);
+        conversation = new ConversationFragment();
 
-        addFragment(this, quickConversationFragment, "QuickConverationFragment");
+        addFragment(this, quickConversationFragment, "QuickConversationFragment");
 
         mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversation);
         InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
@@ -91,10 +109,13 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
         });
     }
 
+    protected void registerMobiTexterBroadcastReceiver() {
+        registerReceiver(mobiComKitBroadcastReceiver, BroadcastService.getIntentFilter());
+    }
+
+
     private void showActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.conversations);
+        mActionBar.setDisplayShowTitleEnabled(true);
     }
 
     @Override
@@ -141,7 +162,6 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     @Override
     public void onQuickConversationFragmentItemClick(View view, Contact contact) {
 
-        conversation = new ConversationFragment();
         addFragment(this, conversation, "Conversation");
         conversation.loadConversation(contact);
     }
@@ -169,6 +189,6 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
     @Override
     public void removeConversation(Message message, String formattedContactNumber) {
-
+        new ConversationUIService(this).removeConversation(message, formattedContactNumber);
     }
 }

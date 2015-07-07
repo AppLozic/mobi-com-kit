@@ -20,4 +20,6 @@ public interface MobiComKitActivityInterface {
 
     void updateLatestMessage(Message message,String number);
 
+    void removeConversation(Message message,String number);
+
 }

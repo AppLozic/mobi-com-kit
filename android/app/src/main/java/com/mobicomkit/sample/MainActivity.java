@@ -25,7 +25,6 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
 
 public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
@@ -199,6 +198,7 @@ public class MainActivity extends MobiComActivityForFragment
     @Override
     public void removeConversation(Message message, String formattedContactNumber) {
 
+        new ConversationUIService(this).removeConversation(message,formattedContactNumber);
     }
 
     /**
