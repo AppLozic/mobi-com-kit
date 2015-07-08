@@ -31,7 +31,8 @@ import net.mobitexter.mobiframework.people.contact.Contact;
 
 
 /**
- * Created by devashish on 6/25/2015.
+ * Cr
+ * eated by devashish on 6/25/2015.
  */
 public class ConversionActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
 
@@ -99,7 +100,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
         addFragment(this, quickConversationFragment, "QuickConversationFragment");
 
         mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversation);
-        InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());/*
+        InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -107,7 +108,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
             public void onBackStackChanged() {
                 if (getSupportFragmentManager().getBackStackEntryCount() == 0) finish();
             }
-        });*/
+        });
         mActionBar.setTitle(R.string.conversations);
     }
 
@@ -180,7 +181,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
     @Override
     public void onBackPressed() {
-        Log.d("inside", "###backpress");
+        super.onBackPressed();
     }
 
     @Override
