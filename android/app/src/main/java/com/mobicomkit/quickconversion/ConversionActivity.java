@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,7 +99,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
         addFragment(this, quickConversationFragment, "QuickConversationFragment");
 
         mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversation);
-        InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
+        InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());/*
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -106,7 +107,8 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
             public void onBackStackChanged() {
                 if (getSupportFragmentManager().getBackStackEntryCount() == 0) finish();
             }
-        });
+        });*/
+        mActionBar.setTitle(R.string.conversations);
     }
 
     protected void registerMobiTexterBroadcastReceiver() {
@@ -178,7 +180,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Log.d("inside", "###backpress");
     }
 
     @Override
