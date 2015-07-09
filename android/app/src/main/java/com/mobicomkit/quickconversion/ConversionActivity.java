@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,8 +30,7 @@ import net.mobitexter.mobiframework.people.contact.Contact;
 
 
 /**
- * Cr
- * eated by devashish on 6/25/2015.
+ * Created by devashish on 6/25/2015.
  */
 public class ConversionActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
 

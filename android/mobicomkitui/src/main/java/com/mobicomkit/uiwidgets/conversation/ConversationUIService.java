@@ -99,7 +99,7 @@ public class ConversationUIService {
             Uri selectedFileUri = (intent == null ? null : intent.getData());
             if (selectedFileUri == null) {
                 selectedFileUri = getConversationFragment().getMultimediaOptionFragment().getCapturedImageUri();
-                ImageUtils.addImageToGallery(FilePathFinder.getPath(context, selectedFileUri), context);
+                ImageUtils.addImageToGallery(FilePathFinder.getPath(fragmentActivity, selectedFileUri), fragmentActivity);
             }
 
             if (selectedFileUri == null) {

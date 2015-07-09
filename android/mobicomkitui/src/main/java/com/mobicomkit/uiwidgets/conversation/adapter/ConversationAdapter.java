@@ -36,12 +36,10 @@ import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.uiwidgets.R;
+import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
-
-import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
@@ -144,6 +142,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View customView;
+
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (!quick) {
             if (getItemViewType(position) == 0) {
@@ -529,7 +528,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
     private void showFullView(Message smListItem) {
         Intent intent = new Intent(context, FullScreenImageActivity.class);
         intent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(smListItem, Message.class));
-        ((MobiComActivity) context).startActivityForResult(intent, MobiComActivity.REQUEST_CODE_FULL_SCREEN_ACTION);
+        ((MobiComKitActivityInterface) context).startActivityForResult(intent, MobiComKitActivityInterface.REQUEST_CODE_FULL_SCREEN_ACTION);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mobicomkit.uiwidgets.conversation.activity;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.mobicomkit.api.conversation.Message;
@@ -12,6 +13,7 @@ import net.mobitexter.mobiframework.people.contact.Contact;
  */
 public interface MobiComKitActivityInterface {
 
+    int REQUEST_CODE_FULL_SCREEN_ACTION = 301;
     void onQuickConversationFragmentItemClick(View view, Contact contact);
 
     void startContactActivityForResult();
@@ -21,5 +23,7 @@ public interface MobiComKitActivityInterface {
     void updateLatestMessage(Message message,String number);
 
     void removeConversation(Message message,String number);
+
+    void startActivityForResult(Intent intent,int code);
 
 }
