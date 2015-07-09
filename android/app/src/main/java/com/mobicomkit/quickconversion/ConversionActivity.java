@@ -19,7 +19,7 @@ import com.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.sample.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
-import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;
+import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiverForFragments;
 import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
@@ -37,7 +37,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     public static boolean mobiTexterBroadcastReceiverActivated;
     protected ConversationFragment conversation;
     protected QuickConversationFragment quickConversationFragment;
-    protected MobiComKitBroadcastReceiver mobiComKitBroadcastReceiver;
+    protected MobiComKitBroadcastReceiverForFragments mobiComKitBroadcastReceiver;
     protected ActionBar mActionBar;
     FragmentActivity fragmentActivity;
 
@@ -97,7 +97,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
         addFragment(this, quickConversationFragment, "QuickConversationFragment");
 
-        mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversation);
+        mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiverForFragments(this);
         InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -113,7 +113,6 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     protected void registerMobiTexterBroadcastReceiver() {
         registerReceiver(mobiComKitBroadcastReceiver, BroadcastService.getIntentFilter());
     }
-
 
     private void showActionBar() {
         mActionBar.setDisplayShowTitleEnabled(true);
