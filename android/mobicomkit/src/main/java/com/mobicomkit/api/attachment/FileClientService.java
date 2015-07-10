@@ -9,8 +9,8 @@ import android.util.Log;
 
 import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
-import com.mobicomkit.api.MobiComKitServer;
 
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.file.FileUtils;
 
@@ -39,14 +39,15 @@ import java.util.Date;
 public class FileClientService extends MobiComKitClientService {
 
     //Todo: Make the base folder configurable using either strings.xml or properties file
-    public static final String MOBI_TEXTER_IMAGES_FOLDER = "/MobiCom/image";
-    public static final String MOBI_TEXTER_VIDEOS_FOLDER = "/MobiCom/video";
-    public static final String MOBI_TEXTER_OTHER_FILES_FOLDER = "/MobiCom/other";
+    public static final String MOBI_TEXTER_IMAGES_FOLDER = "/image";
+    public static final String MOBI_TEXTER_VIDEOS_FOLDER = "/video";
+    public static final String MOBI_TEXTER_OTHER_FILES_FOLDER = "/other";
     public static final String MOBI_TEXTER_THUMBNAIL_SUFIX = "/Thumbnail";
-    public static final String FILE_UPLOAD_URL =  "/rest/ws/file/url";
+    public static final String FILE_UPLOAD_URL = "/rest/ws/file/url";
     public static final String IMAGE_DIR = "image";
     private static final String TAG = "FileClientService";
     private HttpRequestUtils httpRequestUtils;
+    private static final String MAIN_FOLDER_META_DATA = "main_folder_name";
 
     public FileClientService(Context context) {
         super(context);
@@ -54,16 +55,20 @@ public class FileClientService extends MobiComKitClientService {
     }
 
 
-    public String getFileUploadUrl(){ return getBaseUrl() + FILE_UPLOAD_URL; }
+    public String getFileUploadUrl() {
+        return getBaseUrl() + FILE_UPLOAD_URL;
+    }
+
     public static File getFilePath(String fileName, Context context, String contentType, boolean isThumbnail) {
         File filePath;
         File dir;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            String folder = MOBI_TEXTER_OTHER_FILES_FOLDER;
+            String folder = Utils.getMetaDataValue(context, MAIN_FOLDER_META_DATA) + MOBI_TEXTER_OTHER_FILES_FOLDER;
+
             if (contentType.startsWith("image")) {
-                folder = MOBI_TEXTER_IMAGES_FOLDER;
+                folder = Utils.getMetaDataValue(context, MAIN_FOLDER_META_DATA) + MOBI_TEXTER_IMAGES_FOLDER;
             } else if (contentType.startsWith("video")) {
-                folder = MOBI_TEXTER_VIDEOS_FOLDER;
+                folder = Utils.getMetaDataValue(context, MAIN_FOLDER_META_DATA) + MOBI_TEXTER_VIDEOS_FOLDER;
             }
             if (isThumbnail) {
                 folder = folder + MOBI_TEXTER_THUMBNAIL_SUFIX;

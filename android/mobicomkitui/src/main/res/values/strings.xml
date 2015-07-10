@@ -54,5 +54,6 @@
     <dimen name="tile_letter_font_size">250dp</dimen>
     <!-- The deafult tile size -->
     <dimen name="letter_tile_size">64dp</dimen>
+    <string name="main_folder_location_name_of_your_app">/MobiCom</string>
 
 </resources>
