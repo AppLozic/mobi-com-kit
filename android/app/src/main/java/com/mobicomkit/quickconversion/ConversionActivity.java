@@ -34,7 +34,6 @@ import net.mobitexter.mobiframework.people.contact.Contact;
  */
 public class ConversionActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
 
-    public static boolean mobiTexterBroadcastReceiverActivated;
     protected ConversationFragment conversation;
     protected QuickConversationFragment quickConversationFragment;
     protected MobiComKitBroadcastReceiverForFragments mobiComKitBroadcastReceiver;
@@ -74,14 +73,12 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     @Override
     protected void onResume() {
         super.onResume();
-        mobiTexterBroadcastReceiverActivated = Boolean.TRUE;
         registerMobiTexterBroadcastReceiver();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mobiTexterBroadcastReceiverActivated = Boolean.FALSE;
         unregisterReceiver(mobiComKitBroadcastReceiver);
     }
 
