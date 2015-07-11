@@ -25,6 +25,8 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
+
 
 public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
@@ -113,6 +115,13 @@ public class MainActivity extends MobiComActivityForFragment
         startActivity(i);
     }
 
+    public void takeOrder(View v) {
+        Intent i = new Intent(this, ConversionActivity.class);
+        i.putExtra("takeOrder", true);
+        i.putExtra("userId", Utils.getMetaDataValue(this, "com.mobicomkit.take.order.number"));
+        startActivity(i);
+    }
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -190,7 +199,7 @@ public class MainActivity extends MobiComActivityForFragment
 
     @Override
     public void updateLatestMessage(Message message, String formattedContactNumber) {
-        new ConversationUIService(this).updateLatestMessage(message,formattedContactNumber);
+        new ConversationUIService(this).updateLatestMessage(message, formattedContactNumber);
 
 
     }
@@ -198,7 +207,7 @@ public class MainActivity extends MobiComActivityForFragment
     @Override
     public void removeConversation(Message message, String formattedContactNumber) {
 
-        new ConversationUIService(this).removeConversation(message,formattedContactNumber);
+        new ConversationUIService(this).removeConversation(message, formattedContactNumber);
     }
 
     /**

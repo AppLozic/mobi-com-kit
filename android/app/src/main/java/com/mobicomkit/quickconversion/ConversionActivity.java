@@ -105,6 +105,8 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
             }
         });
         mActionBar.setTitle(R.string.conversations);
+
+        new ConversationUIService(this).checkForStartNewConversation(getIntent());
     }
 
     protected void registerMobiTexterBroadcastReceiver() {
@@ -175,7 +177,11 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Boolean takeOrder = getIntent().getBooleanExtra("takeOrder", false);
+        if (takeOrder)
+            this.finish();
+        else
+            super.onBackPressed();
     }
 
     @Override

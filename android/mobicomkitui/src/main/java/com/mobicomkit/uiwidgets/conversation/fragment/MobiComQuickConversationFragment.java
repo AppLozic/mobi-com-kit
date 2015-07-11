@@ -256,8 +256,8 @@ public class MobiComQuickConversationFragment extends Fragment {
     }
 
     public void checkForEmptyConversations() {
-        boolean isLodingConversation = ( downloadConversation!=null && downloadConversation.getStatus() == AsyncTask.Status.RUNNING);
-        if (latestSmsForEachContact.isEmpty() && !isLodingConversation ) {
+        boolean isLodingConversation = (downloadConversation != null && downloadConversation.getStatus() == AsyncTask.Status.RUNNING);
+        if (latestSmsForEachContact.isEmpty() && !isLodingConversation) {
             emptyTextView.setVisibility(View.VISIBLE);
             startNewButton.setVisibility(View.VISIBLE);
         } else {
@@ -324,7 +324,7 @@ public class MobiComQuickConversationFragment extends Fragment {
 
     public void downloadConversations(boolean showInstruction) {
         minCreatedAtTime = null;
-        downloadConversation =  new DownloadConversation(listView, true, 1, 0, 0, showInstruction);
+        downloadConversation = new DownloadConversation(listView, true, 1, 0, 0, showInstruction);
         downloadConversation.execute();
     }
 
@@ -357,7 +357,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             loadMore = false;
-           // Toast.makeText(context,R.string.quick_conversation_loading, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(context,R.string.quick_conversation_loading, Toast.LENGTH_SHORT).show();
         }
 
         protected Long doInBackground(Void... voids) {
@@ -408,8 +408,10 @@ public class MobiComQuickConversationFragment extends Fragment {
             } else {
                 listView.setSelection(firstVisibleItem);
             }
-            String errorMessage = getResources().getString(R.string.internet_connection_not_available);
-            Utils.isNetworkAvailable(getActivity(), errorMessage);
+            if (isAdded()) {
+                String errorMessage = getResources().getString(R.string.internet_connection_not_available);
+                Utils.isNetworkAvailable(getActivity(), errorMessage);
+            }
             loadMore = !nextMessageList.isEmpty();
 
             if (context != null && showInstruction) {
