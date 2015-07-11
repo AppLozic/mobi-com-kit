@@ -34,7 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mobicomkit.quickconversion.ConversionActivity"
+        <activity
+            android:name="com.mobicomkit.quickconversion.ConversionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:parentActivityName=".MainActivity"
@@ -111,7 +112,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+            android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <receiver
             android:name="com.mobicomkit.sample.pushnotification.GcmBroadcastReceiver"
@@ -146,7 +147,12 @@
         <meta-data
             android:name="com.mobicomkit.server.url"
             android:value="@string/default_server_url" />
-
+        <meta-data
+            android:name="main_folder_name"
+            android:value="@string/default_meadia_location_folder" />
+        <meta-data
+            android:name="com.mobicomkit.take.order.number"
+            android:value="@string/take_order_number" />
 
     </application>
 

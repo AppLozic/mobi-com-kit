@@ -37,7 +37,7 @@ import com.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
+import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
@@ -461,7 +461,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
     private void showFullView(Message smListItem) {
         Intent intent = new Intent(context, FullScreenImageActivity.class);
         intent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(smListItem, Message.class));
-        ((MobiComActivity) context).startActivityForResult(intent, MobiComActivity.REQUEST_CODE_FULL_SCREEN_ACTION);
+        ((MobiComKitActivityInterface) context).startActivityForResult(intent, MobiComKitActivityInterface.REQUEST_CODE_FULL_SCREEN_ACTION);
     }
 
     @Override

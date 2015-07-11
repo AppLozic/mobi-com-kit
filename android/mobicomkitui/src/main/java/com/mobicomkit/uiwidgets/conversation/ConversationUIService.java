@@ -2,7 +2,6 @@ package com.mobicomkit.uiwidgets.conversation;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -45,16 +44,7 @@ public class ConversationUIService {
     public static final int REQUEST_CODE_CONTACT_GROUP_SELECTION = 101;
     public static final int INSTRUCTION_DELAY = 5000;
 
-    private Context context;
     private FragmentActivity fragmentActivity;
-
-    public ConversationUIService() {
-
-    }
-
-    public ConversationUIService(Context context) {
-        this.context = context;
-    }
 
     public ConversationUIService(FragmentActivity fragmentActivity) {
         this.fragmentActivity = fragmentActivity;
@@ -99,12 +89,12 @@ public class ConversationUIService {
             Uri selectedFileUri = (intent == null ? null : intent.getData());
             if (selectedFileUri == null) {
                 selectedFileUri = getConversationFragment().getMultimediaOptionFragment().getCapturedImageUri();
-                ImageUtils.addImageToGallery(FilePathFinder.getPath(context, selectedFileUri), context);
+                ImageUtils.addImageToGallery(FilePathFinder.getPath(fragmentActivity, selectedFileUri), fragmentActivity);
             }
 
             if (selectedFileUri == null) {
                 Bitmap photo = (Bitmap) intent.getExtras().get("data");
-                selectedFileUri = ImageUtils.getImageUri(context, photo);
+                selectedFileUri = ImageUtils.getImageUri(fragmentActivity, photo);
             }
             getConversationFragment().loadFile(selectedFileUri);
             Log.i(TAG, "File uri: " + selectedFileUri);
@@ -173,7 +163,7 @@ public class ConversationUIService {
     }
 
     public void syncMessages(Message message, String keyString) {
-        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(context).getCountryCode());
+        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(fragmentActivity).getCountryCode());
 
         if (BroadcastService.isIndividual()) {
             ConversationFragment conversationFragment = getConversationFragment();
@@ -206,7 +196,7 @@ public class ConversationUIService {
         if (!BroadcastService.isIndividual()) {
             return;
         }
-        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(context).getCountryCode());
+        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(fragmentActivity).getCountryCode());
         ConversationFragment conversationFragment = getConversationFragment();
         if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
                 conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
@@ -301,40 +291,43 @@ public class ConversationUIService {
                 //Todo: show warning that the user doesn't have any number stored.
                 return;
             }
-            contact = ContactUtils.getContact(context, contactId);
+            contact = ContactUtils.getContact(fragmentActivity, contactId);
         }
 
         Long groupId = intent.getLongExtra("groupId", -1);
         String groupName = intent.getStringExtra("groupName");
         if (groupId != -1) {
-            group = GroupUtils.fetchGroup(context, groupId, groupName);
+            group = GroupUtils.fetchGroup(fragmentActivity, groupId, groupName);
         }
 
         String contactNumber = intent.getStringExtra("contactNumber");
+        Log.d("UIService:","value is ="+contactNumber);
+
         boolean firstTimeMTexterFriend = intent.getBooleanExtra("firstTimeMTexterFriend", false);
         if (!TextUtils.isEmpty(contactNumber)) {
-            contact = ContactUtils.getContact(context, contactNumber);
+            contact = ContactUtils.getContact(fragmentActivity, contactNumber);
             if (BroadcastService.isIndividual()) {
+
                 getConversationFragment().setFirstTimeMTexterFriend(firstTimeMTexterFriend);
             }
         }
 
         String userId = intent.getStringExtra("userId");
+        Log.d("userId","UserID="+userId);
         if (!TextUtils.isEmpty(userId)) {
             contact = new Contact(fragmentActivity, userId);
-            contact.setUserId(userId);
             //Todo: Load contact details from server.
         }
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);
         if (!TextUtils.isEmpty(messageJson)) {
             Message message = (Message) GsonUtils.getObjectFromJson(messageJson, Message.class);
-            contact = ContactUtils.getContact(context, message.getTo());
+            contact = ContactUtils.getContact(fragmentActivity, message.getTo());
         }
 
         boolean support = intent.getBooleanExtra(Support.SUPPORT_INTENT_KEY, false);
         if (support) {
-            contact = new Support(context).getSupportContact();
+            contact = new Support(fragmentActivity).getSupportContact();
         }
 
         if (contact != null) {

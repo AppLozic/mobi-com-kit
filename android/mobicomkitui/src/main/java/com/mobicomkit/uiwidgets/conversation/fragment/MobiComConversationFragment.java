@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -61,7 +62,6 @@ import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.activity.SpinnerNavItem;
-import com.mobicomkit.uiwidgets.conversation.adapter.ConversationAdapter;
 import com.mobicomkit.uiwidgets.conversation.adapter.DetailedConversationAdapter;
 import com.mobicomkit.uiwidgets.conversation.adapter.TitleNavigationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
@@ -167,8 +167,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         deliveredIcon = getResources().getDrawable(R.drawable.ic_action_message_delivered);
 
         if (contact != null && !TextUtils.isEmpty(contact.getContactNumber())) {
-            BroadcastService.currentUserId = contact.getUserId();
-            loadConversation(contact);
+                loadConversation(contact);
         }
 
         listView.setLongClickable(true);
@@ -292,6 +291,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                                          }
                                      }
         );
+
         //Adding fragment for emoticons...
 //        //Fragment emojiFragment = new EmojiconsFragment(this, this);
 //        Fragment emojiFragment = new EmojiconsFragment();
@@ -324,7 +324,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                 conversationAdapter.notifyDataSetChanged();
                 if (messageList.isEmpty()) {
                     emptyTextView.setVisibility(View.VISIBLE);
-                    ((MobiComActivity) getActivity()).removeConversation(message, contact.getFormattedContactNumber());
+                    ((MobiComKitActivityInterface) getActivity()).removeConversation(message, contact.getFormattedContactNumber());
                 }
                 break;
             }
@@ -460,6 +460,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         if (downloadConversation != null) {
             downloadConversation.cancel(true);
         }
+        BroadcastService.currentUserId = contact.getContactIds();
         /*
         filePath = null;*/
         if (TextUtils.isEmpty(filePath)) {
@@ -805,6 +806,12 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        BroadcastService.currentUserId = null;
+    }
+
     public void updateTitle() {
         String title = null;
         //  if (!((MobiComActivity) getActivity()).getSlidingPaneLayout().isOpen()) {
@@ -815,7 +822,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
         //}
         if (title != null) {
-            //((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
+            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
         }
     }
 

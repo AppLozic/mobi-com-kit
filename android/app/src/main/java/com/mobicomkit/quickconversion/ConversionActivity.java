@@ -19,7 +19,7 @@ import com.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.sample.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
-import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;
+import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiverForFragments;
 import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
@@ -34,9 +34,10 @@ import net.mobitexter.mobiframework.people.contact.Contact;
  */
 public class ConversionActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
 
-    ConversationFragment conversation;
-    QuickConversationFragment quickConversationFragment;
-    MobiComKitBroadcastReceiver mobiComKitBroadcastReceiver;
+    protected ConversationFragment conversation;
+    protected QuickConversationFragment quickConversationFragment;
+    protected MobiComKitBroadcastReceiverForFragments mobiComKitBroadcastReceiver;
+    protected ActionBar mActionBar;
     FragmentActivity fragmentActivity;
 
     public ConversionActivity() {
@@ -70,16 +71,30 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        registerMobiTexterBroadcastReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mobiComKitBroadcastReceiver);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mActionBar = getSupportActionBar();
+
         setContentView(R.layout.quickconversion_activity);
         quickConversationFragment = new QuickConversationFragment();
-        conversation = (ConversationFragment) getSupportFragmentManager().findFragmentById(R.id.conversation_fragment_pane);
+        conversation = new ConversationFragment();
 
-        addFragment(this, quickConversationFragment, "QuickConverationFragment");
+        addFragment(this, quickConversationFragment, "QuickConversationFragment");
 
-        mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversation);
+        mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiverForFragments(this);
         InstructionUtil.showInfo(this, R.string.info_message_sync, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -89,12 +104,17 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
                 if (getSupportFragmentManager().getBackStackEntryCount() == 0) finish();
             }
         });
+        mActionBar.setTitle(R.string.conversations);
+
+        new ConversationUIService(this).checkForStartNewConversation(getIntent());
+    }
+
+    protected void registerMobiTexterBroadcastReceiver() {
+        registerReceiver(mobiComKitBroadcastReceiver, BroadcastService.getIntentFilter());
     }
 
     private void showActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.conversations);
+        mActionBar.setDisplayShowTitleEnabled(true);
     }
 
     @Override
@@ -141,7 +161,6 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     @Override
     public void onQuickConversationFragmentItemClick(View view, Contact contact) {
 
-        conversation = new ConversationFragment();
         addFragment(this, conversation, "Conversation");
         conversation.loadConversation(contact);
     }
@@ -158,7 +177,11 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Boolean takeOrder = getIntent().getBooleanExtra("takeOrder", false);
+        if (takeOrder)
+            this.finish();
+        else
+            super.onBackPressed();
     }
 
     @Override
@@ -169,6 +192,6 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
     @Override
     public void removeConversation(Message message, String formattedContactNumber) {
-
+        new ConversationUIService(this).removeConversation(message, formattedContactNumber);
     }
 }
