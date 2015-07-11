@@ -40,6 +40,13 @@ public class Contact {
 
     private String userId;
 
+    @Expose
+    private String imageURL;
+    @Expose
+    private String localImageUrl;
+    @Expose
+    private String emailId;
+
     public Contact() {
 
     }
@@ -252,5 +259,29 @@ public class Contact {
 
     public String getContactIds() {
         return TextUtils.isEmpty(getUserId()) ? getFormattedContactNumber() : getUserId();
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getLocalImageUrl() {
+        return localImageUrl;
+    }
+
+    public void setLocalImageUrl(String localImageUrl) {
+        this.localImageUrl = localImageUrl;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 }

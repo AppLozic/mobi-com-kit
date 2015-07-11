@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobicomkit.api.MobiComKitConstants;
-import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.attachment.AttachmentManager;
 import com.mobicomkit.api.attachment.AttachmentView;
 import com.mobicomkit.api.attachment.FileClientService;
@@ -33,12 +32,13 @@ import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
+import com.mobicomkit.contact.AppContactService;
+import com.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 
-import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
@@ -49,7 +49,6 @@ import net.mobitexter.mobiframework.emoticon.EmoticonUtils;
 import net.mobitexter.mobiframework.file.FileUtils;
 import net.mobitexter.mobiframework.json.GsonUtils;
 import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
 import net.mobitexter.mobiframework.people.group.Group;
 
 import java.io.File;
@@ -78,6 +77,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
     private EmojiconHandler emojiconHandler;
     private FileClientService fileClientService;
     private MessageDatabaseService messageDatabaseService;
+    private BaseContactService contactService;
 
     static {
         messageTypeColorMap.put(Message.MessageType.INBOX.getValue(), R.color.message_type_inbox);
@@ -100,7 +100,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         this(context, textViewResourceId, messageList, contact, null, messageIntentClass, emojiconHandler);
     }
 
-    public DetailedConversationAdapter(final Context context, int textViewResourceId, List<Message> messageList, Contact contact, Group group, Class messageIntentClass, EmojiconHandler emojiconHandler) {
+    public DetailedConversationAdapter(final Context context, int textViewResourceId, List<Message> messageList, final Contact contact, Group group, Class messageIntentClass, EmojiconHandler emojiconHandler) {
         super(context, textViewResourceId, messageList);
         this.messageIntentClass = messageIntentClass;
         this.context = context;
@@ -111,10 +111,11 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         this.fileClientService = new FileClientService(context);
         this.messageDatabaseService = new MessageDatabaseService(context);
         this.conversationService = new MobiComConversationService(context);
+        this.contactService =  new AppContactService(context);
         contactImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
             @Override
             protected Bitmap processBitmap(Object data) {
-                return ContactUtils.loadContactPhoto((Uri) data, getImageSize(), (Activity) getContext());
+                return contactService.downloadContactImage((Activity) getContext(), (Contact) data );
             }
         };
         contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
@@ -152,18 +153,19 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         if (!TextUtils.isEmpty(message.getContactIds())) {
             userIds = Arrays.asList(message.getContactIds().split("\\s*,\\s*"));
         }
-        final Contact contactReceiver;
+        final Contact receiverContact;
         if (group != null) {
-            contactReceiver = null;
+            receiverContact = null;
         } else if (individual) {
-            contactReceiver = contact;
+            receiverContact = contact;
             contact.setContactNumber(items.get(0));
             if (userIds != null) {
-                contact.setUserId(userIds.get(0));
+               // contact.setUserId(userIds.get(0));
+                contact = contactService.getContactById(userIds.get(0));
             }
-            contact.setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(items.get(0), MobiComUserPreference.getInstance(context).getCountryCode()));
+            //contact.setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(items.get(0), MobiComUserPreference.getInstance(context).getCountryCode()));
         } else {
-            contactReceiver = ContactUtils.getContact(getContext(), items.get(0));
+            receiverContact = contactService.getContactById(userIds.get(0));
         }
 
         if (message != null) {
@@ -251,9 +253,9 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                 deliveryStatus.setText("via Carrier");
             }
 
-            if (contactReceiver != null) {
+            if (receiverContact != null) {
 
-                Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactReceiver.getContactId()));
+                Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(receiverContact.getContactId()));
 
                 if (message.isTypeOutbox()) {
                     Uri imageUri = Utils.getUserImageUri(context);
@@ -262,12 +264,12 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                     }
 
                 } else {
-                    contactImageLoader.loadImage(contactUri, contactImage, alphabeticTextView);
+                    contactImageLoader.loadImage(receiverContact, contactImage, alphabeticTextView);
                 }
 
                 if (alphabeticTextView != null) {
-                    String contactNumber = contactReceiver.getContactNumber().toUpperCase();
-                    char firstLetter = !TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);
+                    String contactNumber = receiverContact.getContactNumber().toUpperCase();
+                    char firstLetter = !TextUtils.isEmpty(receiverContact.getFullName()) ? receiverContact.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);
                     if (firstLetter != '+') {
                         alphabeticTextView.setText(String.valueOf(firstLetter));
                     } else if (contactNumber.length() >= 2) {
