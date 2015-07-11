@@ -30,7 +30,7 @@ dependencies {
 
 
 group = 'net.mobitexter.mobiframework'
-version = '1.12'
+version = '1.13'
 
 def siteUrl = 'https://github.com/MobiComKit/releases'
 def gitUrl = 'https://github.com/MobiComKit/releases.git'
@@ -41,7 +41,7 @@ bintray {
 
     configurations = ['archives'] //When uploading configuration files
     pkg {
-        repo = 'MobiFramework'
+        repo = 'maven'
         name = project.name
         desc = 'MobiFramework library'
         websiteUrl = siteUrl
