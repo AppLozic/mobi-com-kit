@@ -149,7 +149,7 @@
             android:value="@string/default_server_url" />
         <meta-data
             android:name="main_folder_name"
-            android:value="@string/main_folder_location_name_of_your_app" />
+            android:value="@string/default_meadia_location_folder" />
 
     </application>
 
