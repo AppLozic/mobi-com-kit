@@ -37,5 +37,7 @@
     <string name="support_phone_number">+918042028425</string>
     <string name="default_server_url">https://mobi-com.appspot.com</string>
     <string name="default_meadia_location_folder">/Applozic</string>
+    <string name="order_sample_button">Order taking sample</string>
+    <string name="take_order_number">mobishop</string>
 
 </resources>
