@@ -32,6 +32,10 @@ public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
 
     public static final String DATABASE_NAME = "yourappdb";
+    public static final String MOBICOMKIT = "mobicomkit";
+    public static final String USER_ID = "userId";
+    public static final String TAKE_ORDER = "takeOrder";
+    public static final String TAKE_ORDER_USERID_METADATA = "com.mobicomkit.take.order.userId";
     public static final int DATABASE_VERSION = 1;
 
     /**
@@ -110,16 +114,16 @@ public class MainActivity extends MobiComActivityForFragment
     }
 
     public void startChat(View v) {
-        Intent i = new Intent(this, SlidingPaneActivity.class);
-        i.putExtra("userId", "mobicomkit");
-        startActivity(i);
+        Intent chatIntent = new Intent(this, SlidingPaneActivity.class);
+        chatIntent.putExtra(USER_ID, MOBICOMKIT);
+        startActivity(chatIntent);
     }
 
     public void takeOrder(View v) {
-        Intent i = new Intent(this, ConversionActivity.class);
-        i.putExtra("takeOrder", true);
-        i.putExtra("userId", Utils.getMetaDataValue(this, "com.mobicomkit.take.order.number"));
-        startActivity(i);
+        Intent takeOrderIntent = new Intent(this, ConversionActivity.class);
+        takeOrderIntent.putExtra(TAKE_ORDER, true);
+        takeOrderIntent.putExtra(USER_ID, Utils.getMetaDataValue(this, TAKE_ORDER_USERID_METADATA));
+        startActivity(takeOrderIntent);
     }
 
     public void onSectionAttached(int number) {

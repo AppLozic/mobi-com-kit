@@ -39,6 +39,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     protected MobiComKitBroadcastReceiverForFragments mobiComKitBroadcastReceiver;
     protected ActionBar mActionBar;
     FragmentActivity fragmentActivity;
+    public static final String TAKE_ORDER = "takeOrder";
 
     public ConversionActivity() {
 
@@ -177,7 +178,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
 
     @Override
     public void onBackPressed() {
-        Boolean takeOrder = getIntent().getBooleanExtra("takeOrder", false);
+        Boolean takeOrder = getIntent().getBooleanExtra(TAKE_ORDER, false);
         if (takeOrder)
             this.finish();
         else
