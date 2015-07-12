@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mobicomkit.api.account.user.UserLoginTask;
 import com.mobicomkit.sample.pushnotification.GCMRegistrationUtils;
 import com.mobicomkit.api.account.register.RegisterUserClientService;
 
@@ -77,7 +78,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-       mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,7 +172,38 @@ public class LoginActivity extends Activity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(userId, email, password, phoneNumber);
+
+            // callback for login process
+            UserLoginTask.TaskListener listener = new UserLoginTask.TaskListener() {
+                @Override
+                public void onFinished(Boolean result, Exception exception) {
+                    // Do Something after the task has finished
+                    mAuthTask = null;
+                    showProgress(false);
+
+                    if (result) {
+                        //Start GCM registartion....
+                        GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
+                        gcmRegistrationUtils.setUpGcmNotification();
+                        finish();
+                    } else {
+                        mEmailSignInButton.setVisibility(View.VISIBLE);
+                        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+                        alertDialog.setTitle(getString(R.string.text_alert));
+                        alertDialog.setMessage(exception.toString());
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
+                }
+            };
+
+            mAuthTask = new UserLoginTask(userId, email, password, phoneNumber, listener, this);
+
             mEmailSignInButton.setVisibility(View.INVISIBLE);
             mAuthTask.execute((Void) null);
 
@@ -260,75 +292,6 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPostExecute(List<String> emailAddressCollection) {
             addEmailsToAutoComplete(emailAddressCollection);
-        }
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mUserId;
-        private final String mEmail;
-        private final String mPassword;
-        private final String mPhoneNumber;
-        private Exception mException;
-
-        UserLoginTask(String userId, String email, String password, String phoneNumber) {
-            mUserId = userId;
-            mEmail = email;
-            mPassword = password;
-            mPhoneNumber = phoneNumber;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            try {
-                new RegisterUserClientService(LoginActivity.this).createAccount(mEmail, mUserId, mPhoneNumber, "");
-            } catch (Exception e) {
-                e.printStackTrace();
-                mException = e;
-                return false;
-            }
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                //Start GCM registartion....
-                GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
-                gcmRegistrationUtils.setUpGcmNotification();
-                finish();
-            } else {
-
-                AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-                alertDialog.setTitle(getString(R.string.text_alert));
-                alertDialog.setMessage(mException.toString());
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
-
-            }
-
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
         }
     }
 }
