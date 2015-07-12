@@ -151,8 +151,8 @@
             android:name="main_folder_name"
             android:value="@string/default_meadia_location_folder" />
         <meta-data
-            android:name="com.mobicomkit.take.order.number"
-            android:value="@string/take_order_number" />
+            android:name="com.mobicomkit.take.order.userId"
+            android:value="@string/take_order_userid" />
 
     </application>
 
