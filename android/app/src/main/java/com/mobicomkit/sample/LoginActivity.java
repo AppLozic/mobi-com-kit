@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mobicomkit.api.account.user.User;
 import com.mobicomkit.api.account.user.UserLoginTask;
 import com.mobicomkit.sample.pushnotification.GCMRegistrationUtils;
 import com.mobicomkit.api.account.register.RegisterUserClientService;
@@ -202,11 +203,15 @@ public class LoginActivity extends Activity {
                 }
             };
 
-            mAuthTask = new UserLoginTask(userId, email, password, phoneNumber, listener, this);
+            User user = new User();
+            user.setUserId(userId);
+            user.setEmailId(email);
+            user.setPassword(password);
+            user.setContactNumber(phoneNumber);
 
+            mAuthTask = new UserLoginTask(user, listener, this);
             mEmailSignInButton.setVisibility(View.INVISIBLE);
             mAuthTask.execute((Void) null);
-
         }
     }
 

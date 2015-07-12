@@ -27,11 +27,11 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
     private final Context context;
     private Exception mException;
 
-    public UserLoginTask(String userId, String email, String password, String phoneNumber, TaskListener listener, Context context) {
-        mUserId = userId;
-        mEmail = email;
-        mPassword = password;
-        mPhoneNumber = phoneNumber;
+    public UserLoginTask(User user, TaskListener listener, Context context) {
+        mUserId = user.getUserId();
+        mEmail = user.getEmailId();
+        mPassword = user.getPassword();
+        mPhoneNumber = user.getContactNumber();
         this.taskListener = listener;
         this.context = context;
     }
