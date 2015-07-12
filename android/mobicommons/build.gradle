@@ -1,7 +1,4 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'maven-publish'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 21
@@ -26,87 +23,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.googlecode.libphonenumber:libphonenumber:7.0.1'
-}
-
-
-group = 'net.mobitexter.mobiframework'
-version = '1.13'
-
-def siteUrl = 'https://github.com/MobiComKit/releases'
-def gitUrl = 'https://github.com/MobiComKit/releases.git'
-
-bintray {
-    user = 'put_user_name_here'
-    key = 'put_key_here'
-
-    configurations = ['archives'] //When uploading configuration files
-    pkg {
-        repo = 'maven'
-        name = project.name
-        desc = 'MobiFramework library'
-        websiteUrl = siteUrl
-        issueTrackerUrl = 'https://github.com/MobiComKit/releases/issues'
-        vcsUrl = gitUrl
-        licenses = ['Apache-2.0']
-        labels = ['aar', 'android', 'mobicomkit']
-        publicDownloadNumbers = true
-    }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name 'MobiCommons'
-                url siteUrl
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'devashish.mamgain'
-                        name 'Devashish Mamgain'
-                        email 'devashish.mamgain@gmail.com'
-                    }
-                }
-                scm {
-                    connection 'https://github.com/MobiComKit/releases.git'
-                    developerConnection 'https://github.com/MobiComKit/releases.git'
-                    url siteUrl
-
-                }
-            }
-        }
-    }
-}
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-task findConventions << {
-    println project.getConvention()
 }
