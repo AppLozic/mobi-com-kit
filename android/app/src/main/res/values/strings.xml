@@ -40,4 +40,12 @@
     <string name="order_sample_button">Order taking sample</string>
     <string name="take_order_number">mobishop</string>
 
+    <!-- support or admin  contact information ...please add details here  -->
+    <string name="support_contact_display_name">AppLozic Support</string>
+    <string name="support_contact_userId">applozic.connect</string>
+    <string name="support_contact_emailId">applozic.connect@gmail.com</string>
+    <string name="support_contact_number">918042028425</string>
+    <string name="support_contact_image_url">http://www.mobitexter.net/resources/images/mt_logo_white.png</string>
+
+
 </resources>

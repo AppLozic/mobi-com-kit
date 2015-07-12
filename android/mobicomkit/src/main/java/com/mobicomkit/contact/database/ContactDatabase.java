@@ -103,7 +103,6 @@ public class ContactDatabase {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = prepareContactValues(contact);
-        //We need to decide
         dbHelper.getWritableDatabase().insert(CONTACT, null, contentValues);
         dbHelper.close();
     }

@@ -105,7 +105,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 userIds = Arrays.asList(message.getContactIds().split("\\s*,\\s*"));
             }
             //contactReceiver = ContactUtils.getContact(getContext(), items.get(0));
-            final Contact contactReceiver = contactService.getContactById(userIds.get(0));
+            final Contact contactReceiver = contactService.getContactWithFallback(userIds.get(0));
             if (contactReceiver != null) {
                 String contactInfo = TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getContactNumber() : contactReceiver.getFullName();
                 if (items.size() > 1) {

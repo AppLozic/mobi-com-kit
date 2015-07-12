@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.mobicomkit.api.MobiComKitClientService;
@@ -13,6 +14,7 @@ import com.mobicomkit.contact.database.ContactDatabase;
 
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.people.contact.Contact;
+import net.mobitexter.mobiframework.people.contact.ContactUtils;
 
 import java.io.FileNotFoundException;
 import java.net.HttpURLConnection;
@@ -56,6 +58,7 @@ public class AppContactService implements BaseContactService {
     }
 
 
+
     @Override
     public List<Contact> getAll() {
         return contactDatabase.getAllContact();
@@ -63,7 +66,16 @@ public class AppContactService implements BaseContactService {
 
     @Override
     public Contact getContactById(String contactId) {
-        return contactDatabase.getContactById(contactId);
+        return  contactDatabase.getContactById(contactId);
+    }
+
+
+    public Contact getContactWithFallback(String contactId) {
+        Contact contact = getContactById(contactId);
+        if (contact ==null ){
+            contact = ContactUtils.getContact(context,contactId);
+        }
+        return contact;
     }
 
     @Override
@@ -71,10 +83,24 @@ public class AppContactService implements BaseContactService {
          contactDatabase.updateContact(contact);
     }
 
+    @Override
+    public void upsert(Contact contact) {
+        if ( contactDatabase.getContactById(contact.getUserId())==null ){
+             contactDatabase.addContact(contact);
+        }else{
+            contactDatabase.updateContact(contact);
+        }
+
+    }
+
 
     @Override
     public Bitmap downloadContactImage(Context context, Contact contact) {
             try {
+                if(TextUtils.isEmpty( contact.getImageURL() ) && TextUtils.isEmpty(contact.getLocalImageUrl())){
+                    Log.i(TAG, " concat image url is not found...");
+                    return null;
+                }
                 Bitmap attachedImage = null;
                 String contactImageURL = contact.getImageURL();
                 String contentType = "image";
@@ -101,7 +127,6 @@ public class AppContactService implements BaseContactService {
                 }
                 // Calculate inSampleSize
                 options.inSampleSize = ImageUtils.calculateInSampleSize(options, 100, 50);
-
                 // Decode bitmap with inSampleSize set
                 options.inJustDecodeBounds = false;
                 attachedImage = BitmapFactory.decodeFile(imageLocalPath, options);

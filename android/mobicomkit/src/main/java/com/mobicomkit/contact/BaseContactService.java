@@ -24,7 +24,11 @@ public interface BaseContactService {
 
     Contact getContactById(String contactId);
 
+    Contact getContactWithFallback(String contactId);
+
     void updateContact(Contact contact);
+
+    void upsert(Contact contact);
 
     Bitmap downloadContactImage(Context context, Contact contact);
 

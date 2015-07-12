@@ -43,7 +43,17 @@ public class DeviceContactService implements BaseContactService {
     }
 
     @Override
+    public Contact getContactWithFallback(String contactId) {
+        return null;
+    }
+
+    @Override
     public void updateContact(Contact contact) {
+
+    }
+
+    @Override
+    public void upsert(Contact contact) {
 
     }
 

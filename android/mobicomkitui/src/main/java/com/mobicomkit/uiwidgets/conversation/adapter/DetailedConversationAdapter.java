@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobicomkit.api.MobiComKitConstants;
+import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.attachment.AttachmentManager;
 import com.mobicomkit.api.attachment.AttachmentView;
 import com.mobicomkit.api.attachment.FileClientService;
@@ -39,6 +40,7 @@ import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 
+import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
@@ -78,7 +80,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
     private FileClientService fileClientService;
     private MessageDatabaseService messageDatabaseService;
     private BaseContactService contactService;
-
+    private Contact senderContact;
     static {
         messageTypeColorMap.put(Message.MessageType.INBOX.getValue(), R.color.message_type_inbox);
         messageTypeColorMap.put(Message.MessageType.OUTBOX.getValue(), R.color.message_type_outbox);
@@ -112,6 +114,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         this.messageDatabaseService = new MessageDatabaseService(context);
         this.conversationService = new MobiComConversationService(context);
         this.contactService =  new AppContactService(context);
+        this.senderContact = contactService.getContactById(MobiComUserPreference.getInstance(context).getUserId());
         contactImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
             @Override
             protected Bitmap processBitmap(Object data) {
@@ -160,12 +163,12 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
             receiverContact = contact;
             contact.setContactNumber(items.get(0));
             if (userIds != null) {
-               // contact.setUserId(userIds.get(0));
-                contact = contactService.getContactById(userIds.get(0));
+                contact.setUserId(userIds.get(0));
             }
-            //contact.setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(items.get(0), MobiComUserPreference.getInstance(context).getCountryCode()));
+            contact.setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(items.get(0), MobiComUserPreference.getInstance(context).getCountryCode()));
         } else {
-            receiverContact = contactService.getContactById(userIds.get(0));
+            //receiverContact = ContactUtils.getContact(getContext(), items.get(0));
+            receiverContact =contactService.getContactById(userIds.get(0));
         }
 
         if (message != null) {
@@ -254,19 +257,11 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
             }
 
             if (receiverContact != null) {
-
-                Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(receiverContact.getContactId()));
-
                 if (message.isTypeOutbox()) {
-                    Uri imageUri = Utils.getUserImageUri(context);
-                    if (imageUri != null) {
-                        contactImage.setImageURI(imageUri);
-                    }
-
+                    contactImageLoader.loadImage(senderContact,contactImage, alphabeticTextView);
                 } else {
                     contactImageLoader.loadImage(receiverContact, contactImage, alphabeticTextView);
                 }
-
                 if (alphabeticTextView != null) {
                     String contactNumber = receiverContact.getContactNumber().toUpperCase();
                     char firstLetter = !TextUtils.isEmpty(receiverContact.getFullName()) ? receiverContact.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);

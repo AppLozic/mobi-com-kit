@@ -241,11 +241,16 @@ public class Contact {
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", emailIds=" + emailIds +
-                ", contactNumber=" + contactNumber +
-                ", formattedContactNumber=" + formattedContactNumber +
                 ", contactNumbers=" + contactNumbers +
                 ", phoneNumbers=" + phoneNumbers +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", formattedContactNumber='" + formattedContactNumber + '\'' +
                 ", contactId=" + contactId +
+                ", fullName='" + fullName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", localImageUrl='" + localImageUrl + '\'' +
+                ", emailId='" + emailId + '\'' +
                 '}';
     }
 
