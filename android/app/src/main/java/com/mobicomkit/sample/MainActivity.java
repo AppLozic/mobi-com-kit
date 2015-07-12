@@ -292,11 +292,7 @@ public class MainActivity extends MobiComActivityForFragment
             contact.setImageURL(getString(R.string.support_contact_image_url));
             contact.setEmailId(getString(R.string.support_contact_emailId));
             appContactService.add(contact);
-        }else {
-            System.out.println("@@contact is added ....");
-
         }
-
     }
 
 }
