@@ -14,14 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
+import com.mobicomkit.contact.AppContactService;
+import com.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
 import net.mobitexter.mobiframework.commons.image.ImageLoader;
@@ -51,6 +51,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
     private Group group;
     private boolean individual;
     String mimeType = "";
+    private BaseContactService contactService;
     private EmojiconHandler emojiconHandler;
 
 
@@ -68,13 +69,13 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
         super(context,  R.layout.mobicom_message_row_view,  messageList);
         this.context = context;
         this.emojiconHandler = emojiconHandler;
+        this.contactService = new AppContactService(context);
         contactImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
             @Override
             protected Bitmap processBitmap(Object data) {
-                return ContactUtils.loadContactPhoto((Uri) data, getImageSize(), (Activity) getContext());
+                return  contactService.downloadContactImage((Activity) getContext(),(Contact)data);
             }
         };
-
         contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
         contactImageLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
         contactImageLoader.setImageFadeIn(false);
@@ -97,13 +98,14 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
             ImageView sentOrReceived = (ImageView) customView.findViewById(R.id.sentOrReceivedIcon);
             TextView attachedFile = (TextView) customView.findViewById(R.id.attached_file);
             final ImageView attachmentIcon = (ImageView) customView.findViewById(R.id.attachmentIcon);
-            final Contact contactReceiver;
+
             List<String> items = Arrays.asList(message.getTo().split("\\s*,\\s*"));
             List<String> userIds = null;
             if (!TextUtils.isEmpty(message.getContactIds())) {
                 userIds = Arrays.asList(message.getContactIds().split("\\s*,\\s*"));
             }
-            contactReceiver = ContactUtils.getContact(getContext(), items.get(0));
+            //contactReceiver = ContactUtils.getContact(getContext(), items.get(0));
+            final Contact contactReceiver = contactService.getContactWithFallback(userIds.get(0));
             if (contactReceiver != null) {
                 String contactInfo = TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getContactNumber() : contactReceiver.getFullName();
                 if (items.size() > 1) {
@@ -114,13 +116,13 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 smReceivers.setText(contactInfo);
             }
 
-            Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactReceiver.getContactId()));
+            //Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactReceiver.getContactId()));
             if (contactReceiver != null && new Support(context).isSupportNumber(contactReceiver.getContactNumber()) && (!message.isTypeOutbox())) {
                 contactImage.setImageResource(R.drawable.ic_launcher);
             } else {
-                contactImageLoader.loadImage(contactUri, contactImage, alphabeticTextView);
+                contactImageLoader.loadImage(contactReceiver, contactImage, alphabeticTextView);
             }
-            if (alphabeticTextView != null) {
+            if (alphabeticTextView != null && contactReceiver!=null) {
                 String contactNumber = contactReceiver.getContactNumber().toUpperCase();
                 char firstLetter = !TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);
                 if (firstLetter != '+') {

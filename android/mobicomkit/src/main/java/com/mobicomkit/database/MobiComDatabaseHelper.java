@@ -13,6 +13,8 @@ import net.mobitexter.mobiframework.commons.core.utils.DBUtils;
 
 public class MobiComDatabaseHelper extends SQLiteOpenHelper {
 
+    public static final int DB_VERSION = 2;
+
     public static final String _ID = "_id";
     public static final String SMS_KEY_STRING = "smsKeyString";
     public static final String STORE_ON_DEVICE_COLUMN = "storeOnDevice";
@@ -23,11 +25,23 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
     public static final String TIME_TO_LIVE = "timeToLive";
     public static final String CONTACTID = "contactId";
     public static final String SCHEDULE_SMS_TABLE_NAME = "ScheduleSMS";
+
+    public static final String FULL_NAME = "fullName";
+
+    public static final String CONTACT_NO = "contactNO";
+    public static final String DISPLAY_NAME = "displayName";
+    public static final String CONTACT_IMAGE_LOCAL_URI = "contactImageLocalURI";
+    public static final String CONTACT_IMAGE_URL = "contactImageURL";
+    public static final String USERID = "userId";
+    public static final String EMAIL = "email";
+
+
     public static final String CREATE_SCHEDULE_SMS_TABLE = "create table " + SCHEDULE_SMS_TABLE_NAME + "( "
             + _ID + " integer primary key autoincrement  ," + SMS
             + " text not null, " + TIMESTAMP + " INTEGER ,"
             + TO_FIELD + " varchar(20) not null, " + SMS_TYPE + " varchar(20) not null ," + CONTACTID + " varchar(20) , " + SMS_KEY_STRING + " varChar(50), " + STORE_ON_DEVICE_COLUMN + " INTEGER DEFAULT 1, source INTEGER, timeToLive integer) ;";
-    public static final int DB_VERSION = 2;
+
+
     public static final String CREATE_SMS_TABLE = "create table sms ( "
             + "id integer primary key autoincrement, "
             + "keyString var(100), "
@@ -54,6 +68,16 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
             + "blobKeyString varchar(2000), "
             + "canceled integer default 0, "
             + "UNIQUE (keyString, contactNumbers))";
+
+    private static final String CREATE_CONTACT_TABLE = " CREATE TABLE contact ( " +
+            USERID + " VARCHAR(50) primary key, "
+            + FULL_NAME + " VARCHAR(200), "
+            + CONTACT_NO + " VARCHAR(15), "
+            + DISPLAY_NAME + " VARCHAR(25), "
+            + CONTACT_IMAGE_URL + " VARCHAR(200), "
+            + CONTACT_IMAGE_LOCAL_URI + " VARCHAR(200), "
+            + EMAIL + " VARCHAR(100) "
+            + " ) ";
 
     private static final String CREATE_INDEX_SMS_TYPE = "CREATE INDEX IF NOT EXISTS INDEX_SMS_TYPE ON sms (type)";
     private static final String TAG = "MobiComDatabaseHelper";
@@ -87,6 +111,9 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
         }
         if (!DBUtils.isTableExists(database, SCHEDULE_SMS_TABLE_NAME)) {
             database.execSQL(CREATE_SCHEDULE_SMS_TABLE);
+        }
+        if (!DBUtils.isTableExists(database, "contact")) {
+            database.execSQL(CREATE_CONTACT_TABLE);
         }
         //ALL indexes should go here after creating tables.
         database.execSQL(CREATE_INDEX_SMS_TYPE);

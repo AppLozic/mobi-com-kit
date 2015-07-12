@@ -1,6 +1,7 @@
 package com.mobicomkit.sample;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
+import com.mobicomkit.contact.AppContactService;
 import com.mobicomkit.quickconversion.ConversionActivity;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.UIService;
@@ -26,6 +28,7 @@ import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
+import net.mobitexter.mobiframework.people.contact.Contact;
 
 
 public class MainActivity extends MobiComActivityForFragment
@@ -66,7 +69,7 @@ public class MainActivity extends MobiComActivityForFragment
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
+        buildSupportContactData();
         MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
         if (!userPreference.isRegistered()) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -275,6 +278,21 @@ public class MainActivity extends MobiComActivityForFragment
         fragmentTransaction.commit();
         supportFragmentManager.executePendingTransactions();
         //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
+    }
+
+    private void  buildSupportContactData(){
+        Context context = getApplicationContext();
+        AppContactService appContactService = new AppContactService(context);
+        // avoid each time update ....
+        if( appContactService.getContactById(getString(R.string.support_contact_userId))== null){
+            Contact contact = new Contact();
+            contact.setUserId(getString(R.string.support_contact_userId));
+            contact.setFullName(getString(R.string.support_contact_display_name));
+            contact.setContactNumber(getString(R.string.support_contact_number));
+            contact.setImageURL(getString(R.string.support_contact_image_url));
+            contact.setEmailId(getString(R.string.support_contact_emailId));
+            appContactService.add(contact);
+        }
     }
 
 }
