@@ -21,6 +21,7 @@ import com.mobicomkit.api.MobiComKitConstants;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.broadcast.BroadcastService;
+import com.mobicomkit.contact.AppContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;
@@ -315,8 +316,12 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
 
         String userId = intent.getStringExtra("userId");
         if (!TextUtils.isEmpty(userId)) {
-            contact = new Contact(this, userId);
-            //Todo: Load contact details from server.
+            contact = new AppContactService(this).getContactById(userId);
+            if (contact != null) {
+                contact.processContactNumbers(this);
+            } else {
+                contact = new Contact(this, userId);
+            }
         }
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);

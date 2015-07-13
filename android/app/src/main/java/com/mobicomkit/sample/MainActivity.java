@@ -35,7 +35,7 @@ public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
 
     public static final String DATABASE_NAME = "yourappdb";
-    public static final String MOBICOMKIT = "mobicomkit";
+    public static final String MOBICOMKIT = "applozic.connect";
     public static final String USER_ID = "userId";
     public static final String TAKE_ORDER = "takeOrder";
     public static final String TAKE_ORDER_USERID_METADATA = "com.mobicomkit.take.order.userId";

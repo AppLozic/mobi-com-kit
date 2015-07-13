@@ -19,6 +19,7 @@ import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.broadcast.BroadcastService;
+import com.mobicomkit.contact.AppContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
@@ -315,8 +316,12 @@ public class ConversationUIService {
         String userId = intent.getStringExtra("userId");
         Log.d("userId","UserID="+userId);
         if (!TextUtils.isEmpty(userId)) {
-            contact = new Contact(fragmentActivity, userId);
-            //Todo: Load contact details from server.
+            contact = new AppContactService(fragmentActivity).getContactById(userId);
+            if (contact != null) {
+                contact.processContactNumbers(fragmentActivity);
+            } else {
+                contact = new Contact(fragmentActivity, userId);
+            }
         }
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);

@@ -104,8 +104,9 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
             if (!TextUtils.isEmpty(message.getContactIds())) {
                 userIds = Arrays.asList(message.getContactIds().split("\\s*,\\s*"));
             }
-            //contactReceiver = ContactUtils.getContact(getContext(), items.get(0));
-            final Contact contactReceiver = contactService.getContactWithFallback(userIds.get(0));
+
+            final Contact contactReceiver = getContactReceiver(items, userIds);
+
             if (contactReceiver != null) {
                 String contactInfo = TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getContactNumber() : contactReceiver.getFullName();
                 if (items.size() > 1) {
@@ -185,6 +186,16 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
         }
 
         return customView;
+    }
+
+    private Contact getContactReceiver(List<String> items, List<String> userIds) {
+        if (userIds != null && !userIds.isEmpty()) {
+            return contactService.getContactWithFallback(userIds.get(0));
+        } else if (items != null && !items.isEmpty())  {
+            return ContactUtils.getContact(getContext(), items.get(0));
+        }
+
+        return null;
     }
 
 
