@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import net.mobitexter.mobiframework.people.contact.Contact;
+import net.mobitexter.mobiframework.people.contact.ContactUtils;
 
 import java.util.List;
 
@@ -11,6 +12,12 @@ import java.util.List;
  * Created by adarsh on 7/7/15.
  */
 public class DeviceContactService implements BaseContactService {
+
+    private Context context;
+
+    public DeviceContactService(Context context) {
+        this.context = context;
+    }
 
     @Override
     public void add(Contact contact) {
@@ -59,6 +66,15 @@ public class DeviceContactService implements BaseContactService {
 
     @Override
     public Bitmap downloadContactImage(Context context, Contact contact) {
+        return null;
+    }
+
+    @Override
+    public Contact getContactReceiver(List<String> items, List<String> userIds) {
+        if (items != null && !items.isEmpty()) {
+            return ContactUtils.getContact(context, items.get(0));
+        }
+
         return null;
     }
 

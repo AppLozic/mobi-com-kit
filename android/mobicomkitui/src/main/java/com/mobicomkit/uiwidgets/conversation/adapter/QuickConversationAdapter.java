@@ -3,8 +3,6 @@ package com.mobicomkit.uiwidgets.conversation.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -105,7 +103,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 userIds = Arrays.asList(message.getContactIds().split("\\s*,\\s*"));
             }
 
-            final Contact contactReceiver = getContactReceiver(items, userIds);
+            final Contact contactReceiver = contactService.getContactReceiver(items, userIds);
 
             if (contactReceiver != null) {
                 String contactInfo = TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getContactNumber() : contactReceiver.getFullName();
@@ -187,17 +185,6 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
 
         return customView;
     }
-
-    private Contact getContactReceiver(List<String> items, List<String> userIds) {
-        if (userIds != null && !userIds.isEmpty()) {
-            return contactService.getContactWithFallback(userIds.get(0));
-        } else if (items != null && !items.isEmpty())  {
-            return ContactUtils.getContact(getContext(), items.get(0));
-        }
-
-        return null;
-    }
-
 
 }
 

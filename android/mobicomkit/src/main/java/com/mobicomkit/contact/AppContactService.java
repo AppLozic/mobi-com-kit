@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class AppContactService implements BaseContactService {
 
-    private static final String TAG ="AppContactService" ;
+    private static final String TAG = "AppContactService";
     ContactDatabase contactDatabase;
     Context context;
 
@@ -58,7 +58,6 @@ public class AppContactService implements BaseContactService {
     }
 
 
-
     @Override
     public List<Contact> getAll() {
         return contactDatabase.getAllContact();
@@ -66,28 +65,28 @@ public class AppContactService implements BaseContactService {
 
     @Override
     public Contact getContactById(String contactId) {
-        return  contactDatabase.getContactById(contactId);
+        return contactDatabase.getContactById(contactId);
     }
 
 
     public Contact getContactWithFallback(String contactId) {
         Contact contact = getContactById(contactId);
-        if (contact ==null ){
-            contact = ContactUtils.getContact(context,contactId);
+        if (contact == null) {
+            contact = ContactUtils.getContact(context, contactId);
         }
         return contact;
     }
 
     @Override
     public void updateContact(Contact contact) {
-         contactDatabase.updateContact(contact);
+        contactDatabase.updateContact(contact);
     }
 
     @Override
     public void upsert(Contact contact) {
-        if ( contactDatabase.getContactById(contact.getUserId())==null ){
-             contactDatabase.addContact(contact);
-        }else{
+        if (contactDatabase.getContactById(contact.getUserId()) == null) {
+            contactDatabase.addContact(contact);
+        } else {
             contactDatabase.updateContact(contact);
         }
 
@@ -96,52 +95,62 @@ public class AppContactService implements BaseContactService {
 
     @Override
     public Bitmap downloadContactImage(Context context, Contact contact) {
-            try {
-                if(TextUtils.isEmpty( contact.getImageURL() ) && TextUtils.isEmpty(contact.getLocalImageUrl())){
-                    Log.i(TAG, " concat image url is not found...");
-                    return null;
-                }
-                Bitmap attachedImage = null;
-                String contactImageURL = contact.getImageURL();
-                String contentType = "image";
-                final BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                String imageLocalPath = contact.getLocalImageUrl();
-                if (imageLocalPath != null) {
-                    try {
-                        attachedImage = BitmapFactory.decodeFile(imageLocalPath);
-                    } catch (Exception ex) {
-                        Log.e(TAG, "File not found on local storage: " + ex.getMessage());
-                    }
-                }
-                if (attachedImage == null) {
-                    HttpURLConnection connection = new MobiComKitClientService(context).openHttpConnection(contactImageURL);
-                    if (connection.getResponseCode() == 200) {
-                        attachedImage = BitmapFactory.decodeStream(connection.getInputStream());
-                        imageLocalPath = new FileClientService(context).saveImageToInternalStorage(attachedImage, contact.getUserId(), context, "image");
-                        contact.setLocalImageUrl(imageLocalPath);
-                        updateContact(contact);
-                    } else {
-                        Log.w(TAG, "Download is failed response code is ...." + connection.getResponseCode());
-                    }
-                }
-                // Calculate inSampleSize
-                options.inSampleSize = ImageUtils.calculateInSampleSize(options, 100, 50);
-                // Decode bitmap with inSampleSize set
-                options.inJustDecodeBounds = false;
-                attachedImage = BitmapFactory.decodeFile(imageLocalPath, options);
-                return attachedImage;
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-                Log.e(TAG, "File not found on server: " + ex.getMessage());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Log.e(TAG, "Exception fetching file from server: " + ex.getMessage());
+        try {
+            if (TextUtils.isEmpty(contact.getImageURL()) && TextUtils.isEmpty(contact.getLocalImageUrl())) {
+                Log.i(TAG, " concat image url is not found...");
+                return null;
             }
-
-            return null;
+            Bitmap attachedImage = null;
+            String contactImageURL = contact.getImageURL();
+            String contentType = "image";
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            String imageLocalPath = contact.getLocalImageUrl();
+            if (imageLocalPath != null) {
+                try {
+                    attachedImage = BitmapFactory.decodeFile(imageLocalPath);
+                } catch (Exception ex) {
+                    Log.e(TAG, "File not found on local storage: " + ex.getMessage());
+                }
+            }
+            if (attachedImage == null) {
+                HttpURLConnection connection = new MobiComKitClientService(context).openHttpConnection(contactImageURL);
+                if (connection.getResponseCode() == 200) {
+                    attachedImage = BitmapFactory.decodeStream(connection.getInputStream());
+                    imageLocalPath = new FileClientService(context).saveImageToInternalStorage(attachedImage, contact.getUserId(), context, "image");
+                    contact.setLocalImageUrl(imageLocalPath);
+                    updateContact(contact);
+                } else {
+                    Log.w(TAG, "Download is failed response code is ...." + connection.getResponseCode());
+                }
+            }
+            // Calculate inSampleSize
+            options.inSampleSize = ImageUtils.calculateInSampleSize(options, 100, 50);
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            attachedImage = BitmapFactory.decodeFile(imageLocalPath, options);
+            return attachedImage;
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            Log.e(TAG, "File not found on server: " + ex.getMessage());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.e(TAG, "Exception fetching file from server: " + ex.getMessage());
         }
 
+        return null;
+    }
+
+
+    public Contact getContactReceiver(List<String> items, List<String> userIds) {
+        if (userIds != null && !userIds.isEmpty()) {
+            return getContactWithFallback(userIds.get(0));
+        } else if (items != null && !items.isEmpty()) {
+            return ContactUtils.getContact(context, items.get(0));
+        }
+
+        return null;
+    }
 
 }
 

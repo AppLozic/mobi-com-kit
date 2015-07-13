@@ -35,6 +35,8 @@ import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
+import com.mobicomkit.contact.AppContactService;
+import com.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
@@ -81,6 +83,8 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
     private EmojiconHandler emojiconHandler;
     private FileClientService fileClientService;
     private MessageDatabaseService messageDatabaseService;
+    private BaseContactService contactService;
+
 
     static {
         messageTypeColorMap.put(Message.MessageType.INBOX.getValue(), R.color.message_type_inbox);
@@ -110,6 +114,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         this.contact = contact;
         this.group = group;
         this.emojiconHandler = emojiconHandler;
+        this.contactService = new AppContactService(context);
         this.individual = (contact != null || group != null);
         this.quick = quick;
         this.fileClientService = new FileClientService(context);
@@ -177,7 +182,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
             }
             contact.setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(items.get(0), MobiComUserPreference.getInstance(context).getCountryCode()));
         } else {
-            contactReceiver = ContactUtils.getContact(getContext(), items.get(0));
+            contactReceiver = contactService.getContactReceiver(items, userIds);
         }
 
         if (message != null) {

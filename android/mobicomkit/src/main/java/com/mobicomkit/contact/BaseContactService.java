@@ -32,4 +32,5 @@ public interface BaseContactService {
 
     Bitmap downloadContactImage(Context context, Contact contact);
 
+    Contact getContactReceiver(List<String> items, List<String> userIds);
 }

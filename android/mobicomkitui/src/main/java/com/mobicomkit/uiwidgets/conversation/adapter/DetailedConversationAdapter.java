@@ -167,8 +167,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
             }
             contact.setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(items.get(0), MobiComUserPreference.getInstance(context).getCountryCode()));
         } else {
-            //receiverContact = ContactUtils.getContact(getContext(), items.get(0));
-            receiverContact =contactService.getContactById(userIds.get(0));
+            receiverContact = contactService.getContactReceiver(items, userIds);
         }
 
         if (message != null) {
