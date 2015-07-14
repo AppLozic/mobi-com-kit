@@ -1,4 +1,4 @@
-package com.mobicomkit.quickconversion;
+package com.mobicomkit.uiwidgets.conversation.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +16,11 @@ import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MessageIntentService;
 import com.mobicomkit.api.conversation.MobiComMessageService;
 import com.mobicomkit.broadcast.BroadcastService;
-import com.mobicomkit.sample.R;
+import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiverForFragments;
 import com.mobicomkit.uiwidgets.conversation.UIService;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 import com.mobicomkit.uiwidgets.conversation.fragment.QuickConversationFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
@@ -32,7 +31,7 @@ import net.mobitexter.mobiframework.people.contact.Contact;
 /**
  * Created by devashish on 6/25/2015.
  */
-public class ConversionActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
+public class ConversationActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
 
     protected ConversationFragment conversation;
     protected QuickConversationFragment quickConversationFragment;
@@ -41,11 +40,11 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
     FragmentActivity fragmentActivity;
     public static final String TAKE_ORDER = "takeOrder";
 
-    public ConversionActivity() {
+    public ConversationActivity() {
 
     }
 
-    public ConversionActivity(FragmentActivity fragmentActivity) {
+    public ConversationActivity(FragmentActivity fragmentActivity) {
         this.fragmentActivity = fragmentActivity;
     }
 
@@ -139,9 +138,7 @@ public class ConversionActivity extends ActionBarActivity implements MessageComm
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.start_new) {
+        if (id == R.id.start_new) {
             new ConversationUIService(this).startContactActivityForResult();
         } else if (id == R.id.refresh) {
             String message = this.getString(R.string.info_message_sync);

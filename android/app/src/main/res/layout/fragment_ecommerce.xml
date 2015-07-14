@@ -159,7 +159,7 @@
 
         </TableLayout>
 
-        <Button
+      <!--  <Button
             android:id="@+id/button_chat"
             android:layout_width="188dp"
             android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
             android:background="@color/holo_blue"
             android:onClick="startChat"
             android:text="@string/ecommerce_chat_button"
-            android:textColor="@color/white" />
+            android:textColor="@color/white" />-->
 
 
         <Button
