@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.contact.AppContactService;
-import com.mobicomkit.quickconversion.ConversionActivity;
+import com.mobicomkit.uiwidgets.conversation.activity.ConversionActivity;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
@@ -83,12 +83,12 @@ public class MainActivity extends MobiComActivityForFragment
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
 
-        if (position == 1) {
+        /*if (position == 1) {
             Intent intent = new Intent(this, SlidingPaneActivity.class);
             startActivity(intent);
             return;
-        }
-        if (position == 2) {
+        }*/
+        if (position == 1) {
             Intent intent = new Intent(this, ConversionActivity.class);
             startActivity(intent);
             return;
