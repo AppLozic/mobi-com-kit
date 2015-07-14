@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.contact.AppContactService;
-import com.mobicomkit.uiwidgets.conversation.activity.ConversionActivity;
+import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
@@ -89,7 +89,7 @@ public class MainActivity extends MobiComActivityForFragment
             return;
         }*/
         if (position == 1) {
-            Intent intent = new Intent(this, ConversionActivity.class);
+            Intent intent = new Intent(this, ConversationActivity.class);
             startActivity(intent);
             return;
         }/*
@@ -123,7 +123,7 @@ public class MainActivity extends MobiComActivityForFragment
     }
 
     public void takeOrder(View v) {
-        Intent takeOrderIntent = new Intent(this, ConversionActivity.class);
+        Intent takeOrderIntent = new Intent(this, ConversationActivity.class);
         takeOrderIntent.putExtra(TAKE_ORDER, true);
         takeOrderIntent.putExtra(USER_ID, Utils.getMetaDataValue(this, TAKE_ORDER_USERID_METADATA));
         startActivity(takeOrderIntent);
