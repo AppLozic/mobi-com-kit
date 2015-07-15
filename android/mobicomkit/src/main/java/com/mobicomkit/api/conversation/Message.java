@@ -403,7 +403,8 @@ public class Message {
 
     @Override
     public int hashCode() {
-        int result = to != null ? to.hashCode() : 0;
+        int result = getContactIds() != null ? getContactIds().hashCode() : 0;
+        result = 31 * result + (getTo() != null ? getTo().hashCode() : 0);
         result = 31 * result + (getMessage() != null ? getMessage().hashCode() : 0);
         result = 31 * result + (getTimeToLive() != null ? getTimeToLive().hashCode() : 0);
         return result;
