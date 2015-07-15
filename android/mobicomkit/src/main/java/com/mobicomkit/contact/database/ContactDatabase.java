@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.database.MobiComDatabaseHelper;
@@ -43,7 +44,7 @@ public class ContactDatabase {
         contact.setLocalImageUrl(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_LOCAL_URI)));
         contact.setImageURL(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_URL)));
         contact.setContactNumber(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_NO)));
-
+        contact.processContactNumbers(context);
         return contact;
     }
 
@@ -102,7 +103,9 @@ public class ContactDatabase {
     }
 
     public void addContact(Contact contact) {
-
+        if (TextUtils.isEmpty(contact.getContactNumber())) {
+            contact.setContactNumber(contact.getUserId());
+        }
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = prepareContactValues(contact);
         dbHelper.getWritableDatabase().insert(CONTACT, null, contentValues);
