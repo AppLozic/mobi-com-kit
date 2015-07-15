@@ -335,6 +335,13 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
     }
 
+    public String getCurrentUserId() {
+        if (contact == null) {
+            return "";
+        }
+        return contact.getUserId() != null ? contact.getUserId() : contact.getFormattedContactNumber();
+    }
+
     public Contact getContact() {
         return contact;
     }
@@ -751,7 +758,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                         mediaUploadProgressBarIndividualMessage.setVisibility(View.GONE);
                         TextView createdAtTime = (TextView) view.findViewById(R.id.createdAtTime);
                         if (messageListItem.isTypeOutbox() && !messageListItem.isCall() && !messageListItem.getDelivered() && messageListItem.getScheduledAt() == null) {
-                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, support.isSupportNumber(getFormattedContactNumber()) ? deliveredIcon : sentIcon, null);
+                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, support.isSupportNumber(getCurrentUserId()) ? deliveredIcon : sentIcon, null);
                         }
                     }
                 }

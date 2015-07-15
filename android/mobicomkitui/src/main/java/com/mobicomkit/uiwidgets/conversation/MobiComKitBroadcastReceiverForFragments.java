@@ -42,12 +42,6 @@ public class MobiComKitBroadcastReceiverForFragments extends BroadcastReceiver {
         }
         Log.i(TAG, "Received broadcast, action: " + action + ", message: " + message);
 
-        MobiComUserPreference userPreferences = MobiComUserPreference.getInstance(context);
-        String formattedContactNumber = "";
-        if (message != null) {
-            formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), userPreferences.getCountryCode());
-        }
-
         if (message != null && !message.isSentToMany()) {
             /*Todo: update the quick conversation fragment on resume, commented because now it is not a sliding pane activity and
             quickconversationfragment is not activity.*/
@@ -64,6 +58,7 @@ public class MobiComKitBroadcastReceiverForFragments extends BroadcastReceiver {
         }
 
         String keyString = intent.getStringExtra("keyString");
+        String userId = message != null ? message.getContactIds() : "";
 
         if (BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString().equals(action)) {
             InstructionUtil.showInstruction(context, intent.getIntExtra("resId", -1), intent.getBooleanExtra("actionable", false), R.color.instruction_color);
@@ -76,10 +71,10 @@ public class MobiComKitBroadcastReceiverForFragments extends BroadcastReceiver {
         } else if (BroadcastService.INTENT_ACTIONS.SYNC_MESSAGE.toString().equals(intent.getAction())) {
             conversationUIService.syncMessages(message, keyString);
         } else if (BroadcastService.INTENT_ACTIONS.DELETE_MESSAGE.toString().equals(intent.getAction())) {
-            formattedContactNumber = intent.getStringExtra("contactNumbers");
-            conversationUIService.deleteMessage(message, keyString, formattedContactNumber);
+            userId = intent.getStringExtra("contactNumbers");
+            conversationUIService.deleteMessage(message, keyString, userId);
         } else if (BroadcastService.INTENT_ACTIONS.MESSAGE_DELIVERY.toString().equals(action)) {
-            conversationUIService.updateDeliveryStatus(message, formattedContactNumber);
+            conversationUIService.updateDeliveryStatus(message, userId);
         } else if (BroadcastService.INTENT_ACTIONS.DELETE_CONVERSATION.toString().equals(action)) {
             String contactNumber = intent.getStringExtra("contactNumber");
             Contact contact = ContactUtils.getContact(context, contactNumber);

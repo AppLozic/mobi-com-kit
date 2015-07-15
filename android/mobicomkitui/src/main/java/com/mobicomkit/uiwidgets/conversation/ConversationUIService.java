@@ -148,11 +148,11 @@ public class ConversationUIService {
 
     }
 
-    public void updateLastMessage(String keyString, String formattedContactNumber) {
+    public void updateLastMessage(String keyString, String userId) {
         if (!BroadcastService.isQuick()) {
             return;
         }
-        getQuickConversationFragment().updateLastMessage(keyString, formattedContactNumber);
+        getQuickConversationFragment().updateLastMessage(keyString, userId);
     }
 
     public boolean isBroadcastedToGroup(Long broadcastGroupId) {
@@ -163,19 +163,18 @@ public class ConversationUIService {
     }
 
     public void syncMessages(Message message, String keyString) {
-        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(fragmentActivity).getCountryCode());
+        String userId = message.getContactIds();
 
         if (BroadcastService.isIndividual()) {
             ConversationFragment conversationFragment = getConversationFragment();
-            //Todo: Replace all getFormattedContactNumber with getContactIds()
-            if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
+            if (userId.equals(conversationFragment.getCurrentUserId()) ||
                     conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
                 conversationFragment.addMessage(message);
             }
         }
 
         if (message.getBroadcastGroupId() == null) {
-            updateLastMessage(keyString, formattedContactNumber);
+            updateLastMessage(keyString, userId);
         }
     }
 
@@ -197,16 +196,15 @@ public class ConversationUIService {
         if (!BroadcastService.isIndividual()) {
             return;
         }
-        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(fragmentActivity).getCountryCode());
+        String userId = message.getContactIds();
         ConversationFragment conversationFragment = getConversationFragment();
-        if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
+        if (userId.equals(conversationFragment.getContact().getUserId()) ||
                 conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
             conversationFragment.updateMessageKeyString(message);
         }
     }
 
     public void deleteMessage(Message message, String keyString, String formattedContactNumber) {
-        //Todo: replace currentOpenedContactNumber with MobiComKitBroadcastReceiver.currentUserId
         if (PhoneNumberUtils.compare(formattedContactNumber, BroadcastService.currentUserId)) {
             getConversationFragment().deleteMessageFromDeviceList(keyString);
         } else {

@@ -47,11 +47,9 @@ public class MobiComKitBroadcastReceiver extends BroadcastReceiver {
         }
         Log.i(TAG, "Received broadcast, action: " + action + ", message: " + message);
 
-        MobiComUserPreference userPreferences = MobiComUserPreference.getInstance(context);
-        String formattedContactNumber = "";
+        String userId = message != null ? message.getContactIds() : "";
         if (message != null && !conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId()) && !message.isSentToMany()) {
             quickConversationFragment.addMessage(message);
-            formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), userPreferences.getCountryCode());
         } else if (message != null && message.isSentToMany() && BroadcastService.INTENT_ACTIONS.SYNC_MESSAGE.toString().equals(intent.getAction())) {
             for (String toField : message.getTo().split(",")) {
                 Message singleMessage = new Message(message);
@@ -72,28 +70,28 @@ public class MobiComKitBroadcastReceiver extends BroadcastReceiver {
         } else if (BroadcastService.INTENT_ACTIONS.LOAD_MORE.toString().equals(action)) {
             quickConversationFragment.setLoadMore(intent.getBooleanExtra("loadMore", true));
         } else if (BroadcastService.INTENT_ACTIONS.MESSAGE_SYNC_ACK_FROM_SERVER.toString().equals(action)) {
-            if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
+            if (userId.equals(conversationFragment.getCurrentUserId()) ||
                     conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
                 conversationFragment.updateMessageKeyString(message);
             }
         } else if (BroadcastService.INTENT_ACTIONS.SYNC_MESSAGE.toString().equals(intent.getAction())) {
-            if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
+            if (userId.equals(conversationFragment.getCurrentUserId()) ||
                     conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
                 conversationFragment.addMessage(message);
             }
             if (message.getBroadcastGroupId() == null) {
-                quickConversationFragment.updateLastMessage(keyString, formattedContactNumber);
+                quickConversationFragment.updateLastMessage(keyString, userId);
             }
         } else if (BroadcastService.INTENT_ACTIONS.DELETE_MESSAGE.toString().equals(intent.getAction())) {
-            formattedContactNumber = intent.getStringExtra("contactNumbers");
-            if (PhoneNumberUtils.compare(formattedContactNumber, MobiComActivity.currentOpenedContactNumber)) {
+            userId = intent.getStringExtra("contactNumbers");
+            if (PhoneNumberUtils.compare(userId, MobiComActivity.currentOpenedContactNumber)) {
                 conversationFragment.deleteMessageFromDeviceList(keyString);
             } else {
                 //Todo: if it is sent to many and remove from all.
-                quickConversationFragment.updateLastMessage(keyString, formattedContactNumber);
+                quickConversationFragment.updateLastMessage(keyString, userId);
             }
         } else if (BroadcastService.INTENT_ACTIONS.MESSAGE_DELIVERY.toString().equals(action)) {
-            if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber())) {
+            if (userId.equals(conversationFragment.getCurrentUserId())) {
                 conversationFragment.updateDeliveryStatus(message);
             }
         } else if (BroadcastService.INTENT_ACTIONS.DELETE_CONVERSATION.toString().equals(action)) {
