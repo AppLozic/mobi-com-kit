@@ -67,7 +67,6 @@ public class ContactDatabase {
     }
 
     public List<Contact> getAllContact() {
-
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(CONTACT, null, null, null, null, null, MobiComDatabaseHelper.FULL_NAME + " asc");
         List<Contact> contactList = getContactList(cursor);
@@ -77,7 +76,6 @@ public class ContactDatabase {
     }
 
     public Contact getContactById(String id) {
-
         String structuredNameWhere = MobiComDatabaseHelper.USERID + " =?";
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(CONTACT, null, structuredNameWhere, new String[]{id}, null, null, null);
@@ -95,8 +93,6 @@ public class ContactDatabase {
     }
 
     public void updateContact(Contact contact) {
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = prepareContactValues(contact);
         dbHelper.getWritableDatabase().update(CONTACT, contentValues, MobiComDatabaseHelper.USERID + "=?", new String[]{contact.getUserId()});
         dbHelper.close();
@@ -106,14 +102,12 @@ public class ContactDatabase {
         if (TextUtils.isEmpty(contact.getContactNumber())) {
             contact.setContactNumber(contact.getUserId());
         }
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = prepareContactValues(contact);
         dbHelper.getWritableDatabase().insert(CONTACT, null, contentValues);
         dbHelper.close();
     }
 
     public ContentValues prepareContactValues(Contact contact) {
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(MobiComDatabaseHelper.FULL_NAME, contact.getFullName());
         contentValues.put(MobiComDatabaseHelper.CONTACT_NO, contact.getContactNumber());
@@ -122,7 +116,6 @@ public class ContactDatabase {
         contentValues.put(MobiComDatabaseHelper.USERID, contact.getUserId());
         contentValues.put(MobiComDatabaseHelper.EMAIL, contact.getEmailId());
         return contentValues;
-
     }
 
     public void addAllContact(List<Contact> contactList) {

@@ -68,7 +68,6 @@ public class AppContactService implements BaseContactService {
         return contactDatabase.getContactById(contactId);
     }
 
-
     public Contact getContactWithFallback(String contactId) {
         Contact contact = getContactById(contactId);
         if (contact == null) {
