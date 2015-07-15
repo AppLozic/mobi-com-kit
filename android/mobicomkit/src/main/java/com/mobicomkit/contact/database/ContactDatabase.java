@@ -18,10 +18,8 @@ import java.util.List;
  */
 public class ContactDatabase {
 
-    private static final String TAG = "ContactDatabaseService";
-
-
     public static final String CONTACT = "contact";
+    private static final String TAG = "ContactDatabaseService";
     Context context = null;
     private MobiComUserPreference userPreferences;
     private MobiComDatabaseHelper dbHelper;
@@ -39,15 +37,13 @@ public class ContactDatabase {
      * @return
      */
     public Contact getContact(Cursor cursor) {
-        Contact contact = null;
-        if (cursor.moveToNext() && cursor.getCount() > 0) {
-            contact = new Contact();
-            contact.setFullName(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.FULL_NAME)));
-            contact.setUserId(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.USERID)));
-            contact.setLocalImageUrl(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_LOCAL_URI)));
-            contact.setImageURL(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_URL)));
-            contact.setContactNumber(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_NO)));
-        }
+        Contact contact = new Contact();
+        contact.setFullName(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.FULL_NAME)));
+        contact.setUserId(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.USERID)));
+        contact.setLocalImageUrl(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_LOCAL_URI)));
+        contact.setImageURL(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_URL)));
+        contact.setContactNumber(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_NO)));
+
         return contact;
     }
 
@@ -84,8 +80,14 @@ public class ContactDatabase {
         String structuredNameWhere = MobiComDatabaseHelper.USERID + " =?";
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(CONTACT, null, structuredNameWhere, new String[]{id}, null, null, null);
-        Contact contact = getContact(cursor);
-        cursor.close();
+        Contact contact = null;
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                contact = getContact(cursor);
+            }
+            cursor.close();
+        }
         dbHelper.close();
         return contact;
 

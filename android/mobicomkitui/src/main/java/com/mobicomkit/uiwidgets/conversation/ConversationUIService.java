@@ -40,11 +40,10 @@ import net.mobitexter.mobiframework.people.group.GroupUtils;
 
 public class ConversationUIService {
 
-    private static final String TAG = "ConversationUIService";
     public static final int REQUEST_CODE_FULL_SCREEN_ACTION = 301;
     public static final int REQUEST_CODE_CONTACT_GROUP_SELECTION = 101;
     public static final int INSTRUCTION_DELAY = 5000;
-
+    private static final String TAG = "ConversationUIService";
     private FragmentActivity fragmentActivity;
 
     public ConversationUIService(FragmentActivity fragmentActivity) {
@@ -168,6 +167,7 @@ public class ConversationUIService {
 
         if (BroadcastService.isIndividual()) {
             ConversationFragment conversationFragment = getConversationFragment();
+            //Todo: Replace all getFormattedContactNumber with getContactIds()
             if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
                     conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
                 conversationFragment.addMessage(message);
