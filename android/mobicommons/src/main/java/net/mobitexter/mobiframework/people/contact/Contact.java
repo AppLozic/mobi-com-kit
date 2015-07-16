@@ -136,7 +136,7 @@ public class Contact {
     }
 
     public String getFormattedContactNumber() {
-        return formattedContactNumber;
+        return TextUtils.isEmpty(formattedContactNumber) ? getContactNumber() : formattedContactNumber;
     }
 
     public void setFormattedContactNumber(String formattedContactNumber) {
@@ -189,6 +189,10 @@ public class Contact {
 
     public void setContactId(long contactId) {
         this.contactId = contactId;
+    }
+
+    public String getDisplayName() {
+        return fullName == null ? getContactIds() : fullName;
     }
 
     public String getFullName() {

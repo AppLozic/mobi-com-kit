@@ -335,6 +335,13 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
     }
 
+    public String getCurrentUserId() {
+        if (contact == null) {
+            return "";
+        }
+        return contact.getUserId() != null ? contact.getUserId() : contact.getFormattedContactNumber();
+    }
+
     public Contact getContact() {
         return contact;
     }
@@ -664,7 +671,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
 
     public String getNameForInviteDialog() {
         if (contact != null) {
-            return TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName();
+            return contact.getDisplayName();
         } else if (group != null) {
             return group.getName();
         }
@@ -751,7 +758,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                         mediaUploadProgressBarIndividualMessage.setVisibility(View.GONE);
                         TextView createdAtTime = (TextView) view.findViewById(R.id.createdAtTime);
                         if (messageListItem.isTypeOutbox() && !messageListItem.isCall() && !messageListItem.getDelivered() && messageListItem.getScheduledAt() == null) {
-                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, support.isSupportNumber(getFormattedContactNumber()) ? deliveredIcon : sentIcon, null);
+                            createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, support.isSupportNumber(getCurrentUserId()) ? deliveredIcon : sentIcon, null);
                         }
                     }
                 }
@@ -816,7 +823,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         String title = null;
         //  if (!((MobiComActivity) getActivity()).getSlidingPaneLayout().isOpen()) {
         if (contact != null) {
-            title = TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName();
+            title = contact.getDisplayName();
         } else if (group != null) {
             title = group.getName();
         }

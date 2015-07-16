@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.mobicomkit.api.MobiComKitConstants;
-import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.broadcast.BroadcastService;
@@ -27,7 +26,6 @@ import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFr
 import com.mobicomkit.uiwidgets.conversation.fragment.MultimediaOptionFragment;
 import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
-import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.file.FilePathFinder;
@@ -148,11 +146,11 @@ public class ConversationUIService {
 
     }
 
-    public void updateLastMessage(String keyString, String formattedContactNumber) {
+    public void updateLastMessage(String keyString, String userId) {
         if (!BroadcastService.isQuick()) {
             return;
         }
-        getQuickConversationFragment().updateLastMessage(keyString, formattedContactNumber);
+        getQuickConversationFragment().updateLastMessage(keyString, userId);
     }
 
     public boolean isBroadcastedToGroup(Long broadcastGroupId) {
@@ -163,19 +161,18 @@ public class ConversationUIService {
     }
 
     public void syncMessages(Message message, String keyString) {
-        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(fragmentActivity).getCountryCode());
+        String userId = message.getContactIds();
 
         if (BroadcastService.isIndividual()) {
             ConversationFragment conversationFragment = getConversationFragment();
-            //Todo: Replace all getFormattedContactNumber with getContactIds()
-            if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
+            if (userId.equals(conversationFragment.getCurrentUserId()) ||
                     conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
                 conversationFragment.addMessage(message);
             }
         }
 
         if (message.getBroadcastGroupId() == null) {
-            updateLastMessage(keyString, formattedContactNumber);
+            updateLastMessage(keyString, userId);
         }
     }
 
@@ -197,16 +194,15 @@ public class ConversationUIService {
         if (!BroadcastService.isIndividual()) {
             return;
         }
-        String formattedContactNumber = ContactNumberUtils.getPhoneNumber(message.getTo(), MobiComUserPreference.getInstance(fragmentActivity).getCountryCode());
+        String userId = message.getContactIds();
         ConversationFragment conversationFragment = getConversationFragment();
-        if (formattedContactNumber.equals(conversationFragment.getFormattedContactNumber()) ||
+        if (userId.equals(conversationFragment.getContact().getUserId()) ||
                 conversationFragment.isBroadcastedToGroup(message.getBroadcastGroupId())) {
             conversationFragment.updateMessageKeyString(message);
         }
     }
 
     public void deleteMessage(Message message, String keyString, String formattedContactNumber) {
-        //Todo: replace currentOpenedContactNumber with MobiComKitBroadcastReceiver.currentUserId
         if (PhoneNumberUtils.compare(formattedContactNumber, BroadcastService.currentUserId)) {
             getConversationFragment().deleteMessageFromDeviceList(keyString);
         } else {
@@ -308,7 +304,6 @@ public class ConversationUIService {
         if (!TextUtils.isEmpty(contactNumber)) {
             contact = ContactUtils.getContact(fragmentActivity, contactNumber);
             if (BroadcastService.isIndividual()) {
-
                 getConversationFragment().setFirstTimeMTexterFriend(firstTimeMTexterFriend);
             }
         }
@@ -327,7 +322,7 @@ public class ConversationUIService {
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);
         if (!TextUtils.isEmpty(messageJson)) {
             Message message = (Message) GsonUtils.getObjectFromJson(messageJson, Message.class);
-            contact = ContactUtils.getContact(fragmentActivity, message.getTo());
+            contact = new AppContactService(fragmentActivity).getContactWithFallback(message.getTo());
         }
 
         boolean support = intent.getBooleanExtra(Support.SUPPORT_INTENT_KEY, false);

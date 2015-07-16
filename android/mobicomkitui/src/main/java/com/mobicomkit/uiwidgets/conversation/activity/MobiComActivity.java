@@ -212,7 +212,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
             mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             mActionBar.setDisplayShowTitleEnabled(true);
         }
-        currentOpenedContactNumber = conversationFragment.getFormattedContactNumber();
+        currentOpenedContactNumber = conversationFragment.getCurrentUserId();
     }
 
     public void loadLatestInConversationFragment() {

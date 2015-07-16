@@ -288,7 +288,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
 
             if (contactReceiver != null) {
                 if (quick) {
-                    String contactInfo = TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getContactNumber() : contactReceiver.getFullName();
+                    String contactInfo = contactReceiver.getDisplayName();
                     if (items.size() > 1) {
                         Contact contact2 = ContactUtils.getContact(getContext(), items.get(1));
                         contactInfo = TextUtils.isEmpty(contactReceiver.getFirstName()) ? contactReceiver.getContactNumber() : contactReceiver.getFirstName() + ", "
@@ -312,7 +312,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
 
                 if (alphabeticTextView != null) {
                     String contactNumber = contactReceiver.getContactNumber().toUpperCase();
-                    char firstLetter = !TextUtils.isEmpty(contactReceiver.getFullName()) ? contactReceiver.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);
+                    char firstLetter = contactReceiver.getDisplayName().toUpperCase().charAt(0);
                     if (firstLetter != '+') {
                         alphabeticTextView.setText(String.valueOf(firstLetter));
                     } else if (contactNumber.length() >= 2) {

@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.mobicomkit.api.MobiComKitConstants;
@@ -57,7 +53,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
     protected static final long UPDATE_INTERVAL = 5;
     protected static final long FASTEST_INTERVAL = 1;
     private static final String TAG = "MobiComActivity";
-    public static String currentOpenedContactNumber;
+    public static String currentOpenedUserId;
     public static boolean mobiTexterBroadcastReceiverActivated;
     public static String title = "Conversations";
     protected static boolean HOME_BUTTON_ENABLED = false;
@@ -178,7 +174,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
     }
 
     private void panelOpened() {
-        if (currentOpenedContactNumber != null) {
+        if (currentOpenedUserId != null) {
             InstructionUtil.hideInstruction(this, R.string.instruction_go_back_to_recent_conversation_list);
         }
         Utils.toggleSoftKeyBoard(MobiComActivityForFragment.this, true);
@@ -189,7 +185,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         mActionBar.setDisplayShowTitleEnabled(true);
         mActionBar.setTitle(title);
-        currentOpenedContactNumber = null;
+        currentOpenedUserId = null;
     }
 
     private void panelClosed() {
@@ -208,7 +204,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
             mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             mActionBar.setDisplayShowTitleEnabled(true);
         }
-        currentOpenedContactNumber = conversationFragment.getFormattedContactNumber();
+        currentOpenedUserId = conversationFragment.getCurrentUserId();
     }
 
     public void loadLatestInConversationFragment() {

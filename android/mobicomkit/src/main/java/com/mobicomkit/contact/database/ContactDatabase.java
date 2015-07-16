@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.database.MobiComDatabaseHelper;
@@ -43,7 +44,7 @@ public class ContactDatabase {
         contact.setLocalImageUrl(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_LOCAL_URI)));
         contact.setImageURL(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_IMAGE_URL)));
         contact.setContactNumber(cursor.getString(cursor.getColumnIndex(MobiComDatabaseHelper.CONTACT_NO)));
-
+        contact.processContactNumbers(context);
         return contact;
     }
 
@@ -66,7 +67,6 @@ public class ContactDatabase {
     }
 
     public List<Contact> getAllContact() {
-
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(CONTACT, null, null, null, null, null, MobiComDatabaseHelper.FULL_NAME + " asc");
         List<Contact> contactList = getContactList(cursor);
@@ -76,7 +76,6 @@ public class ContactDatabase {
     }
 
     public Contact getContactById(String id) {
-
         String structuredNameWhere = MobiComDatabaseHelper.USERID + " =?";
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(CONTACT, null, structuredNameWhere, new String[]{id}, null, null, null);
@@ -94,23 +93,21 @@ public class ContactDatabase {
     }
 
     public void updateContact(Contact contact) {
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = prepareContactValues(contact);
         dbHelper.getWritableDatabase().update(CONTACT, contentValues, MobiComDatabaseHelper.USERID + "=?", new String[]{contact.getUserId()});
         dbHelper.close();
     }
 
     public void addContact(Contact contact) {
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (TextUtils.isEmpty(contact.getContactNumber())) {
+            contact.setContactNumber(contact.getUserId());
+        }
         ContentValues contentValues = prepareContactValues(contact);
         dbHelper.getWritableDatabase().insert(CONTACT, null, contentValues);
         dbHelper.close();
     }
 
     public ContentValues prepareContactValues(Contact contact) {
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(MobiComDatabaseHelper.FULL_NAME, contact.getFullName());
         contentValues.put(MobiComDatabaseHelper.CONTACT_NO, contact.getContactNumber());
@@ -119,7 +116,6 @@ public class ContactDatabase {
         contentValues.put(MobiComDatabaseHelper.USERID, contact.getUserId());
         contentValues.put(MobiComDatabaseHelper.EMAIL, contact.getEmailId());
         return contentValues;
-
     }
 
     public void addAllContact(List<Contact> contactList) {

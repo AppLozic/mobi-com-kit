@@ -57,7 +57,7 @@ public class MobiComQuickConversationFragment extends Fragment {
     protected SwipeRefreshLayout swipeLayout;
     protected int listIndex;
 
-    protected Map<String, Message> latestSmsForEachContact = new HashMap<String, Message>();
+    protected Map<String, Message> latestMessageForEachContact = new HashMap<String, Message>();
     protected List<Message> messageList = new ArrayList<Message>();
     protected QuickConversationAdapter conversationAdapter = null;
 
@@ -144,7 +144,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         switch (item.getItemId()) {
             case 0:
                 Contact contact = ContactUtils.getContact(getActivity(), message.getContactIds());
-                new ConversationUIService(getActivity()).deleteConversationThread(contact, TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName());
+                new ConversationUIService(getActivity()).deleteConversationThread(contact, contact.getDisplayName());
                 break;
             default:
                 return super.onContextItemSelected(item);
@@ -166,14 +166,14 @@ public class MobiComQuickConversationFragment extends Fragment {
             @Override
             public void run() {
                 message.processContactIds(context);
-                Message recentMessage = latestSmsForEachContact.get(message.getContactIds());
+                Message recentMessage = latestMessageForEachContact.get(message.getContactIds());
                 if (recentMessage != null && message.getCreatedAtTime() >= recentMessage.getCreatedAtTime()) {
                     messageList.remove(recentMessage);
                 } else if (recentMessage != null) {
                     return;
                 }
 
-                latestSmsForEachContact.put(message.getContactIds(), message);
+                latestMessageForEachContact.put(message.getContactIds(), message);
                 messageList.add(0, message);
                 conversationAdapter.notifyDataSetChanged();
                 //listView.smoothScrollToPosition(messageList.size());
@@ -184,15 +184,15 @@ public class MobiComQuickConversationFragment extends Fragment {
         });
     }
 
-    public void updateLastMessage(String keyString, String formattedContactNumber) {
+    public void updateLastMessage(String keyString, String userId) {
         for (Message message : messageList) {
             if (message.getKeyString() != null && message.getKeyString().equals(keyString)) {
                 MessageDatabaseService messageDatabaseService = new MessageDatabaseService(getActivity());
-                List<Message> lastMessage = messageDatabaseService.getLatestMessage(formattedContactNumber);
+                List<Message> lastMessage = messageDatabaseService.getLatestMessage(userId);
                 if (lastMessage.isEmpty()) {
-                    removeConversation(message, formattedContactNumber);
+                    removeConversation(message, userId);
                 } else {
-                    deleteMessage(lastMessage.get(0), formattedContactNumber);
+                    deleteMessage(lastMessage.get(0), userId);
                 }
                 break;
             }
@@ -207,13 +207,13 @@ public class MobiComQuickConversationFragment extends Fragment {
         return null;
     }
 
-    public void deleteMessage(final Message message, final String formattedContactNumber) {
+    public void deleteMessage(final Message message, final String userId) {
         this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Message recentMessage = latestSmsForEachContact.get(formattedContactNumber);
+                Message recentMessage = latestMessageForEachContact.get(userId);
                 if (recentMessage != null && message.getCreatedAtTime() <= recentMessage.getCreatedAtTime()) {
-                    latestSmsForEachContact.put(formattedContactNumber, message);
+                    latestMessageForEachContact.put(userId, message);
                     messageList.set(messageList.indexOf(recentMessage), message);
 
                     conversationAdapter.notifyDataSetChanged();
@@ -226,15 +226,15 @@ public class MobiComQuickConversationFragment extends Fragment {
         });
     }
 
-    public void updateLatestMessage(Message message, String formattedContactNumber) {
-        deleteMessage(message, formattedContactNumber);
+    public void updateLatestMessage(Message message, String userId) {
+        deleteMessage(message, userId);
     }
 
-    public void removeConversation(final Message message, final String formattedContactNumber) {
+    public void removeConversation(final Message message, final String userId) {
         this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                latestSmsForEachContact.remove(formattedContactNumber);
+                latestMessageForEachContact.remove(userId);
                 messageList.remove(message);
                 conversationAdapter.notifyDataSetChanged();
                 checkForEmptyConversations();
@@ -246,9 +246,9 @@ public class MobiComQuickConversationFragment extends Fragment {
         this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Message message = latestSmsForEachContact.get(contact.getFormattedContactNumber());
+                Message message = latestMessageForEachContact.get(contact.getUserId());
                 messageList.remove(message);
-                latestSmsForEachContact.remove(contact.getFormattedContactNumber());
+                latestMessageForEachContact.remove(contact.getUserId());
                 conversationAdapter.notifyDataSetChanged();
                 checkForEmptyConversations();
             }
@@ -257,7 +257,7 @@ public class MobiComQuickConversationFragment extends Fragment {
 
     public void checkForEmptyConversations() {
         boolean isLodingConversation = (downloadConversation != null && downloadConversation.getStatus() == AsyncTask.Status.RUNNING);
-        if (latestSmsForEachContact.isEmpty() && !isLodingConversation) {
+        if (latestMessageForEachContact.isEmpty() && !isLodingConversation) {
             emptyTextView.setVisibility(View.VISIBLE);
             startNewButton.setVisibility(View.VISIBLE);
         } else {
@@ -385,15 +385,15 @@ public class MobiComQuickConversationFragment extends Fragment {
                 if (currentMessage.isSentToMany()) {
                     continue;
                 }
-                Message recentSms = latestSmsForEachContact.get(currentMessage.getContactIds());
+                Message recentSms = latestMessageForEachContact.get(currentMessage.getContactIds());
                 if (recentSms != null) {
                     if (currentMessage.getCreatedAtTime() >= recentSms.getCreatedAtTime()) {
-                        latestSmsForEachContact.put(currentMessage.getContactIds(), currentMessage);
+                        latestMessageForEachContact.put(currentMessage.getContactIds(), currentMessage);
                         messageList.remove(recentSms);
                         messageList.add(currentMessage);
                     }
                 } else {
-                    latestSmsForEachContact.put(currentMessage.getContactIds(), currentMessage);
+                    latestMessageForEachContact.put(currentMessage.getContactIds(), currentMessage);
                     messageList.add(currentMessage);
                 }
             }
