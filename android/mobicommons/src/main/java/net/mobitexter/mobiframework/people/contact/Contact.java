@@ -289,4 +289,12 @@ public class Contact {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
+
+    public boolean isDrawableResources(){
+        if ( imageURL!=null && imageURL.startsWith("R.drawable") ){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

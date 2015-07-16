@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -43,7 +42,6 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterfac
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
 import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
 import net.mobitexter.mobiframework.commons.core.utils.Support;
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.commons.image.ImageLoader;
 import net.mobitexter.mobiframework.commons.image.ImageUtils;
 import net.mobitexter.mobiframework.emoticon.EmojiconHandler;
@@ -133,7 +131,6 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         };
         imageThumbnailLoader.setImageFadeIn(false);
         imageThumbnailLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
-
 
         sentIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_sent);
         deliveredIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_delivered);
@@ -255,28 +252,11 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                 deliveryStatus.setText("via Carrier");
             }
 
-            if (receiverContact != null) {
-                if (message.isTypeOutbox()) {
-                    contactImageLoader.loadImage(senderContact,contactImage, alphabeticTextView);
-                } else {
-                    contactImageLoader.loadImage(receiverContact, contactImage, alphabeticTextView);
-                }
-                if (alphabeticTextView != null) {
-                    String contactNumber = receiverContact.getContactNumber().toUpperCase();
-                    char firstLetter = !TextUtils.isEmpty(receiverContact.getFullName()) ? receiverContact.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);
-                    if (firstLetter != '+') {
-                        alphabeticTextView.setText(String.valueOf(firstLetter));
-                    } else if (contactNumber.length() >= 2) {
-                        alphabeticTextView.setText(String.valueOf(contactNumber.charAt(1)));
-                    }
-
-                    Character colorKey = AlphaNumberColorUtil.alphabetBackgroundColorMap.containsKey(firstLetter) ? firstLetter : null;
-                    alphabeticTextView.setTextColor(context.getResources().getColor(AlphaNumberColorUtil.alphabetTextColorMap.get(colorKey)));
-                    alphabeticTextView.setBackgroundResource(AlphaNumberColorUtil.alphabetBackgroundColorMap.get(colorKey));
-                }
+            if (message.isTypeOutbox()) {
+                loadContactImage(senderContact, contactImage, alphabeticTextView);
+            }else{
+                loadContactImage(receiverContact, contactImage, alphabeticTextView);
             }
-
-
             if (message.hasAttachment()) {
                 mainAttachmentLayout.setLayoutParams(getImageLayoutParam(false));
                 if (message.getFileMetas() != null && message.getFileMetas().get(0).getContentType().contains("image")) {
@@ -423,6 +403,29 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
 
         }
         return customView;
+    }
+
+    private void loadContactImage( Contact contact, ImageView contactImage, TextView alphabeticTextView) {
+
+        if (contact.isDrawableResources()){
+            int drawableResourceId = context.getResources().getIdentifier("ic_mobicom", "drawable", context.getPackageName());
+            contactImage.setImageResource(drawableResourceId);
+        }else {
+            contactImageLoader.loadImage(contact,contactImage,alphabeticTextView);
+        }
+        if (alphabeticTextView != null ) {
+            String contactNumber = contact.getContactNumber().toUpperCase();
+            char firstLetter = !TextUtils.isEmpty(contact.getFullName()) ? contact.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);
+            if (firstLetter != '+') {
+                alphabeticTextView.setText(String.valueOf(firstLetter));
+            } else if (contactNumber.length() >= 2) {
+                alphabeticTextView.setText(String.valueOf(contactNumber.charAt(1)));
+            }
+
+            Character colorKey = AlphaNumberColorUtil.alphabetBackgroundColorMap.containsKey(firstLetter) ? firstLetter : null;
+            alphabeticTextView.setTextColor(context.getResources().getColor(AlphaNumberColorUtil.alphabetTextColorMap.get(colorKey)));
+            alphabeticTextView.setBackgroundResource(AlphaNumberColorUtil.alphabetBackgroundColorMap.get(colorKey));
+        }
     }
 
     private void showAttachmentIconAndText(TextView attachedFile, final String filePath, final String mimeType) {
