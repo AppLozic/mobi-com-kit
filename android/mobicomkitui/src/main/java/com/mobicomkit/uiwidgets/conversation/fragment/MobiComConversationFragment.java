@@ -671,7 +671,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
 
     public String getNameForInviteDialog() {
         if (contact != null) {
-            return TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName();
+            return contact.getDisplayName();
         } else if (group != null) {
             return group.getName();
         }
@@ -823,7 +823,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         String title = null;
         //  if (!((MobiComActivity) getActivity()).getSlidingPaneLayout().isOpen()) {
         if (contact != null) {
-            title = TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName();
+            title = contact.getDisplayName();
         } else if (group != null) {
             title = group.getName();
         }

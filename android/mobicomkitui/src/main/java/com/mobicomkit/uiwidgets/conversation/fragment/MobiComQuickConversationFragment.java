@@ -144,7 +144,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         switch (item.getItemId()) {
             case 0:
                 Contact contact = ContactUtils.getContact(getActivity(), message.getContactIds());
-                new ConversationUIService(getActivity()).deleteConversationThread(contact, TextUtils.isEmpty(contact.getFullName()) ? contact.getContactNumber() : contact.getFullName());
+                new ConversationUIService(getActivity()).deleteConversationThread(contact, contact.getDisplayName());
                 break;
             default:
                 return super.onContextItemSelected(item);

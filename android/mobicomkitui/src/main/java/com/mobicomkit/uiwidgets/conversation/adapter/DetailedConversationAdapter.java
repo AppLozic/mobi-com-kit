@@ -263,7 +263,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                 }
                 if (alphabeticTextView != null) {
                     String contactNumber = receiverContact.getContactNumber().toUpperCase();
-                    char firstLetter = !TextUtils.isEmpty(receiverContact.getFullName()) ? receiverContact.getFullName().toUpperCase().charAt(0) : contactNumber.charAt(0);
+                    char firstLetter = receiverContact.getDisplayName().toUpperCase().charAt(0);
                     if (firstLetter != '+') {
                         alphabeticTextView.setText(String.valueOf(firstLetter));
                     } else if (contactNumber.length() >= 2) {

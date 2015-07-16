@@ -71,6 +71,8 @@ public class AppContactService implements BaseContactService {
     public Contact getContactWithFallback(String contactId) {
         Contact contact = getContactById(contactId);
         if (contact == null) {
+            //Todo: fix it,
+            // contact = new Contact(context, contactId);
             contact = ContactUtils.getContact(context, contactId);
         }
         return contact;

@@ -45,11 +45,11 @@ public class NotificationService {
 
     }
 
-    public void notifyUser(Contact contact, Message sms) {
-
+    public void notifyUser(Contact contact, Message message) {
         Intent intent = new Intent();
-        intent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(sms, Message.class));
+        intent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(message, Message.class));
         intent.setAction(NotificationBroadcastReceiver.LAUNCH_APP);
+        //Todo: change it to ConversationActivity
         intent.putExtra(MobiComKitConstants.ACTIVITY_TO_OPEN, "com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity");
         intent.setClass(context, NotificationBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) (System.currentTimeMillis() & 0xfffffff), intent, 0);
@@ -60,15 +60,15 @@ public class NotificationService {
                         .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setWhen(System.currentTimeMillis())
-                        .setContentTitle(contact.getFullName() != null ? contact.getFullName() : sms.getContactIds())
-                        .setContentText(sms.getMessage())
+                        .setContentTitle(contact.getDisplayName())
+                        .setContentText(message.getMessage())
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setAutoCancel(true);
-        if (sms.hasAttachment()) {
+        if (message.hasAttachment()) {
             try {
                 InputStream in;
-                HttpURLConnection httpConn = new MobiComKitClientService(context).openHttpConnection(sms.getFileMetas().get(0).getThumbnailUrl());
+                HttpURLConnection httpConn = new MobiComKitClientService(context).openHttpConnection(message.getFileMetas().get(0).getThumbnailUrl());
                 int response = httpConn.getResponseCode();
                 if (response == HttpURLConnection.HTTP_OK) {
                     in = httpConn.getInputStream();
@@ -81,7 +81,7 @@ public class NotificationService {
         }
         WearableNotificationWithVoice notificationWithVoice =
                 new WearableNotificationWithVoice(mBuilder, wearable_action_title,
-                        wearable_action_label, wearable_send_icon, sms.getContactIds().hashCode());
+                        wearable_action_label, wearable_send_icon, message.getContactIds().hashCode());
         notificationWithVoice.setCurrentContext(context);
         notificationWithVoice.setPendingIntent(pendingIntent);
 
