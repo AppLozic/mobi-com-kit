@@ -1,12 +1,12 @@
 <html>
 
     <head>
+        <link href="css/jquery.fileupload.css" rel="stylesheet">
+        <link href="css/fancybox/jquery.fancybox.css"  rel="stylesheet">
+        <link href="emojify/emoji-1.0.css"  rel="stylesheet">
 
-
-        
-      <!-- Custom CSS -->		     
-         <link href="css/app/mck-combined.css" rel="stylesheet">
-         <link href="css/app/mck-sidebox-1.0.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/app/mck-sidebox-1.0.css" rel="stylesheet">
 
         <script src="js/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
@@ -17,7 +17,13 @@
 
     </head>
     <body>
-       <div>
+        <div>
+            <a href="#" class="btn btn-primary mobicomkit-launcher">
+                <span>Start Messaging</span>
+            </a>
+        </div>
+
+        <div>
             <a href="#" class="btn mobicomkit-launcher" data-mck-id="shanki91.app">
                 shanki
             </a>
@@ -105,12 +111,44 @@
                 </div>
 
             </div>
+            <div id="mck-sidebox-launcher" class="mck-sidebox-launcher">
+                <a href="#" class="mobicomkit-launcher mck-button-launcher"></a>
+                <div id="mck-msg-preview" class="mck-msg-preview mobicomkit-launcher">
+                    <div class="mck-row">
+                        <div class="blk-lg-3 mck-preview-icon">
+                        </div>
 
+                        <div class="blk-lg-9">
+                            <div class="mck-row truncate">
+                                <strong class="mck-preview-cont-name"></strong>
+
+                            </div>
+                            <div class="mck-row mck-preview-content"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <script type="text/javascript" src="js/mck-combine.min.js"></script>
+        <script type="text/javascript" src="js/mck-modal.js"></script>
+        <script type="text/javascript" src="js/jquery.linkify.min.js"></script>
+        <script  type="text/javascript" src="js/jquery.ui.widget.js"></script>
+
+        <script type="text/javascript" src="js/jquery.fancybox.js"></script>
         <script type="text/javascript" src="http://mobi-com.appspot.com/_ah/channel/jsapi"></script>
-	<script type="text/javascript" src="js/app/mck-sidebox-1.0.js"></script>
+        <script type="text/javascript" src="emojify/emoji-1.0.js"></script>
+
+        <script type="text/javascript" src="js/jquery.fileupload.js"></script>
+        <script type="text/javascript" src="js/load-image.js"></script>
+
+
+
+        <script type="text/javascript" src="js/load-image-meta.js"></script>
+        <script type="text/javascript" src="js/jquery.fileupload-process.js"></script>
+        <script type="text/javascript" src="js/jquery.fileupload-image.js"></script>
+        <script type="text/javascript" src="js/jquery.fileupload-validate.js"></script>
+        <script type="text/javascript" src="js/app/mck-sidebox-1.0.js"></script>
         <script type="text/javascript">
 
 
