@@ -16,7 +16,6 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(TAG, "Received notification: " + intent.getExtras().toString());
-        setResultCode(Activity.RESULT_OK);
         if (MobiComPushReceiver.isMobiComPushNotification(context, intent)) {
             Log.i(TAG, "Yes it is a MT notification....");
             MobiComPushReceiver.processMessageAsync(context, intent);
