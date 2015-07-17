@@ -1243,7 +1243,7 @@ function MobiComKit() {
                             Notification.requestPermission();
                         }
                         var notification = new Notification(name, {
-                            body: message
+                            body: message.message
                         });
                         notification.onclick = function (x) {
                             window.focus();
