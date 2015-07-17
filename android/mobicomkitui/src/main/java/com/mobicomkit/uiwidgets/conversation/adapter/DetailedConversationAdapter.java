@@ -112,7 +112,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         this.messageDatabaseService = new MessageDatabaseService(context);
         this.conversationService = new MobiComConversationService(context);
         this.contactService =  new AppContactService(context);
-        this.senderContact = contactService.getContactById(MobiComUserPreference.getInstance(context).getUserId());
+        this.senderContact = contactService.getContactWithFallback(MobiComUserPreference.getInstance(context).getUserId());
         contactImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
             @Override
             protected Bitmap processBitmap(Object data) {
