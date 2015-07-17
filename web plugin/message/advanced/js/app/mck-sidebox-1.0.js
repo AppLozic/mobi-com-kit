@@ -72,7 +72,7 @@ function MobiComKit() {
         MCK_GETUSERNAME = options.contactDisplayName;
         MCK_SUPPORT_ID_DATA_ATTR = (typeof options.supportId != "undefined" && options.supportId != "" && options.supportId != "null") ? ('data-mck-id="' + options.supportId + '"') : '';
         IS_MCK_NOTIFICATION = (typeof options.desktopNotification != "undefined" && options.desktopNotification != "" && options.desktopNotification != "null") ? options.desktopNotification : false;
-        
+
         mckMessageService.init(options);
         mckFileService.init();
 
@@ -83,7 +83,7 @@ function MobiComKit() {
         var _this = this;
         var INITIALIZE_APP_URL = "/tab/initialize.page";
         //var retry = 0;
-        
+
         _this.getLauncherHtml = function() {
             return '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher">' +
                             '<a href="#" class="mobicomkit-launcher mck-button-launcher" ' + MCK_SUPPORT_ID_DATA_ATTR + '></a>' +
@@ -1258,7 +1258,7 @@ function MobiComKit() {
                             return;
                         }
                         if (window.webkitNotifications.checkPermission() === 0) {
-                            var notification = window.webkitNotifications.createNotification(name, message);
+                            var notification = window.webkitNotifications.createNotification(name, message.message);
                             mckNotificationService.showNotification(notification);
                         }
                     }
@@ -1268,7 +1268,7 @@ function MobiComKit() {
                         return;
                     }
                     if (window.webkitNotifications.checkPermission() === 0) {
-                        var notification = window.webkitNotifications.createNotification("/favicon.ico", name, message);
+                        var notification = window.webkitNotifications.createNotification("/favicon.ico", name, message.message);
                         mckNotificationService.showNotification(notification);
                     }
                 }
