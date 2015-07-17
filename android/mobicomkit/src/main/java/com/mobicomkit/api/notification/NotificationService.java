@@ -49,8 +49,8 @@ public class NotificationService {
         Intent intent = new Intent();
         intent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(message, Message.class));
         intent.setAction(NotificationBroadcastReceiver.LAUNCH_APP);
-        //Todo: change it to ConversationActivity
-        intent.putExtra(MobiComKitConstants.ACTIVITY_TO_OPEN, "com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity");
+        //Todo: Make it configurable
+        intent.putExtra(MobiComKitConstants.ACTIVITY_TO_OPEN, "com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity");
         intent.setClass(context, NotificationBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) (System.currentTimeMillis() & 0xfffffff), intent, 0);
         NotificationCompat.Builder mBuilder =
