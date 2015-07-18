@@ -14,6 +14,7 @@ import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MessageIntentService;
 import com.mobicomkit.api.notification.WearableNotificationWithVoice;
 
+import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.json.GsonUtils;
 
 /**
@@ -33,8 +34,8 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         String actionName = intent.getAction();
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);
-        String activityToOpen = intent.getStringExtra(MobiComKitConstants.ACTIVITY_TO_OPEN);
-        Log.i(TAG, "got broadcast receiver.." + messageJson + " , " + activityToOpen);
+        String activityToOpen = Utils.getMetaDataValueForReceiver(context, NotificationBroadcastReceiver.class.getName(),  "activity.open.on.notification");
+        Log.i(TAG, "got broadcast receiver.." + messageJson + " , " + activityToOpen + " class name : " + NotificationBroadcastReceiver.class.getName());
         Intent newIntent;
         if (actionName.equals(LAUNCH_APP)) {
             String messageText = getMessageText(intent) == null ? null : getMessageText(intent).toString();
