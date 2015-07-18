@@ -922,16 +922,14 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         super.onResume();
         if (contact != null || group != null) {
             BroadcastService.currentUserId = contact.getContactIds();
+            String ns = Context.NOTIFICATION_SERVICE;
+            NotificationManager nMgr = (NotificationManager) getActivity().getSystemService(ns);
+            nMgr.cancel(BroadcastService.currentUserId.hashCode());
+
             if (downloadConversation != null) {
                 downloadConversation.cancel(true);
             }
             loadnewMessageOnResume(contact, group);
-//            if (contact!=null) {
-//                loadConversation(contact);
-//            }else if (group !=null ){
-//                loadConversation(group);
-        } else {
-            // ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
         }
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
