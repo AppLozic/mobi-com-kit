@@ -2,7 +2,9 @@ package net.mobitexter.mobiframework.commons.core.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -217,9 +219,19 @@ public class Utils {
     }
 
     public static String getMetaDataValue(Context context, String metaDataName) {
-
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            return ai.metaData.getString(metaDataName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static String getMetaDataValueForReceiver(Context context, String componentName,String metaDataName) {
+        try {
+            ActivityInfo ai = context.getPackageManager().getReceiverInfo(new ComponentName(context, componentName), PackageManager.GET_META_DATA);
             return ai.metaData.getString(metaDataName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

@@ -295,10 +295,6 @@ public class Contact {
     }
 
     public boolean isDrawableResources(){
-        if ( imageURL!=null && imageURL.startsWith("R.drawable") ){
-            return true;
-        }else{
-            return false;
-        }
+     return (imageURL!=null && imageURL.startsWith("R.drawable"));
     }
 }

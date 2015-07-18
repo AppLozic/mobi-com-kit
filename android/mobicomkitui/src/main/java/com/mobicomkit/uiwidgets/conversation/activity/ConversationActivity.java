@@ -22,7 +22,7 @@ import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiverForFragments;
 import com.mobicomkit.uiwidgets.conversation.UIService;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
-import com.mobicomkit.uiwidgets.conversation.fragment.QuickConversationFragment;
+import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import net.mobitexter.mobiframework.people.contact.Contact;
@@ -34,7 +34,7 @@ import net.mobitexter.mobiframework.people.contact.Contact;
 public class ConversationActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
 
     protected ConversationFragment conversation;
-    protected QuickConversationFragment quickConversationFragment;
+    protected MobiComQuickConversationFragment quickConversationFragment;
     protected MobiComKitBroadcastReceiverForFragments mobiComKitBroadcastReceiver;
     protected ActionBar mActionBar;
     FragmentActivity fragmentActivity;
@@ -89,7 +89,7 @@ public class ConversationActivity extends ActionBarActivity implements MessageCo
         mActionBar = getSupportActionBar();
 
         setContentView(R.layout.quickconversion_activity);
-        quickConversationFragment = new QuickConversationFragment();
+        quickConversationFragment = new MobiComQuickConversationFragment();
         conversation = new ConversationFragment();
 
         addFragment(this, quickConversationFragment, "QuickConversationFragment");

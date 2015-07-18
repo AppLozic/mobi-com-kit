@@ -133,6 +133,8 @@
             <intent-filter>
                 <action android:name="mobicom.LAUNCH_APP" />
             </intent-filter>
+            <meta-data android:name="activity.open.on.notification"
+                android:value="com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity"/>
         </receiver>
 
         <meta-data
