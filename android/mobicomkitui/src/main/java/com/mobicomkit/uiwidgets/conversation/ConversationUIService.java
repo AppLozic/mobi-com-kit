@@ -66,6 +66,7 @@ public class ConversationUIService {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
+                //Todo: load fragment from backstack if available and avoid creating new fragment.
                 ConversationFragment conversationFragment = new ConversationFragment();
                 //UIService.addFragment(fragmentActivity,conversationFragment,"Conversation");
                 ((MobiComKitActivityInterface) fragmentActivity).addFragment(conversationFragment);
