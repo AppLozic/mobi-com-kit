@@ -6,7 +6,8 @@
         
       <!-- Custom CSS -->		     
          <link href="css/app/mck-combined.css" rel="stylesheet">
-
+         <script src="js/jquery-1.11.3.min.js"></script>
+      
         <script src="js/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
 
@@ -112,8 +113,9 @@
 		<script type="text/javascript" src="js/app/mck-sidebox-1.0.js"></script>
         <script type="text/javascript">
 
-
-            $(document).ready(function () {
+            var $applozic = jQuery.noConflict(true);
+	
+            $applozic(document).ready(function () {
                 var mobiComKitSideBox = new MobiComKitSidebox();
                 mobiComKitSideBox.load();
 
@@ -133,7 +135,7 @@
                 var mckClientAppId = "mobicomkit-sample-app";
 
                 this.load = function () {
-                    $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
+                    $applozic.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
                       readConversation: readMessage, contactDisplayName: displayName,
                       desktopNotification: true
                     });
