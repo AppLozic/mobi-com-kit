@@ -408,7 +408,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
     private void loadContactImage( Contact contact, ImageView contactImage, TextView alphabeticTextView) {
 
         if (contact.isDrawableResources()){
-            int drawableResourceId = context.getResources().getIdentifier("ic_mobicom", "drawable", context.getPackageName());
+            int drawableResourceId = context.getResources().getIdentifier(contact.getrDrawableName(), "drawable", context.getPackageName());
             contactImage.setImageResource(drawableResourceId);
         }else {
             contactImageLoader.loadImage(contact,contactImage,alphabeticTextView);

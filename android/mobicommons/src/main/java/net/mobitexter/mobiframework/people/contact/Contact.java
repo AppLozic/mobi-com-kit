@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public class Contact {
 
+    public static final String R_DRAWABLE = "R.drawable";
     @Expose
     private String firstName = "";
     @Expose
@@ -295,6 +296,11 @@ public class Contact {
     }
 
     public boolean isDrawableResources(){
-     return (imageURL!=null && imageURL.startsWith("R.drawable"));
+     return (imageURL!=null && imageURL.startsWith(R_DRAWABLE));
+    }
+
+    public String getrDrawableName(){
+      return  getImageURL()==null ? getImageURL() : getImageURL().substring(R_DRAWABLE.length()+1);
+
     }
 }
