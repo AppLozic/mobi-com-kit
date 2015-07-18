@@ -255,7 +255,6 @@ function MobiComKit() {
         var $mck_loading = $(".mck-loading");
         var $mck_text_box = $("#mck-text-box");
         var $mck_minimize_icon = $(".mck-minimize-icon");
-        var $mck_modal_footer = $(".modal-footer");
         var $mck_show_more_icon = $("#mck-show-more-icon");
         var $mck_sidebox_content = $(".mck-sidebox-content");
 
@@ -336,16 +335,6 @@ function MobiComKit() {
                 $mck_msg_response.removeClass('vis').addClass('n-vis');
                 $mck_msg_form[0].reset();
                 $mck_msg_inner.html("");
-
-                         if (options.mode == 'support'){
-
-                                if($(this).data("mck-id"))
-                                $mck_modal_footer.show();
-                                else
-                                $mck_modal_footer.hide();
-
-                                }
-
                 $mck_loading.removeClass('vis').addClass('n-vis');
                 mckMessageService.loadMessageList($(this).data("mck-id"));
                 mckMessageLayout.openConversation();
