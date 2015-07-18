@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.broadcast.BroadcastService;
+import com.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationListView;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
@@ -280,6 +282,7 @@ public class MobiComQuickConversationFragment extends Fragment {
     @Override
     public void onResume() {
         //Assigning to avoid notification in case if quick conversation fragment is opened....
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(MobiComKitApplication.TITLE);
         BroadcastService.selectMobiComKitAll();
         super.onResume();
         if (listView != null) {

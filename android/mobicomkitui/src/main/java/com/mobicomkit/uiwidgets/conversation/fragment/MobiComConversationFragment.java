@@ -166,8 +166,8 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         sentIcon = getResources().getDrawable(R.drawable.ic_action_message_sent);
         deliveredIcon = getResources().getDrawable(R.drawable.ic_action_message_delivered);
 
-        if (contact != null && !TextUtils.isEmpty(contact.getContactNumber())) {
-                loadConversation(contact);
+        if (contact != null) {
+            loadConversation(contact);
         }
 
         listView.setLongClickable(true);
@@ -468,6 +468,8 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             downloadConversation.cancel(true);
         }
         BroadcastService.currentUserId = contact.getContactIds();
+        resetlastConversationTime();
+
         /*
         filePath = null;*/
         if (TextUtils.isEmpty(filePath)) {
@@ -919,16 +921,15 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     public void onResume() {
         super.onResume();
         if (contact != null || group != null) {
+            BroadcastService.currentUserId = contact.getContactIds();
+            String ns = Context.NOTIFICATION_SERVICE;
+            NotificationManager nMgr = (NotificationManager) getActivity().getSystemService(ns);
+            nMgr.cancel(BroadcastService.currentUserId.hashCode());
+
             if (downloadConversation != null) {
                 downloadConversation.cancel(true);
             }
             loadnewMessageOnResume(contact, group);
-//            if (contact!=null) {
-//                loadConversation(contact);
-//            }else if (group !=null ){
-//                loadConversation(group);
-        } else {
-            // ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
         }
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {

@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/quick_conversation_fragment_pane"
-        android:name="com.mobicomkit.uiwidgets.conversation.fragment.QuickConversationFragment"
+        android:name="com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="left"></fragment>
