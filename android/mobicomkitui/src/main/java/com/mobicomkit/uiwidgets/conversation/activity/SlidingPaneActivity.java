@@ -26,7 +26,8 @@ import com.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
-import com.mobicomkit.uiwidgets.conversation.fragment.QuickConversationFragment;
+import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
+import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import net.mobitexter.mobiframework.commons.core.utils.Support;
@@ -75,7 +76,7 @@ public class SlidingPaneActivity extends MobiComActivity {
         slidingPaneLayout.getViewTreeObserver().addOnGlobalLayoutListener(
                 new FirstLayoutListener());
 
-        quickConversationFragment = (QuickConversationFragment) getSupportFragmentManager().findFragmentById(R.id.quick_conversation_fragment_pane);
+        quickConversationFragment = (MobiComQuickConversationFragment) getSupportFragmentManager().findFragmentById(R.id.quick_conversation_fragment_pane);
         conversationFragment = (ConversationFragment) getSupportFragmentManager().findFragmentById(R.id.conversation_fragment_pane);
 
         mobiComKitBroadcastReceiver = new MobiComKitBroadcastReceiver(quickConversationFragment, conversationFragment);

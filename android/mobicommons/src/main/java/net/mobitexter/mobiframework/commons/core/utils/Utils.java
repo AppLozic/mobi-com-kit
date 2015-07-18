@@ -219,7 +219,6 @@ public class Utils {
     }
 
     public static String getMetaDataValue(Context context, String metaDataName) {
-
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             return ai.metaData.getString(metaDataName);
@@ -231,7 +230,6 @@ public class Utils {
     }
 
     public static String getMetaDataValueForReceiver(Context context, String componentName,String metaDataName) {
-
         try {
             ActivityInfo ai = context.getPackageManager().getReceiverInfo(new ComponentName(context, componentName), PackageManager.GET_META_DATA);
             return ai.metaData.getString(metaDataName);
