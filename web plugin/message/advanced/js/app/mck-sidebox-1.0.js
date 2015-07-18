@@ -280,14 +280,6 @@ function MobiComKit() {
                 if ($(this).hasClass('mck-msg-preview')) {
                     $(this).hide();
                 }
-                $mck_msg_error.html("");
-                $mck_msg_error.removeClass('vis').addClass('n-vis');
-                $mck_response_text.html("");
-                $mck_msg_response.removeClass('vis').addClass('n-vis');
-                $mck_msg_form[0].reset();
-                $mck_msg_inner.html("");
-                mckMessageService.loadMessageList($(this).data("mck-id"));
-                mckMessageLayout.openConversation();
             });
 
             $mck_text_box.keydown(function (event) {
@@ -336,7 +328,7 @@ function MobiComKit() {
                 }
             });
 
-            $(document).on("click", ".mck-conversation-tab-link, .mck-contact-list ." + MCK_LAUNCHER, function (e) {
+            $(document).on("click", "." + MCK_LAUNCHER + ",.mck-conversation-tab-link, .mck-contact-list ." + MCK_LAUNCHER, function (e) {
                 $mck_msg_error.html("");
                 $mck_msg_error.removeClass('vis').addClass('n-vis');
                 $mck_response_text.html("");
@@ -419,12 +411,14 @@ function MobiComKit() {
                 var contactIdsArray = contactIds.split(",");
                 for (var i = 0; i < contactIdsArray.length; i++) {
                     var contact = mckMessageLayout.getContact(contactIdsArray[i]);
-                    if (typeof contact !== 'undefined') {
-                        var userId = $("#mck-message-cell .mck-message-inner").data('mck-id');
-                        if (typeof userId !== 'undefined' && userId === contact.displayName) {
-                            mckMessageLayout.addMessage(message, true);
-                        }
+                    if (typeof contact == "undefined") {
+                      contact = mckMessageLayout.createContact(contactIdsArray[i]);
                     }
+                    var userId = $("#mck-message-cell .mck-message-inner").data('mck-id');
+                    if (typeof userId !== 'undefined' && userId === contact.contactId) {
+                      mckMessageLayout.addMessage(message, true);
+                    }
+
                 }
                 $mck_msg_sbmt.attr('disabled', false);
                 $mck_msg_sbmt.html('Send');
@@ -517,6 +511,12 @@ function MobiComKit() {
 
             $mck_msg_inner.html("");
             $mck_loading.removeClass('n-vis').addClass('vis');
+            if (individual) {
+              $mck_msg_inner.data('mck-id', userId);
+            } else {
+              $mck_msg_inner.data('mck-id', "");
+            }
+
             $.ajax({
                 url: MCK_BASE_URL + MESSAGE_LIST_URL + "?startIndex=0&pageSize=" + pageSize + userIdParam,
                 type: 'get',
@@ -525,7 +525,6 @@ function MobiComKit() {
                     $mck_loading.removeClass('vis').addClass('n-vis');
                     if (data + '' === "null" || typeof data.message === "undefined" || data.message.length === 0) {
                         if (individual) {
-                            $mck_msg_inner.data('mck-id', userId);
                             $mck_msg_inner.removeClass('mck-msg-w-panel');
                             $mck_top_btn_panel.removeClass('vis').addClass('n-vis');
                             $mck_msg_inner.html('<div class="mck-no-data-text mck-text-muted">No messages yet!</div>');
@@ -534,7 +533,6 @@ function MobiComKit() {
                         }
                     } else {
                         if (individual) {
-                            $mck_msg_inner.data('mck-id', userId);
                             mckMessageLayout.processMessageList(data);
                             $mck_top_btn_panel.removeClass('n-vis').addClass('vis');
                             $mck_msg_inner.addClass('mck-msg-w-panel');
@@ -542,10 +540,8 @@ function MobiComKit() {
                                 MCK_CALLBACK(userId);
                             }
                         } else {
-                            $mck_msg_inner.data('mck-id', "");
                             mckMessageLayout.addContactsFromMessageList(data);
                             sessionStorage.setItem('mckMessageArray', JSON.stringify(data.message));
-
                         }
                     }
 
@@ -1294,7 +1290,7 @@ function MobiComKit() {
                 $mck_preview_content.html(msg);
                 $mck_preview_name.html(contact.displayName);
                 $mck_preview_icon.html(imgsrctag);
-                $mck_msg_preview.data('mck-id', contact.displayName);
+                $mck_msg_preview.data('mck-id', contact.contactId);
                 $mck_sidebox_launcher.addClass('mck-sidebox-launcher-with-preview');
 
             }
@@ -1377,7 +1373,7 @@ function MobiComKit() {
                     if (typeof contact !== 'undefined') {
 
                         var userId = $("#mck-message-cell .mck-message-inner").data('mck-id');
-                        if (typeof userId !== 'undefined' && userId === contact.displayName) {
+                        if (typeof userId !== 'undefined' && userId === contact.contactId) {
 
                             mckMessageLayout.addMessage(message, true);
                             //Todo: use contactNumber instead of contactId for Google Contacts API.
@@ -1401,7 +1397,7 @@ function MobiComKit() {
                             var contact = mckMessageLayout.getContact(contactIdsArray[i]);
                             if (typeof contact !== 'undefined') {
                                 var userId = $("#mck-message-cell .mck-message-inner").data('mck-id');
-                                if (typeof userId !== 'undefined' && userId === contact.displayName) {
+                                if (typeof userId !== 'undefined' && userId === contact.contactId) {
                                     mckMessageLayout.addMessage(message, true);
                                     if (message.type == 3 || (message.type == 5 && message.fileMetaKeyStrings)) {
                                         $("." + message.keyString + " .mck-message-status").removeClass('mck-icon-time').addClass('mck-icon-ok-circle');
