@@ -1,5 +1,5 @@
 
-/* 
+/*
     Created on : Mar 20, 2015, 5:28:06 PM
     Author     : devashish
 */
@@ -106,6 +106,13 @@
     color: #333;
     width: 310px;
 }
+#mck-sidebox div {
+    font-family:Heslvetica Neue,Helvetica,Arial,sans-serif !important;
+}
+
+#mck-sidebox #mck-conversation-title{
+    font-family:Helvetica Neue,Helvetica,Arial,sans-serif !important;
+}
 
 .mck-sidebox .move-right {
     float: right!important;
@@ -191,7 +198,7 @@
     background-color: #fff;
     background-image: none;
     border: 1px solid #ccc;
-    border-radius: 4px;    
+    border-radius: 4px;
     box-sizing: border-box;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
@@ -502,8 +509,7 @@
 .mck-message-cell .mck-top-btn-panel {
     margin: 0px;
     padding: 5px 0;
-    background-color: #F0F0F0;
-    position: fixed;
+    background-color: silver;
     width: 100%;
     /*height: 35px;*/
     z-index: 1000;
@@ -517,7 +523,7 @@
 .mck-sidebox ol, .mck-sidebox ul {
     margin-top: 0;
     margin-bottom: 10px;
-} 
+}
 .mck-sidebox .nav {
     padding-left: 0;
     margin-bottom: 0;
@@ -626,7 +632,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0;    
+    left: 0;
     overflow: auto;
 }
 
@@ -1158,10 +1164,10 @@
 
 .mck-sidebox-launcher .mck-preview-content {
     cursor: pointer;
-    word-break: normal; 
-     word-spacing: normal; 
-     word-wrap: normal; 
-     white-space: normal;
+    word-break: normal;
+    word-spacing: normal;
+    word-wrap: normal;
+    white-space: normal;
 }
 
 
