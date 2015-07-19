@@ -338,6 +338,9 @@ function MobiComKit() {
                 $mck_msg_inner.html("");
                 $mck_loading.removeClass('vis').addClass('n-vis');
                 mckMessageService.loadMessageList($applozic(this).data("mck-id"));
+                if(options.mode == 'support'){
+                  $applozic('a.mck-conversation-tab-link').hide();
+                }
                 mckMessageLayout.openConversation();
             });
 

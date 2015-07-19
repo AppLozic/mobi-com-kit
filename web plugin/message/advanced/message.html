@@ -9,7 +9,7 @@
 
       <!-- Custom CSS -->
          <link href="css/app/mck-combined.css" rel="stylesheet">
-         <script src="js/jquery-1.11.3.min.js"></script>
+         <script src="js/jquery-other.js"></script>
 
         <script src="js/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
@@ -34,7 +34,6 @@
                     <div class="mck-sidebox-content">
                         <div class="modal-header mck-box-top">
                             <button type="button" class="box-close close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <button type="button" class="mck-minimize-icon box-close close icon"><span aria-hidden="true">&minus;</span></button>
                             <h4 class="modal-title mck-box-title truncate" id="mck-conversation-title">Conversations</h4>
                         </div>
 
@@ -135,11 +134,15 @@
             function MobiComKitSidebox() {
                 var mckClientId = "mobicomkit";
                 var mckClientAppId = "mobicomkit-sample-app";
+                var mckMode = "support";
+                var mckSupportId = "applozic";
 
                 this.load = function () {
                     $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
                       readConversation: readMessage, contactDisplayName: displayName,
-                      desktopNotification: true
+                      desktopNotification: true,
+                      mode: mckMode,
+                      supportId: mckSupportId
                     });
                 };
 
