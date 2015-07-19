@@ -113,15 +113,14 @@
 
         <script type="text/javascript" src="js/mck-combine.min.js"></script>
         <script type="text/javascript" src="https://mobi-com.appspot.com/_ah/channel/jsapi"></script>
-	    	<script type="text/javascript" src="js/app/mck-sidebox-1.0.js"></script>
+        <script type="text/javascript" src="js/app/mck-sidebox-1.0.js"></script>
         <script type="text/javascript">
 
-            var $applozic = jQuery.noConflict(true);
+            //var $applozic = jQuery.noConflict(true);
 
-            $applozic(document).ready(function () {
+            $(document).ready(function () {
                 var mobiComKitSideBox = new MobiComKitSidebox();
                 mobiComKitSideBox.load();
-
             });
 
             function readMessage(userId) {
@@ -138,7 +137,7 @@
                 var mckClientAppId = "mobicomkit-sample-app";
 
                 this.load = function () {
-                    $applozic.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
+                    $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
                       readConversation: readMessage, contactDisplayName: displayName,
                       desktopNotification: true
                     });
