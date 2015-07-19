@@ -38,6 +38,7 @@ function MobiComKit() {
     var MCK_CALLBACK;
     var MCK_GETUSERNAME;
     var MCK_SUPPORT_ID_DATA_ATTR;
+    var MCK_MODE;
     var MCK_USER_TIMEZONEOFFSET;
     var FILE_METAS = "";
     var ELEMENT_NODE = 1;
@@ -72,6 +73,7 @@ function MobiComKit() {
         MCK_CALLBACK = options.readConversation;
         MCK_GETUSERNAME = options.contactDisplayName;
         MCK_SUPPORT_ID_DATA_ATTR = (typeof options.supportId != "undefined" && options.supportId != "" && options.supportId != "null") ? ('data-mck-id="' + options.supportId + '"') : '';
+        MCK_MODE = (typeof options.mode != "undefined" && options.mode != "" && options.mode != "null") ? options.mode : 'standard';
         IS_MCK_NOTIFICATION = (typeof options.desktopNotification != "undefined" && options.desktopNotification != "" && options.desktopNotification != "null") ? options.desktopNotification : false;
 
         mckMessageService.init(options);
@@ -87,7 +89,7 @@ function MobiComKit() {
 
         _this.getLauncherHtml = function() {
             return '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher">' +
-                            '<a href="#" class="mobicomkit-launcher mck-button-launcher" ' + MCK_SUPPORT_ID_DATA_ATTR + '></a>' +
+                            '<a href="#" class="mobicomkit-launcher mck-button-launcher" ' + (MCK_MODE == 'support' ? MCK_SUPPORT_ID_DATA_ATTR : '') + '></a>' +
                             '<div id="mck-msg-preview" class="mck-msg-preview mobicomkit-launcher">' +
                             '<div class="mck-row">' +
                             '<div class="blk-lg-3 mck-preview-icon">' +
@@ -338,7 +340,7 @@ function MobiComKit() {
                 $mck_msg_inner.html("");
                 $mck_loading.removeClass('vis').addClass('n-vis');
                 mckMessageService.loadMessageList($applozic(this).data("mck-id"));
-                if(options.mode == 'support'){
+                if (MCK_MODE == 'support') {
                   $applozic('a.mck-conversation-tab-link').hide();
                 }
                 mckMessageLayout.openConversation();
