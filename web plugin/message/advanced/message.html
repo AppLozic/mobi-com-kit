@@ -132,18 +132,22 @@
             }
 
             function MobiComKitSidebox() {
-                var mckClientId = "mobicomkit";
-                var mckClientAppId = "mobicomkit-sample-app";
+                var mckClientId = "customer-1";
+                var mckClientAppId = "applozic-sample-app";
                 var mckMode = "support";
                 var mckSupportId = "applozic";
 
                 this.load = function () {
                     $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
                       readConversation: readMessage, contactDisplayName: displayName,
+                      desktopNotification: true
+                    });
+                    /*$.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
+                      readConversation: readMessage, contactDisplayName: displayName,
                       desktopNotification: true,
                       mode: mckMode,
                       supportId: mckSupportId
-                    });
+                    });*/
                 };
             }
         </script>

@@ -7,7 +7,7 @@ var $applozic = jQuery.noConflict(true);
     var default_options = {
         icons: {},
         defaults: {
-            baseUrl: "https://mobi-com.appspot.com",
+            baseUrl: "https://applozic.appspot.com",
             launcher: "mobicomkit-launcher"
         }
     };
