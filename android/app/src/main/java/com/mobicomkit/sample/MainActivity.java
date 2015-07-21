@@ -3,6 +3,7 @@ package com.mobicomkit.sample;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
@@ -59,6 +61,7 @@ public class MainActivity extends MobiComActivityForFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -110,6 +113,25 @@ public class MainActivity extends MobiComActivityForFragment
                     .commit();
             return;
         }
+
+        if (position ==2) {
+
+            Toast.makeText( getBaseContext(), "Logging out", Toast.LENGTH_SHORT ).show();
+
+            MobiComUserPreference userPreference=MobiComUserPreference.getInstance(this);
+
+            boolean flag=userPreference.userDeleted();
+
+           if(flag){
+               Intent intent = new Intent(this, LoginActivity.class);
+               startActivity(intent);
+           }
+
+
+
+
+        }
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))

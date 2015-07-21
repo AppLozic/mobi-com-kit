@@ -292,4 +292,9 @@ public class MobiComUserPreference {
                 ", contactNumber=" + getContactNumber() +
                 '}';
     }
+
+    public boolean userDeleted(){
+
+         return sharedPreferences.edit().clear().commit();
+    }
 }
