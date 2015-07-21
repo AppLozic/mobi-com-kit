@@ -87,22 +87,22 @@ function MobiComKit() {
         var INITIALIZE_APP_URL = "/tab/initialize.page";
         //var retry = 0;
 
-        _this.getLauncherHtml = function() {
+        _this.getLauncherHtml = function () {
             return '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher">' +
-                            '<a href="#" class="mobicomkit-launcher mck-button-launcher" ' + (MCK_MODE == 'support' ? MCK_SUPPORT_ID_DATA_ATTR : '') + '></a>' +
-                            '<div id="mck-msg-preview" class="mck-msg-preview mobicomkit-launcher">' +
-                            '<div class="mck-row">' +
-                            '<div class="blk-lg-3 mck-preview-icon">' +
-                            '</div>' +
-                            '<div class="blk-lg-9">' +
-                            '<div class="mck-row truncate">' +
-                            '<strong class="mck-preview-cont-name"></strong>' +
-                            '</div>' +
-                            '<div class="mck-row mck-preview-content"></div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
+                    '<a href="#" class="mobicomkit-launcher mck-button-launcher" ' + (MCK_MODE == 'support' ? MCK_SUPPORT_ID_DATA_ATTR : '') + '></a>' +
+                    '<div id="mck-msg-preview" class="mck-msg-preview mobicomkit-launcher">' +
+                    '<div class="mck-row">' +
+                    '<div class="blk-lg-3 mck-preview-icon">' +
+                    '</div>' +
+                    '<div class="blk-lg-9">' +
+                    '<div class="mck-row truncate">' +
+                    '<strong class="mck-preview-cont-name"></strong>' +
+                    '</div>' +
+                    '<div class="mck-row mck-preview-content"></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
         }
 
         _this.initializeApp = function initializeApp(options) {
@@ -117,9 +117,9 @@ function MobiComKit() {
                     USER_COUNTRY_CODE = result.countryCode;
                     USER_DEVICE_KEY = result.deviceKeyString;
                     /* if (USER_DEVICE_KEY == "" && retry < 3) {
-                        retry++;
-                        _this.initializeApp(options);
-                        return;
+                     retry++;
+                     _this.initializeApp(options);
+                     return;
                      } */
 
                     MCK_USER_TIMEZONEOFFSET = result.timeZoneOffset;
@@ -380,7 +380,7 @@ function MobiComKit() {
                 $mck_loading.removeClass('vis').addClass('n-vis');
                 mckMessageService.loadMessageList($applozic(this).data("mck-id"));
                 if (MCK_MODE == 'support') {
-                  $applozic('a.mck-conversation-tab-link').hide();
+                    $applozic('a.mck-conversation-tab-link').hide();
                 }
                 mckMessageLayout.openConversation();
             });
@@ -430,18 +430,17 @@ function MobiComKit() {
             });
         };
 
-        $applozic(document).ready(function () {
-            $mck_search.keydown(function (event) {
-                if (event.keyCode === 13) {
-                    var userId = $(this).val();
-                    if (userId !== "") {
-                        mckMessageLayout.loadTab(userId);
-                    }
-                    $(this).val("");
-                    return false;
+        $mck_search.keydown(function (event) {
+            if (event.keyCode === 13) {
+                var userId = $(this).val();
+                if (userId !== "") {
+                    mckMessageLayout.loadTab(userId);
                 }
-            });
+                $(this).val("");
+                return false;
+            }
         });
+
         _this.sendMessage = function sendMessage(messagePxy) {
             var randomId = MckUtils.randomId();
             var message = {
@@ -469,11 +468,11 @@ function MobiComKit() {
                 for (var i = 0; i < contactIdsArray.length; i++) {
                     var contact = mckMessageLayout.getContact(contactIdsArray[i]);
                     if (typeof contact == "undefined") {
-                      contact = mckMessageLayout.createContact(contactIdsArray[i]);
+                        contact = mckMessageLayout.createContact(contactIdsArray[i]);
                     }
                     var userId = $applozic("#mck-message-cell .mck-message-inner").data('mck-id');
                     if (typeof userId !== 'undefined' && userId === contact.contactId) {
-                      mckMessageLayout.addMessage(message, true);
+                        mckMessageLayout.addMessage(message, true);
                     }
                 }
                 $mck_msg_sbmt.attr('disabled', false);
@@ -570,9 +569,9 @@ function MobiComKit() {
             $mck_msg_inner.html("");
             $mck_loading.removeClass('n-vis').addClass('vis');
             if (individual) {
-              $mck_msg_inner.data('mck-id', userId);
+                $mck_msg_inner.data('mck-id', userId);
             } else {
-              $mck_msg_inner.data('mck-id', "");
+                $mck_msg_inner.data('mck-id', "");
             }
 
             $applozic.ajax({
@@ -667,9 +666,10 @@ function MobiComKit() {
         var _this = this;
         var $mck_msg_sbmt = $applozic("#mck-msg-sbmt");
         var $mck_sidebox = $applozic("#mck-sidebox");
-        var $mck_msg_to = $applozic("#mck-msg-to");;
+        var $mck_msg_to = $applozic("#mck-msg-to");
+        ;
         var $mck_msg_form = $applozic("#mck-msg-form");
- var $mck_sidebox_content = $applozic(".mck-sidebox-content");
+        var $mck_sidebox_content = $applozic(".mck-sidebox-content");
         var $mck_msg_error = $applozic("#mck-msg-error");
         var $mck_msg_response = $applozic("#mck-msg-response");
         var $mck_response_text = $applozic("#mck_response_text");
@@ -679,7 +679,8 @@ function MobiComKit() {
         var $mck_text_box = $applozic("#mck-text-box");
         var $modal_footer_content = $applozic(".modal-footer .modal-form");
         var $mck_sidebox_search = $applozic("#mck-sidebox-search");
-        var $mck_add_new = $applozic(".mck-add-new");;
+        var $mck_add_new = $applozic(".mck-add-new");
+        ;
 
         var markup = '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}"  data-msgtime="${msgCreatedAtTime}" data-msgcontent="${replyIdExpr}" data-msgkeystring="${msgKeyExpr}" data-contact="${contactIdsExpr}" class="row-fluid mck-m-b ${msgKeyExpr}"><div class="clear"><div class="blk-lg-12"><div class="${msgFloatExpr} mck-msg-box ${msgClassExpr}">' +
                 '<div class="mck-msg-text mck-msg-content"></div>' +
@@ -1192,21 +1193,21 @@ function MobiComKit() {
                     if (data.files[0].name === $applozic("#mck-file-box .mck-file-lb a").html()) {
                         $mck_msg_sbmt.attr('disabled', true);
                         $applozic.ajax({
-                                    type: "GET",
-                                    url: MCK_BASE_URL + FILE_UPLOAD_URL,
-                                    global: false,
-                                    data: "data=" + new Date().getTime(),
-                                    crosDomain: true,
-                                    headers: {"UserId-Enabled": true, 'Authorization': "Basic " + AUTH_CODE,
-                                        'Application-Key': APPLICATION_ID},
-                                    success: function (result, status, xhr) {
-                                        data.url = result;
-                                        $file_upload.fileupload('send', data);
-                                    },
-                                    error: function (xhr, desc, err) {
+                            type: "GET",
+                            url: MCK_BASE_URL + FILE_UPLOAD_URL,
+                            global: false,
+                            data: "data=" + new Date().getTime(),
+                            crosDomain: true,
+                            headers: {"UserId-Enabled": true, 'Authorization': "Basic " + AUTH_CODE,
+                                'Application-Key': APPLICATION_ID},
+                            success: function (result, status, xhr) {
+                                data.url = result;
+                                $file_upload.fileupload('send', data);
+                            },
+                            error: function (xhr, desc, err) {
 
-                                    }
-                                });
+                            }
+                        });
                     }
                     return false;
                 },
