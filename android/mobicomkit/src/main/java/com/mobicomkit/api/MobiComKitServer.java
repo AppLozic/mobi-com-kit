@@ -15,7 +15,7 @@ public class MobiComKitServer {
     }
 
     public static final boolean PROD = true;
-    public static final String PROD_DISPLAY_URL = "http://www.mobicomkit.com";
+    public static final String PROD_DISPLAY_URL = "http://www.applozic.com";
     public static final String SERVER_DEVICE_CONTACT_SYNC_URL =  "/rest/ws/contact/v1/device/add";
     public static final String SERVER_CONTACT_SYNC_URL = "/rest/ws/contact/v1/add";
     public static final String FREE_MESSAGE_FAILED_URL = "/rest/ws/sms/mtext/failed?";

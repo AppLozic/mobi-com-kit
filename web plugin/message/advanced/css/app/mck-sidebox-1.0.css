@@ -1164,6 +1164,9 @@
 
 .mck-sidebox-launcher .mck-preview-content {
     cursor: pointer;
+    word-break: normal; 
+    word-spacing: normal; 
+    word-wrap: normal; 
     word-break: normal;
     word-spacing: normal;
     word-wrap: normal;
@@ -1231,4 +1234,32 @@
     .blk-lg-12 {
         width: 100%;
     }
+}
+
+.mck-sidebox-content.vis {
+    display:table !important;
+}
+
+#mck-sidebox-search  input{
+    width: 215px;
+    height: 40px;
+    border: 0px;
+    border-bottom: 1px solid blue;
+    background-color: white;
+    box-shadow: none;
+    outline: none;
+    outline-offset: 1px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.mck-add-new	    {
+    height: 50px;
+    text-align: center;
+}
+
+.mck-conversation-tab-search img {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
 }
