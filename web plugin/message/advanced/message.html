@@ -32,19 +32,20 @@
             <div id="mck-sidebox"  class="modal mck-sidebox fade">
                 <div  class="modal-dialog modal-sm right bg-white md-box-s">
                     <div id="mck-sidebox-content" class="mck-sidebox-content">
-
                         <div class="modal-header mck-box-top">
-                            <button type="button" class="box-close close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" class="box-close mck-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <!--  <button type="button" class="mck-minimize-icon box-close mck-close icon"><span aria-hidden="true">&minus;</span></button> -->
                             <h4 class="modal-title mck-box-title truncate" id="mck-conversation-title">Conversations</h4>
                         </div>
 
-                        <div class="modal-body mck-box-md ">
+                        <div class="mck-box-md">
+
                             <div id="mck-message-cell" class="mck-message-cell">
                                 <div id="mck-top-btn-panel" class="mck-row mck-top-btn-panel n-vis">
-                                    <button type="button" id="mck-show-more" class="mck-show-more btn-light btn btn-default move-left" title="Show More">
+                                    <button type="button" id="mck-show-more" class="mck-show-more mck-btn-light mck-btn mck-btn-default move-left" title="Show More">
                                         <span>Show More</span>
                                     </button>
-                                    <button type="button" id="mck-delete-button" class="mck-delete-button btn-light btn btn-default move-right" title="Delete">
+                                    <button type="button" id="mck-delete-button" class="mck-delete-button mck-btn-light mck-btn mck-btn-default move-right" title="Delete">
                                         <span>Delete</span>
                                     </button>
 
@@ -60,7 +61,7 @@
 
                             </div>
                         </div>
-                        <div class="modal-footer mck-box-ft">
+                        <div class="mck-box-ft">
                             <div class="modal-form n-vis">
 
                                 <p id="mck-msg-error" class="mck-sidebox-error n-vis"></p>
@@ -69,12 +70,12 @@
 
                                 </div>
                                 <form id="mck-msg-form" class="vertical">
-                                    <div class="form-group">
+                                    <div class="mck-form-group">
                                         <label class="sr-only placeholder-text control-label" for="mt-ms-to">To:</label>
                                         <input class="form-cntrl" id="mck-msg-to" name="mt-ms-to" placeholder="To" required>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="mck-form-group">
                                         <label class="sr-only placeholder-text control-label" for="mck-textbox">Message</label>
                                         <div id="mck-textbox-container" class="mck-textbox-container">
                                             <div id="mck-text-box" contenteditable="true" class="mck-text-box text required"></div>
@@ -83,32 +84,31 @@
                                                     <span class="mck-file-content blk-lg-8"><span class="mck-file-lb"></span>&nbsp;<span class="mck-file-sz"></span></span>
                                                     <span class="progress progress-striped active blk-lg-3" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="progress-bar progress-bar-success bar"></span></span>
                                                     <span class="move-right">
-                                                        <button type="button" class="box-close close mck-remove-file" data-dismiss="div" aria-hidden="true">x</button>
+                                                        <button type="button" class="box-close mck-close mck-remove-file" data-dismiss="div" aria-hidden="true">x</button>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group last last-child">
-                                        <button type="submit" id="mck-msg-sbmt" class="btn btn-blue move-left" title="Send">
+                                    <div class="mck-form-group last last-child">
+                                        <button type="submit" id="mck-msg-sbmt" class="mck-btn mck-btn-blue move-left" title="Send">
                                             <span>Send</span>
                                         </button>
 
                                         <label id="mck-file-up" class= "fileinput-button file-upload move-right" title="Attach File">
-                                            <button type="button" class="btn btn-light" title="Attach File"><img src="images/ic_action_attachment.png" alt="Attach file"/></button>
+                                            <button type="button" class="mck-btn mck-btn-light" title="Attach File"><img src="images/ic_action_attachment.png" alt="Attach file"/></button>
                                             <input type="file" name="files[]">
                                         </label>
                                     </div>
                                 </form>
                             </div>
                             <div class="mck-add-new">
-                                <button type="submit" id="mck-msg-new" class="btn btn-blue move-center-right" title="new message">
+                                <button type="submit" id="mck-msg-new" class="mck-btn mck-btn-blue" title="new message">
                                     <span>New Message</span>
                                 </button>
                             </div>
                         </div>
-
                     </div>
                     <div id="mck-sidebox-search" class="mck-sidebox-content n-vis">
                         <div class="modal-header mck-box-top">
@@ -146,29 +146,29 @@
             }
 
             function displayName(userId) {
-            //Todo: replace this with users display users name
-            return userId;
+                //Todo: replace this with users display users name
+                return userId;
             }
 
-                    function MobiComKitSidebox() {
-                    var mckClientId = "customer-1";
-                            var mckClientAppId = "applozic-sample-app";
-                            var mckMode = "support";
-                            var mckSupportId = "applozic";
+            function MobiComKitSidebox() {
+                var mckClientId = "customer-1";
+                var mckClientAppId = "applozic-sample-app";
+                var mckMode = "support";
+                var mckSupportId = "applozic";
 
-                            this.load = function () {
-                            $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
-                                    readConversation: readMessage, contactDisplayName: displayName,
-                                    desktopNotification: true
-                            });
-                                    /*$.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
-                                     readConversation: readMessage, contactDisplayName: displayName,
-                                     desktopNotification: true,
-                                     mode: mckMode,
-                                     supportId: mckSupportId
-                                     });*/
-                            };
-                    }
+                this.load = function () {
+                    $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
+                        readConversation: readMessage, contactDisplayName: displayName,
+                        desktopNotification: true
+                    });
+                    /*$.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
+                     readConversation: readMessage, contactDisplayName: displayName,
+                     desktopNotification: true,
+                     mode: mckMode,
+                     supportId: mckSupportId
+                     });*/
+                };
+            }
         </script>
     </body>
 </html>
