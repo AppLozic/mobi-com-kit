@@ -26,10 +26,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mobicomkit.api.account.register.RegistrationResponse;
 import com.mobicomkit.api.account.user.User;
 import com.mobicomkit.api.account.user.UserLoginTask;
 import com.mobicomkit.sample.pushnotification.GCMRegistrationUtils;
-import com.mobicomkit.api.account.register.RegisterUserClientService;
 
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
 
@@ -176,30 +176,34 @@ public class LoginActivity extends Activity {
 
             // callback for login process
             UserLoginTask.TaskListener listener = new UserLoginTask.TaskListener() {
+
                 @Override
-                public void onFinished(Boolean result, Exception exception) {
-                    // Do Something after the task has finished
+                public void onSuccess(RegistrationResponse registrationResponse) {
                     mAuthTask = null;
                     showProgress(false);
 
-                    if (result) {
-                        //Start GCM registartion....
-                        GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
-                        gcmRegistrationUtils.setUpGcmNotification();
-                        finish();
-                    } else {
-                        mEmailSignInButton.setVisibility(View.VISIBLE);
-                        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-                        alertDialog.setTitle(getString(R.string.text_alert));
-                        alertDialog.setMessage(exception.toString());
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-                    }
+                    //Start GCM registartion....
+                    GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
+                    gcmRegistrationUtils.setUpGcmNotification();
+                    finish();
+                }
+
+                @Override
+                public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
+                    mAuthTask = null;
+                    showProgress(false);
+
+                    mEmailSignInButton.setVisibility(View.VISIBLE);
+                    AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+                    alertDialog.setTitle(getString(R.string.text_alert));
+                    alertDialog.setMessage(exception.toString());
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                 }
             };
 

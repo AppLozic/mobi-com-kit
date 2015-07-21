@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.mobicomkit.api.account.register.RegisterUserClientService;
+import com.mobicomkit.api.account.register.RegistrationResponse;
 
 /**
  * Represents an asynchronous login/registration task used to authenticate
@@ -16,7 +17,10 @@ import com.mobicomkit.api.account.register.RegisterUserClientService;
 public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
     public interface TaskListener {
-        void onFinished(Boolean result, Exception exception);
+        void onSuccess(RegistrationResponse registrationResponse);
+
+        void onFailure(RegistrationResponse registrationResponse, Exception exception);
+
     }
 
     private final TaskListener taskListener;
@@ -26,6 +30,8 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
     private final String mPhoneNumber;
     private final Context context;
     private Exception mException;
+    private RegistrationResponse registrationResponse;
+
 
     public UserLoginTask(User user, TaskListener listener, Context context) {
         mUserId = user.getUserId();
@@ -39,7 +45,7 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            new RegisterUserClientService(context).createAccount(mEmail, mUserId, mPhoneNumber, "");
+            registrationResponse = new RegisterUserClientService(context).createAccount(mEmail, mUserId, mPhoneNumber, "");
         } catch (Exception e) {
             e.printStackTrace();
             mException = e;
@@ -50,9 +56,15 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(final Boolean result) {
-        if (this.taskListener != null) {
-            // And if it is we call the callback function on it.
-            this.taskListener.onFinished(result, mException);
+        // And if it is we call the callback function on it.
+        if (result && this.taskListener != null) {
+            this.taskListener.onSuccess(registrationResponse);
+
+
+        } else if (mException != null && this.taskListener != null) {
+            this.taskListener.onFailure(registrationResponse, mException);
         }
     }
+
+
 }

@@ -76,7 +76,7 @@ public class MultimediaOptionFragment extends DialogFragment {
                         getActivity().startActivityForResult(intentPick, REQUEST_CODE_ATTACH_PHOTO);
                         break;
                     case 0:
-                        ((MobiComActivity) getActivity()).processLocation();
+                       /* ((MobiComActivity) getActivity()).processLocation();*/
                         break;
                     default:
                 }
