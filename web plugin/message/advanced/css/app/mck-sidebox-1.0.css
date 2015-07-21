@@ -1164,15 +1164,12 @@
 
 .mck-sidebox-launcher .mck-preview-content {
     cursor: pointer;
-<<<<<<< HEAD
     word-break: normal; 
     word-spacing: normal; 
     word-wrap: normal; 
-=======
     word-break: normal;
     word-spacing: normal;
     word-wrap: normal;
->>>>>>> origin/master
     white-space: normal;
 }
 
