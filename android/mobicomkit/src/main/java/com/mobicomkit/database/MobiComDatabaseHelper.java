@@ -147,4 +147,11 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
     public synchronized void close() {
         //super.close();
     }
+
+    public int delDatabase() {
+
+        context.deleteDatabase("MCK_" + MobiComKitClientService.getApplicationKey(context));
+
+        return 0;
+    }
 }

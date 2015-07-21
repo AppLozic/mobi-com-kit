@@ -1,6 +1,7 @@
 package com.mobicomkit.api.account.user;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -8,6 +9,8 @@ import android.text.TextUtils;
 import com.mobicomkit.api.MobiComKitClientService;
 
 import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
+
+
 
 import java.util.Date;
 
@@ -293,8 +296,13 @@ public class MobiComUserPreference {
                 '}';
     }
 
-    public boolean userDeleted(){
+    public boolean clearAll(){
 
          return sharedPreferences.edit().clear().commit();
+
+         //Intent intent = new Intent(this, LoginActivity.class);
+         //startActivity(intent);
+
+
     }
 }

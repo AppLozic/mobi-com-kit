@@ -3,7 +3,6 @@ package com.mobicomkit.sample;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.contact.AppContactService;
+import com.mobicomkit.database.MobiComDatabaseHelper;
 import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.UIService;
@@ -114,20 +114,23 @@ public class MainActivity extends MobiComActivityForFragment
             return;
         }
 
-        if (position ==2) {
+        if (position == 2) {
 
-            Toast.makeText( getBaseContext(), "Logging out", Toast.LENGTH_SHORT ).show();
+            Toast.makeText(getBaseContext(), "Logging out", Toast.LENGTH_SHORT).show();
 
-            MobiComUserPreference userPreference=MobiComUserPreference.getInstance(this);
+            MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
 
-            boolean flag=userPreference.userDeleted();
+            MobiComDatabaseHelper databaseHelper = MobiComDatabaseHelper.getInstance(this);
 
-           if(flag){
-               Intent intent = new Intent(this, LoginActivity.class);
-               startActivity(intent);
-           }
+            databaseHelper.delDatabase();
 
+            boolean flag = userPreference.clearAll();
 
+            if (flag) {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                return;
+            }
 
 
         }
@@ -302,11 +305,11 @@ public class MainActivity extends MobiComActivityForFragment
         //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
     }
 
-    private void  buildSupportContactData(){
+    private void buildSupportContactData() {
         Context context = getApplicationContext();
         AppContactService appContactService = new AppContactService(context);
         // avoid each time update ....
-        if( appContactService.getContactById(getString(R.string.support_contact_userId))== null){
+        if (appContactService.getContactById(getString(R.string.support_contact_userId)) == null) {
             Contact contact = new Contact();
             contact.setUserId(getString(R.string.support_contact_userId));
             contact.setFullName(getString(R.string.support_contact_display_name));
