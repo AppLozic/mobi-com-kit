@@ -343,7 +343,7 @@ function MobiComKit() {
                 }
             });
 
-            $applozic(document).on("click", ".mck-conversation-tab-link, .mck-contact-list ." + MCK_LAUNCHER, function (e) {
+            $applozic(document).on("click", "." + MCK_LAUNCHER + ",.mck-conversation-tab-link, .mck-contact-list ." + MCK_LAUNCHER, function (e) {
                 mckMessageLayout.loadTab($(this).data("mck-id"));
             });
             $applozic(document).on("click", ".mck-conversation-tab-search", function (e) {
@@ -352,20 +352,6 @@ function MobiComKit() {
                     mckMessageLayout.loadTab(userId);
                 }
                 $mck_search.val("");
-            });
-            $applozic(document).on("click", "." + MCK_LAUNCHER + ",.mck-conversation-tab-link, .mck-contact-list ." + MCK_LAUNCHER, function (e) {
-                $mck_msg_error.html("");
-                $mck_msg_error.removeClass('vis').addClass('n-vis');
-                $mck_response_text.html("");
-                $mck_msg_response.removeClass('vis').addClass('n-vis');
-                $mck_msg_form[0].reset();
-                $mck_msg_inner.html("");
-                $mck_loading.removeClass('vis').addClass('n-vis');
-                mckMessageService.loadMessageList($applozic(this).data("mck-id"));
-                if (MCK_MODE === 'support') {
-                    $applozic('a.mck-conversation-tab-link').hide();
-                }
-                mckMessageLayout.openConversation();
             });
 
             $applozic(document).on("click", ".mck-show-more", function (e) {
@@ -651,7 +637,7 @@ function MobiComKit() {
         var $mck_sidebox = $applozic("#mck-sidebox");
         var $mck_msg_to = $applozic("#mck-msg-to");
         var $mck_msg_form = $applozic("#mck-msg-form");
-        var $mck_sidebox_content = $applozic(".mck-sidebox-content");
+        var $mck_sidebox_content = $applozic("#mck-sidebox-content");
         var $mck_msg_error = $applozic("#mck-msg-error");
         var $mck_msg_response = $applozic("#mck-msg-response");
         var $mck_response_text = $applozic("#mck_response_text");
