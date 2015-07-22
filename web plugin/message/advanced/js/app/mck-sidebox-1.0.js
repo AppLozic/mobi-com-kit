@@ -261,7 +261,7 @@ function MobiComKit() {
         var $mck_text_box = $applozic("#mck-text-box");
         var $mck_show_more_icon = $applozic("#mck-show-more-icon");
         var $mck_sidebox_content = $applozic(".mck-sidebox-content");
-        var $modal_footer_content = $applozic(".modal-footer .modal-form");
+        var $modal_footer_content = $applozic(".mck-box-ft .modal-form");
         var $mck_sidebox_search = $applozic("#mck-sidebox-search");
         var $mck_add_new = $applozic(".mck-add-new");
         var $mck_search = $applozic("#mck-search");
@@ -345,13 +345,13 @@ function MobiComKit() {
 
             $applozic(document).on("click", "." + MCK_LAUNCHER + ",.mck-conversation-tab-link, .mck-contact-list ." + MCK_LAUNCHER, function (e) {
                 mckMessageLayout.loadTab($(this).data("mck-id"));
-				$mck_search.val("");
+                $mck_search.val("");
             });
             $applozic(document).on("click", ".mck-conversation-tab-search", function (e) {
                 var userId = $mck_search.val();
                 if (userId !== "") {
                     mckMessageLayout.loadTab(userId);
-					$mck_add_new.removeClass('n-vis').addClass('vis');
+                    $modal_footer_content.removeClass('n-vis').addClass('vis');
                 }
                 $mck_search.val("");
             });
@@ -406,7 +406,7 @@ function MobiComKit() {
                 var userId = $(this).val();
                 if (userId !== "") {
                     mckMessageLayout.loadTab(userId);
-					$mck_add_new.removeClass('n-vis').addClass('vis');
+                    $modal_footer_content.removeClass('n-vis').addClass('vis');
                 }
                 $(this).val("");
                 return false;
@@ -508,7 +508,7 @@ function MobiComKit() {
                 $mck_show_more.data('userId', userId);
                 $mck_add_new.removeClass('vis').addClass('n-vis');
                 $modal_footer_content.removeClass('n-vis').addClass('vis');
-                $mck_msg_to.parent('.form-group').removeClass('vis').addClass('n-vis');
+                $mck_msg_to.parent('.mck-form-group').removeClass('vis').addClass('n-vis');
                 $mck_delete_button.removeClass('n-vis').addClass('vis');
                 var displayName = "";
                 if (typeof (MCK_GETUSERNAME) === "function") {
@@ -526,8 +526,11 @@ function MobiComKit() {
                 $mck_msg_inner.data('mck-id', "");
                 $mck_msg_inner.removeClass('mck-msg-w-panel');
                 $mck_top_btn_panel.removeClass('vis').addClass('n-vis');
-                $mck_delete_button.removeClass('vis').addClass('n-vis');
-                $mck_msg_to.parent('.form-group').removeClass('n-vis').addClass('vis');
+                $mck_delete_button.removeClass('vis').addClass('n-vis');				
+				$mck_msg_to.val("");
+                $mck_msg_to.parent('.mck-form-group').removeClass('n-vis').addClass('vis');
+				$modal_footer_content.removeClass('vis').addClass('n-vis');
+				$mck_add_new.removeClass('n-vis').addClass('vis');
                 if (typeof (Storage) !== "undefined") {
                     var mckMessageArray = JSON.parse(sessionStorage.getItem('mckMessageArray'));
                     if (mckMessageArray !== null) {
