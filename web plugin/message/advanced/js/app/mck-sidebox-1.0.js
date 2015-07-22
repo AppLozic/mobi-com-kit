@@ -345,11 +345,13 @@ function MobiComKit() {
 
             $applozic(document).on("click", "." + MCK_LAUNCHER + ",.mck-conversation-tab-link, .mck-contact-list ." + MCK_LAUNCHER, function (e) {
                 mckMessageLayout.loadTab($(this).data("mck-id"));
+				$mck_search.val("");
             });
             $applozic(document).on("click", ".mck-conversation-tab-search", function (e) {
                 var userId = $mck_search.val();
                 if (userId !== "") {
                     mckMessageLayout.loadTab(userId);
+					$mck_add_new.removeClass('n-vis').addClass('vis');
                 }
                 $mck_search.val("");
             });
@@ -404,6 +406,7 @@ function MobiComKit() {
                 var userId = $(this).val();
                 if (userId !== "") {
                     mckMessageLayout.loadTab(userId);
+					$mck_add_new.removeClass('n-vis').addClass('vis');
                 }
                 $(this).val("");
                 return false;
