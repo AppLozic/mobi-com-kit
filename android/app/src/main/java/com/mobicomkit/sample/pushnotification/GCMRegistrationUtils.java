@@ -9,17 +9,20 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.mobicomkit.api.account.register.RegistrationResponse;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
-import com.mobicomkit.api.account.register.RegisterUserClientService;
+import com.mobicomkit.api.account.user.PushNotificationTask;
 
 import java.io.IOException;
 
 public class GCMRegistrationUtils extends Handler {
 
-    private static final String GCM_SENDER_ID = "195932243324";
     private static final String TAG = "GCMRegistrationUtils";
+    private static final String GCM_SENDER_ID = "195932243324";
+    /*private static final String GCM_SENDER_ID = "671105753616";*/
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private final Activity mActivity;
+    private PushNotificationTask pushNotificationTask = null;
 
     public GCMRegistrationUtils(Activity activity) {
         super();
@@ -31,16 +34,20 @@ public class GCMRegistrationUtils extends Handler {
         super.handleMessage(msg);
         if (msg.what == 1) {
             final String pushnotificationId = msg.obj.toString();
-            new Thread(new Runnable() {
+            PushNotificationTask.TaskListener listener = new PushNotificationTask.TaskListener() {
+
                 @Override
-                public void run() {
-                    try {
-                        new RegisterUserClientService(mActivity).updatePushNotificationId(pushnotificationId);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                public void onSuccess(RegistrationResponse registrationResponse) {
                 }
-            }).start();
+
+                @Override
+                public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
+                }
+            };
+
+            pushNotificationTask = new PushNotificationTask(pushnotificationId, listener, mActivity);
+            pushNotificationTask.execute((Void) null);
+
         } else {
             Log.i(TAG, "Handler: Background registration failed");
         }
