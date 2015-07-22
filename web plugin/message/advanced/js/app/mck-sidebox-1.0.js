@@ -28,6 +28,7 @@ function MobiComKit() {
     var MCK_TOKEN;
     var APPLICATION_ID;
     var USER_NUMBER;
+    var MCK_USER_ID;
     var USER_COUNTRY_CODE;
     var USER_DEVICE_KEY;
     var AUTH_CODE;
@@ -65,6 +66,7 @@ function MobiComKit() {
         _this.callback = options.readConversation;
         _this.getUserName = options.contactDisplayName;
         _this.supportId = options.supportId;
+        MCK_USER_ID = options.userId;
         APPLICATION_ID = options.appId;
         MCK_BASE_URL = options.baseUrl;
         MCK_CALLBACK = options.readConversation;
@@ -244,6 +246,7 @@ function MobiComKit() {
         var _this = this;
         var ADD_MESSAGE_URL = "/rest/ws/mobicomkit/v1/message/add";
         var MESSAGE_LIST_URL = "/rest/ws/mobicomkit/v1/message/list";
+        var MESSAGE_DELIVERY_UPDATE_URL = "/rest/ws/sms/mtext/delivered";
         var $mck_msg_to = $applozic("#mck-msg-to");
         var $mck_sidebox = $applozic("#mck-sidebox");
         var $mck_msg_form = $applozic("#mck-msg-form");
@@ -526,11 +529,11 @@ function MobiComKit() {
                 $mck_msg_inner.data('mck-id', "");
                 $mck_msg_inner.removeClass('mck-msg-w-panel');
                 $mck_top_btn_panel.removeClass('vis').addClass('n-vis');
-                $mck_delete_button.removeClass('vis').addClass('n-vis');				
-				$mck_msg_to.val("");
+                $mck_delete_button.removeClass('vis').addClass('n-vis');
+                $mck_msg_to.val("");
                 $mck_msg_to.parent('.mck-form-group').removeClass('n-vis').addClass('vis');
-				$modal_footer_content.removeClass('vis').addClass('n-vis');
-				$mck_add_new.removeClass('n-vis').addClass('vis');
+                $modal_footer_content.removeClass('vis').addClass('n-vis');
+                $mck_add_new.removeClass('n-vis').addClass('vis');
                 if (typeof (Storage) !== "undefined") {
                     var mckMessageArray = JSON.parse(sessionStorage.getItem('mckMessageArray'));
                     if (mckMessageArray !== null) {
@@ -616,6 +619,21 @@ function MobiComKit() {
                 });
 
             }
+        };
+
+        _this.updateDeliveryStatus = function updateDeliveryStatus(message) {
+            var data = "userId=" + MCK_USER_ID + "&smsKeyString=" + message.pairedSmsKeyString;
+
+            $applozic.ajax({
+                url: MCK_BASE_URL + MESSAGE_DELIVERY_UPDATE_URL,
+                data: data,
+                global: false,
+                type: 'get',
+                success: function (data, status) {
+                },
+                error: function (xhr, desc, err) {
+                }
+            });
         };
     }
 
@@ -1444,6 +1462,7 @@ function MobiComKit() {
                 mckMessageLayout.addContactsFromMessage(message, true);
                 if (messageType === "SMS_RECEIVED" && resp.notifyUser) {
                     mckNotificationService.notifyUser(message);
+                    mckMessageService.updateDeliveryStatus(message);
                 }
             } else {
                 if (messageType === "SMS_RECEIVED") {
@@ -1462,6 +1481,7 @@ function MobiComKit() {
                         if (resp.notifyUser) {
                             mckNotificationService.notifyUser(message);
                         }
+                        mckMessageService.updateDeliveryStatus(message);
                     }
                 } else if (messageType === "SMS_SENDING") {
                     if ((message.type !== 5 || message.source !== 1 || message.fileMetaKeyStrings)) {
