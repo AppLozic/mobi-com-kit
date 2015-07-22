@@ -526,11 +526,11 @@ function MobiComKit() {
                 $mck_msg_inner.data('mck-id', "");
                 $mck_msg_inner.removeClass('mck-msg-w-panel');
                 $mck_top_btn_panel.removeClass('vis').addClass('n-vis');
-                $mck_delete_button.removeClass('vis').addClass('n-vis');				
-				$mck_msg_to.val("");
+                $mck_delete_button.removeClass('vis').addClass('n-vis');
+                $mck_msg_to.val("");
                 $mck_msg_to.parent('.mck-form-group').removeClass('n-vis').addClass('vis');
-				$modal_footer_content.removeClass('vis').addClass('n-vis');
-				$mck_add_new.removeClass('n-vis').addClass('vis');
+                $modal_footer_content.removeClass('vis').addClass('n-vis');
+                $mck_add_new.removeClass('n-vis').addClass('vis');
                 if (typeof (Storage) !== "undefined") {
                     var mckMessageArray = JSON.parse(sessionStorage.getItem('mckMessageArray'));
                     if (mckMessageArray !== null) {
