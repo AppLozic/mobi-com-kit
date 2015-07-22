@@ -443,7 +443,7 @@ function MobiComKit() {
                         contact = mckMessageLayout.createContact(contactIdsArray[i]);
                     }
                     var userId = $applozic("#mck-message-cell .mck-message-inner").data('mck-id');
-                    if (typeof userId !== 'undefined' && userId === contact.contactId) {
+                    if (typeof userId !== 'undefined' && userId == contact.contactId) {
                         mckMessageLayout.addMessage(message, true);
                     }
                 }
