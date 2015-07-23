@@ -1,4 +1,6 @@
 var $applozic = jQuery.noConflict(true);
+var appModal = $applozic.fn.modal.noConflict();
+$.fn.modal = appModal;
 (function ($applozic) {
 
     var mobiComKit = new MobiComKit();
@@ -698,8 +700,8 @@ function MobiComKit() {
 
         _this.openConversation = function openConversation() {
             if ($mck_sidebox.css('display') === 'none') {
-                $applozic('.modal').modal('hide');
-                $mck_sidebox.modal();
+                $('.modal').modal('hide');
+                $('#mck-sidebox').modal();
             }
             $mck_msg_to.focus();
         };
