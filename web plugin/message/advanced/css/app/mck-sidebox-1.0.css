@@ -107,6 +107,7 @@
     width: 310px;
 }
 #mck-sidebox div, #mck-conversation-title {
+    margin: 0px;
     font-family:Heslvetica Neue,Helvetica,Arial,sans-serif !important;
 }
 
@@ -1059,7 +1060,11 @@
 .alpha_user i {
     font-size: 24px;
 }
-
+.mck-conversation-tab-link {
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+}
 .mck-conversation-tab-link img {
     height: 20px;
     width: 20px;
@@ -1257,16 +1262,25 @@
 }
 
 #mck-sidebox-search  input{
-    width: 215px;
-    height: 40px;
-    border: 0px;
-    border-bottom: 1px solid grey;
-    background-color: white;
-    box-shadow: none;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
     outline: none;
-    outline-offset: 1px;
-    font-size: 16px;
-    margin-top: 8px;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-right: 0px;
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: relative;
+    z-index: 2;
+    float: left;
+    margin-bottom: 0;
+    display: table-cell;
+    width: 200px;
 }
 
 .mck-add-new	    {
@@ -1278,4 +1292,38 @@
     height: 20px;
     width: 20px;
     vertical-align: middle;
+}
+
+.mck-tab-link {
+    width: 30px;
+    height: 50px;   
+    display: table;
+}
+
+.mck-input-group{
+    margin-top: 8px !important;
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+
+.mck-search-icon{
+    border-top-left-radius: 0;    
+    border-bottom-left-radius: 0;    
+    font-size: 14px;    font-weight: 400;    
+    line-height: 1;    color: #555;    text-align: center;    
+    border-left: 0px;
+    background-color: #fff;    
+    border: 1px solid #ccc;    
+    border-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;    
+    white-space: nowrap;    
+    vertical-align: middle;
+    display: table-cell;
+    border-left: 0px;
+}
+
+.mck-tab-search {
+    opacity: 0.5
 }

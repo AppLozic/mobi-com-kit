@@ -350,7 +350,7 @@ function MobiComKit() {
                 mckMessageLayout.loadTab($(this).data("mck-id"));
                 $mck_search.val("");
             });
-            $applozic(document).on("click", ".mck-conversation-tab-search", function (e) {
+            $applozic(document).on("click", ".mck-tab-search", function (e) {
                 var userId = $mck_search.val();
                 if (userId !== "") {
                     mckMessageLayout.loadTab(userId);
@@ -520,7 +520,8 @@ function MobiComKit() {
                 if (!displayName) {
                     displayName = userId;
                 }
-                $mck_conversation_title.html('<a href="#" role="link" class="mck-conversation-tab-link"><img src="' + MCK_BASE_URL + '/resources/sidebox/images/ic_action_backward.png" alt="Back"></a>&nbsp ' + displayName);
+                ''
+                $mck_conversation_title.html('<div class="mck-tab-link blk-lg-4"><a href="#" role="link" class="mck-conversation-tab-link"><img src="' + MCK_BASE_URL + '/resources/sidebox/images/ic_action_backward.png" alt="Back"></a></div>&nbsp ' + displayName);
             } else {
                 individual = false;
                 pageSize = 50;
