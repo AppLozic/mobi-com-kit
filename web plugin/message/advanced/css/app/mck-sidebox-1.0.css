@@ -1061,7 +1061,11 @@
 .alpha_user i {
     font-size: 24px;
 }
-
+.mck-conversation-tab-link {
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+}
 .mck-conversation-tab-link img {
     height: 20px;
     width: 20px;
@@ -1224,35 +1228,6 @@
     clear: both;  
 }
 
-
-.mck-sidebox-content.vis {
-    display:table !important;
-}
-
-#mck-sidebox-search  input{
-    width: 215px;
-    height: 40px;
-    border: 0px;
-    border-bottom: 1px solid blue;
-    background-color: white;
-    box-shadow: none;
-    outline: none;
-    outline-offset: 1px;
-    font-size: 16px;
-    margin-top: 8px;
-}
-
-.mck-add-new	    {
-    text-align: center;
-}
-
-.mck-conversation-tab-search img {
-    height: 20px;
-    width: 20px;
-    vertical-align: middle;
-}
-
-
 .mck-sidebox-content.vis {
     display:table !important;
 }
@@ -1280,7 +1255,6 @@
 }
 
 .mck-add-new	    {
-    height: 50px;
     text-align: center;
 }
 
@@ -1323,6 +1297,8 @@
 .mck-tab-search {
     opacity: 0.5
 }
+
+
 
 
 @media (min-width: 768px){
