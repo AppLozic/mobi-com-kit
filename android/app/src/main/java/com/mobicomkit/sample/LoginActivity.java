@@ -6,7 +6,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build.VERSION;
@@ -178,13 +180,17 @@ public class LoginActivity extends Activity {
             UserLoginTask.TaskListener listener = new UserLoginTask.TaskListener() {
 
                 @Override
-                public void onSuccess(RegistrationResponse registrationResponse) {
+                public void onSuccess(RegistrationResponse registrationResponse, Context context) {
                     mAuthTask = null;
                     showProgress(false);
 
                     //Start GCM registartion....
                     GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
                     gcmRegistrationUtils.setUpGcmNotification();
+
+                    //starting main MainActivity
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
                     finish();
                 }
 

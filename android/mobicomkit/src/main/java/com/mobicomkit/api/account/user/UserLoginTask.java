@@ -17,7 +17,7 @@ import com.mobicomkit.api.account.register.RegistrationResponse;
 public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
     public interface TaskListener {
-        void onSuccess(RegistrationResponse registrationResponse);
+        void onSuccess(RegistrationResponse registrationResponse,Context context);
 
         void onFailure(RegistrationResponse registrationResponse, Exception exception);
 
@@ -58,7 +58,7 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(final Boolean result) {
         // And if it is we call the callback function on it.
         if (result && this.taskListener != null) {
-            this.taskListener.onSuccess(registrationResponse);
+            this.taskListener.onSuccess(registrationResponse,context);
 
 
         } else if (mException != null && this.taskListener != null) {
