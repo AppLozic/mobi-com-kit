@@ -19,7 +19,6 @@ public class GCMRegistrationUtils extends Handler {
 
     private static final String TAG = "GCMRegistrationUtils";
     private static final String GCM_SENDER_ID = "195932243324";
-    /*private static final String GCM_SENDER_ID = "671105753616";*/
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private final Activity mActivity;
     private PushNotificationTask pushNotificationTask = null;
