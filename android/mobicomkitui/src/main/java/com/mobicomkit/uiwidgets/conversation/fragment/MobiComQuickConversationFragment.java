@@ -37,8 +37,6 @@ import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
 
-import org.apache.http.util.TextUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -360,6 +358,8 @@ public class MobiComQuickConversationFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             loadMore = false;
+            swipeLayout.setEnabled(true);
+            swipeLayout.setRefreshing(initial);
             // Toast.makeText(context,R.string.quick_conversation_loading, Toast.LENGTH_SHORT).show();
         }
 
@@ -384,6 +384,8 @@ public class MobiComQuickConversationFragment extends Fragment {
         }
 
         protected void onPostExecute(Long result) {
+            swipeLayout.setEnabled(false);
+            swipeLayout.setRefreshing(false);
             for (Message currentMessage : nextMessageList) {
                 if (currentMessage.isSentToMany()) {
                     continue;

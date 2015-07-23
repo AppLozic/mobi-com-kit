@@ -38,6 +38,8 @@ public class MobiComUserPreference {
     private static String call_history_display_within_messages_pref_key = "call_history_display_within_messages_pref_key";
     private static String mobitexter_contact_sync_key = "mobitexter_contact_sync_key";
     private static String last_sms_sync_time = "last_sms_sync_time";
+    private static String new_message_flag = "new_message_flag";
+
     public SharedPreferences sharedPreferences;
     private Context context;
     private String countryCode;
@@ -260,7 +262,14 @@ public class MobiComUserPreference {
         sharedPreferences.edit().putBoolean(call_history_display_within_messages_pref_key, enable).commit();
     }
 
-    //Local initialization of few fields
+    public void setNewMessageFlag(boolean enable){
+        sharedPreferences.edit().putBoolean(new_message_flag, enable).commit();
+    }
+
+    public boolean getNewMessageFlag(){
+        return sharedPreferences.getBoolean(new_message_flag, false);
+    }
+    //Local initialization of few fields)
     public void initialize(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = telephonyManager.getSimCountryIso().toUpperCase();

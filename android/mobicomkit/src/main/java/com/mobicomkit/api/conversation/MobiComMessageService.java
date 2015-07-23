@@ -100,6 +100,7 @@ public class MobiComMessageService {
 
         //Check if we are........container is already opened...don't send broadcast
         if (BroadcastService.currentUserId == null) {
+            MobiComUserPreference.getInstance(context).setNewMessageFlag(true);
             BroadcastService.sendNotificationBroadcast(context, message);
         }
 

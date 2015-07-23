@@ -99,7 +99,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     protected TextView emptyTextView;
     protected boolean loadMore = true;
     protected Contact contact;
-    protected Long lastConversationloadTime;
     protected Group group;
     protected EditText messageEditText;
     protected ImageButton sendButton;
@@ -468,7 +467,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             downloadConversation.cancel(true);
         }
         BroadcastService.currentUserId = contact.getContactIds();
-        resetlastConversationTime();
+
 
         /*
         filePath = null;*/
@@ -929,7 +928,10 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             if (downloadConversation != null) {
                 downloadConversation.cancel(true);
             }
-            loadnewMessageOnResume(contact, group);
+            if ( MobiComUserPreference.getInstance(getActivity()).getNewMessageFlag()){
+                loadnewMessageOnResume(contact, group);
+                MobiComUserPreference.getInstance(getActivity()).setNewMessageFlag(false);
+            }
         }
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
@@ -944,10 +946,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                 sms.getTimeToLive() != null && sms.getTimeToLive() != 0) {
             new Timer().schedule(new DisappearingMessageTask(getActivity(), conversationService, sms), sms.getTimeToLive() * 60 * 1000);
         }
-    }
-
-    public void resetlastConversationTime() {
-        lastConversationloadTime = null;
     }
 
     public void loadnewMessageOnResume(Contact contact, Group group) {
@@ -1006,8 +1004,9 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         @Override
         protected Long doInBackground(Void... voids) {
             if (initial) {
+                Long lastConversationloadTime = messageList.isEmpty() ? 1L: messageList.get(messageList.size()-1).getCreatedAtTime();
                 Log.i(TAG, " loading conversation with  lastConversationloadTime " + lastConversationloadTime);
-                nextSmsList = conversationService.getMessages(lastConversationloadTime == null ? 1L : lastConversationloadTime + 1L, null, contact, group);
+                nextSmsList = conversationService.getMessages(lastConversationloadTime+1L , null, contact, group);
             } else if (firstVisibleItem == 1 && loadMore && !messageList.isEmpty()) {
                 loadMore = false;
                 Long endTime = messageList.get(0).getCreatedAtTime();
@@ -1035,11 +1034,11 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             }
 
             //Note: This is done to avoid duplicates with same timestamp entries
-            if (!messageList.isEmpty() && !nextSmsList.isEmpty() && messageList.get(0).equals(nextSmsList.get(nextSmsList.size() - 1))) {
+            if (!messageList.isEmpty() && !nextSmsList.isEmpty() &&
+                    messageList.get(0).equals(nextSmsList.get(nextSmsList.size() - 1))) {
                 nextSmsList.remove(nextSmsList.size() - 1);
             }
-            lastConversationloadTime = nextSmsList.get(nextSmsList.size() - 1).getCreatedAtTime();
-            Log.i(TAG, "setting lastConversationload as :" + lastConversationloadTime);
+
 
             for (Message message : nextSmsList) {
                 selfDestructMessage(message);
