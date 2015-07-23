@@ -83,15 +83,15 @@
 }
 
 .mck-sidebox {
-    position: fixed;
+    position: fixed !important;
     top: 0 !important;
     right: 0 !important;
     bottom: 0;
-    left: auto;
+    left: auto !important;
     margin: 0 !important;
     border: 0 !important;
     padding-left: 0px !important;
-    z-index:  2243500;
+    z-index:  2243500 !important;
     display: none;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -373,6 +373,7 @@
     top: 0;
     right: 0;
     left: 0;
+    z-index: 0 !important;
     background-color: #000;
 }
 
@@ -385,11 +386,11 @@
     background: transparent;
 }
 
-.mck-sidebox  .modal-dialog.md-box-s {
+.mck-sidebox  .mck-modal-dialog.md-box-s {
     max-width: 300px;
 }
 
-.mck-sidebox .modal-dialog {
+.mck-sidebox .mck-modal-dialog {
     position: relative;
     width: auto;
     margin: 10px;
@@ -402,7 +403,7 @@
     left: auto;
 }
 
-.mck-sidebox.fade .modal-dialog {
+.mck-sidebox.fade .mck-modal-dialog {
     -webkit-transition: -webkit-transform .3s ease-out;
     -o-transition: -o-transform .3s ease-out;
     transition: transform .3s ease-out;
@@ -412,7 +413,7 @@
     transform: translate(0,-25%);
 }
 
-.mck-sidebox.in .modal-dialog {
+.mck-sidebox.in .mck-modal-dialog {
     -webkit-transform: translate(0,0);
     -ms-transform: translate(0,0);
     -o-transform: translate(0,0);
@@ -464,7 +465,7 @@
 }
 
 .mck-box-top .mck-close {
-    margin-top :10px;
+    margin-top :12px;
 }
 .mck-box-top .icon{
     margin-right: 12px;
@@ -496,6 +497,7 @@
     line-height: 50px;
     margin: 0;
     vertical-align: middle;
+    line-height: 50px !important;
     overflow: hidden;
 }
 
@@ -643,7 +645,6 @@
 }
 
 .mck-box-ft {
-    min-height: 50px;
     text-align: left;
     border-top: 1px solid #e5e5e5;
     padding: 15px;
@@ -1060,11 +1061,7 @@
 .alpha_user i {
     font-size: 24px;
 }
-.mck-conversation-tab-link {
-    white-space: nowrap;
-    vertical-align: middle;
-    display: table-cell;
-}
+
 .mck-conversation-tab-link img {
     height: 20px;
     width: 20px;
@@ -1227,35 +1224,34 @@
     clear: both;  
 }
 
-@media (min-width: 768px){
-    .mck-sidebox .modal-sm {
-        width: 300px;
-    }
+
+.mck-sidebox-content.vis {
+    display:table !important;
 }
 
-@media (min-width: 1200px){
-    .mck-sidebox  .blk-lg-1, .mck-sidebox  .blk-lg-10, .mck-sidebox  .blk-lg-11, .mck-sidebox  .blk-lg-12, .mck-sidebox  .blk-lg-2, .mck-sidebox  .blk-lg-3, .mck-sidebox  .blk-lg-4, .mck-sidebox  .blk-lg-5, .mck-sidebox  .blk-lg-6, .mck-sidebox  .blk-lg-7, .mck-sidebox  .blk-lg-8, .mck-sidebox  .blk-lg-9, .mck-sidebox-launcher .blk-lg-9 {
-        float: left;
-    }
-
-    .mck-file-box .mck-file-content{
-        float: none;     
-    }
-
-    .blk-lg-3 {
-        width: 25%;
-    }
-    .blk-lg-8 {
-        width: 66.66666667%;
-    }
-    .blk-lg-9 {
-        width: 75%;
-    }
-
-    .blk-lg-12 {
-        width: 100%;
-    }
+#mck-sidebox-search  input{
+    width: 215px;
+    height: 40px;
+    border: 0px;
+    border-bottom: 1px solid blue;
+    background-color: white;
+    box-shadow: none;
+    outline: none;
+    outline-offset: 1px;
+    font-size: 16px;
+    margin-top: 8px;
 }
+
+.mck-add-new	    {
+    text-align: center;
+}
+
+.mck-conversation-tab-search img {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+}
+
 
 .mck-sidebox-content.vis {
     display:table !important;
@@ -1326,4 +1322,39 @@
 
 .mck-tab-search {
     opacity: 0.5
+}
+
+
+@media (min-width: 768px){
+    .mck-sidebox .modal-sm {
+        width: 300px;
+    }
+    .mck-modal-dialog {
+        width: 600px;
+        margin: 30px auto;
+    }
+}
+
+@media (min-width: 1200px){
+    .mck-sidebox  .blk-lg-1, .mck-sidebox  .blk-lg-10, .mck-sidebox  .blk-lg-11, .mck-sidebox  .blk-lg-12, .mck-sidebox  .blk-lg-2, .mck-sidebox  .blk-lg-3, .mck-sidebox  .blk-lg-4, .mck-sidebox  .blk-lg-5, .mck-sidebox  .blk-lg-6, .mck-sidebox  .blk-lg-7, .mck-sidebox  .blk-lg-8, .mck-sidebox  .blk-lg-9, .mck-sidebox-launcher .blk-lg-9 {
+        float: left;
+    }
+
+    .mck-file-box .mck-file-content{
+        float: none;     
+    }
+
+    .blk-lg-3 {
+        width: 25%;
+    }
+    .blk-lg-8 {
+        width: 66.66666667%;
+    }
+    .blk-lg-9 {
+        width: 75%;
+    }
+
+    .blk-lg-12 {
+        width: 100%;
+    }
 }
