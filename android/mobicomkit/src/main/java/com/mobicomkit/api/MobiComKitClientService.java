@@ -8,6 +8,7 @@ import com.mobicomkit.api.account.user.MobiComUserPreference;
 import net.mobitexter.mobiframework.commons.core.utils.Utils;
 
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.util.TextUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -24,7 +25,8 @@ public class MobiComKitClientService {
     public static final String BASE_URL_METADATA = "com.mobicomkit.server.url";
     public static String APPLICATION_KEY_HEADER = "Application-Key";
     public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "com.mobicomkit.application.id";
-    public static final String FILE_URL =  "/rest/ws/file/";
+    public static final String FILE_URL = "/rest/ws/file/";
+    public static final String DEFAULT_BASE_URl = "https://applozic.appspot.com";
 
     public MobiComKitClientService() {
 
@@ -36,7 +38,11 @@ public class MobiComKitClientService {
     }
 
     protected String getBaseUrl() {
-        return Utils.getMetaDataValue(context,BASE_URL_METADATA);
+        String BASE_URl = Utils.getMetaDataValue(context, BASE_URL_METADATA);
+        if (TextUtils.isEmpty(BASE_URl)) {
+            return DEFAULT_BASE_URl;
+        } else
+            return BASE_URl;
     }
 
     public UsernamePasswordCredentials getCredentials(Context context) {
@@ -86,7 +92,7 @@ public class MobiComKitClientService {
 
     }
 
-    public  String getFileUrl() {
+    public String getFileUrl() {
         return getBaseUrl() + FILE_URL;
     }
 
