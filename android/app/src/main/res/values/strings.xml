@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MobiComKit</string>
-    <string name="mobicomkit_label">MobiComKit</string>
+    <string name="app_name">AppLozic</string>
+    <string name="mobicomkit_label">AppLozic</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Chat using Fragment </string>
@@ -10,6 +10,7 @@
     <string name="title_section4">ECommerce</string>
     <string name="title_section5">Messages (Activity based)</string>
     <string name="title_section6">Messages (Fragment based)</string>
+    <string name="title_section7">Log out</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -18,7 +19,7 @@
     <string name="button_text">Test</string>
     <string name="title_activity_test">Test</string>
     <string name="hello_world">Hello world test!</string>
-    <string name="ecommerce">MobiComKit</string>
+    <string name="ecommerce">AppLozic</string>
     <string name="user_id">devashish.mamgain@gmail.com</string>
     <string name="ecommerce_button1_text">Gadgets</string>
     <string name="ecommerce_button2_text">Home</string>
@@ -33,19 +34,19 @@
     <string name="ecommerce_chat_button">Chat</string>
     <string name="ecommerce_ad_text">Free Advertise</string>
     <string name="ecommerce_text1">Demo screen to show messaging integration, tap on the Chat button below</string>
-    <string name="application_key">mobicomkit-sample-app</string>
+    <string name="application_key">applozic-sample-app</string>
     <string name="support_phone_number">+918042028425</string>
-    <string name="default_server_url">https://mobi-com.appspot.com</string>
+    <string name="default_server_url">https://applozic.appspot.com</string>
     <string name="default_meadia_location_folder">/Applozic</string>
     <string name="order_sample_button">Order taking sample</string>
     <string name="take_order_userid">AppLozicShop</string>
 
     <!-- support or admin  contact information ...please add details here  -->
     <string name="support_contact_display_name">AppLozic Support</string>
-    <string name="support_contact_userId">applozic.connect</string>
-    <string name="support_contact_emailId">applozic.connect@gmail.com</string>
+    <string name="support_contact_userId">applozic</string>
+    <string name="support_contact_emailId">devashish@applozic.com</string>
     <string name="support_contact_number">918042028425</string>
-    <string name="support_contact_image_url">http://www.mobitexter.net/resources/images/mt_logo_white.png</string>
+    <string name="support_contact_image_url">http://www.applozic.com/resources/images/applozic.png</string>
 
 
 </resources>

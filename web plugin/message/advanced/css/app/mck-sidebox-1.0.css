@@ -106,12 +106,8 @@
     color: #333;
     width: 310px;
 }
-#mck-sidebox div {
+#mck-sidebox div, #mck-conversation-title {
     font-family:Heslvetica Neue,Helvetica,Arial,sans-serif !important;
-}
-
-#mck-sidebox #mck-conversation-title{
-    font-family:Helvetica Neue,Helvetica,Arial,sans-serif !important;
 }
 
 .mck-sidebox .move-right {
@@ -151,7 +147,7 @@
     background-color: transparent;
 }
 
-.mck-sidebox .form-group {
+.mck-sidebox .mck-form-group {
     margin-bottom: 15px;
 }
 
@@ -258,7 +254,7 @@
 }
 
 
-.mck-sidebox .btn {
+.mck-sidebox .mck-btn {
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -280,44 +276,44 @@
     border-radius: 4px;
 }
 
-.mck-sidebox .btn-blue {
+.mck-sidebox .mck-btn-blue {
     color: #fff !important;
     background-color: #337ab7 !important;
     border-color: #2e6da4;
 }
 
-.mck-sidebox .btn-light {
+.mck-sidebox .mck-btn-light {
     background: #F2F2F2 !important;
     border-color: #B6C2C9 !important;
 }
 
-.mck-sidebox .btn-light:hover {
+.mck-sidebox .mck-btn-light:hover {
     background: #fff !important;
 }
 
-.mck-sidebox .btn.focus, .mck-sidebox .btn:focus, .mck-sidebox .btn:hover {
+.mck-sidebox .mck-btn.focus, .mck-sidebox .mck-btn:focus, .mck-sidebox .mck-btn:hover {
     color: #333;
     text-decoration: none;
 }
 
-.mck-sidebox .btn.active, .mck-sidebox .btn:active {
+.mck-sidebox .mck-btn.active, .mck-sidebox .mck-btn:active {
     background-image: none;
     outline: 0;
     -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
     box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
 }
 
-.mck-sidebox .btn-blue.active, .mck-sidebox .btn-blue.focus, .mck-sidebox .btn-blue:active, .mck-sidebox .btn-blue:focus, .mck-sidebox .btn-blue:hover, .mck-sidebox .open>.dropdown-toggle.btn-blue {
+.mck-sidebox .mck-btn-blue.active, .mck-sidebox .mck-btn-blue.focus, .mck-sidebox .mck-btn-blue:active, .mck-sidebox .mck-btn-blue:focus, .mck-sidebox .mck-btn-blue:hover, .mck-sidebox .open>.dropdown-toggle.mck-btn-blue {
     color: #fff;
     background-color: #286090;
     border-color: #204d74;
 }
 
-.mck-sidebox .btn-blue.active, .mck-sidebox .btn-blue:active, .mck-sidebox .open>.dropdown-toggle.btn-blue {
+.mck-sidebox .mck-btn-blue.active, .mck-sidebox .mck-btn-blue:active, .mck-sidebox .open>.dropdown-toggle.mck-btn-blue {
     background-image: none;
 }
 
-.mck-sidebox .btn.active.focus, .mck-sidebox .btn.active:focus, .mck-sidebox .btn.focus, .mck-sidebox .btn:active.focus, .mck-sidebox .btn:active:focus, .mck-sidebox .btn:focus {
+.mck-sidebox .mck-btn.active.focus, .mck-sidebox .mck-btn.active:focus, .mck-sidebox .mck-btn.focus, .mck-sidebox .mck-btn:active.focus, .mck-sidebox .mck-btn:active:focus, .mck-sidebox .mck-btn:focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
@@ -466,8 +462,8 @@
     border-bottom: 1px solid #e5e5e5;
 }
 
-.mck-box-top .close {
-    margin-top :13px;
+.mck-box-top .mck-close {
+    margin-top :10px;
 }
 .mck-box-top .icon{
     margin-right: 12px;
@@ -475,7 +471,7 @@
 
 .mck-sidebox .box-close {
     float: right;
-    font-size: 21px;
+    font-size: 28px;
     font-weight: 700;
     line-height: 1;
     color: #000;
@@ -494,6 +490,7 @@
 
 
 .mck-box-title {
+    text-align: left;
     font-size: 18px;
     line-height: 50px;
     margin: 0;
@@ -516,7 +513,7 @@
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.mck-top-btn-panel .btn {
+.mck-top-btn-panel .mck-btn {
     margin-right: 5px;
     margin-left: 5px;
 }
@@ -533,12 +530,12 @@
 .mck-sidebox  .nav-tabs {
     border-bottom: 1px solid #ddd;
 }
-.mck-sidebox .btn-group-vertical>.btn-group:after, .mck-sidebox .btn-group-vertical>.btn-group:before, .mck-sidebox .btn-toolbar:after, .mck-sidebox .btn-toolbar:before, .mck-sidebox .clearfix:after, .mck-sidebox .clearfix:before, .mck-sidebox .container-fluid:after, .mck-sidebox .container-fluid:before, .mck-sidebox .container:after, .mck-sidebox .container:before, .mck-sidebox .dl-horizontal dd:after, .mck-sidebox .dl-horizontal dd:before, .mck-sidebox .form-horizontal .form-group:after, .mck-sidebox .form-horizontal .form-group:before, .mck-sidebox .modal-footer:after, .mck-sidebox .modal-footer:before, .mck-sidebox .nav:after, .mck-sidebox .nav:before, .mck-sidebox .navbar-collapse:after, .mck-sidebox .navbar-collapse:before, .mck-sidebox .navbar-header:after, .mck-sidebox .navbar-header:before, .mck-sidebox .navbar:after, .mck-sidebox .navbar:before, .mck-sidebox .pager:after, .mck-sidebox .pager:before, .mck-sidebox .panel-body:after, .mck-sidebox .panel-body:before, .mck-sidebox .mck-row:after, .mck-sidebox .mck-row:before {
+.mck-sidebox .btn-group-vertical>.btn-group:after, .mck-sidebox .btn-group-vertical>.btn-group:before, .mck-sidebox .btn-toolbar:after, .mck-sidebox .btn-toolbar:before, .mck-sidebox .clearfix:after, .mck-sidebox .clearfix:before, .mck-sidebox .container-fluid:after, .mck-sidebox .container-fluid:before, .mck-sidebox .container:after, .mck-sidebox .container:before, .mck-sidebox .dl-horizontal dd:after, .mck-sidebox .dl-horizontal dd:before, .mck-sidebox .form-horizontal .mck-mck-form-group:after, .mck-sidebox .form-horizontal .mck-mck-form-group:before, .mck-sidebox .mck-box-ft:after, .mck-sidebox .mck-box-ft:before, .mck-sidebox .nav:after, .mck-sidebox .nav:before, .mck-sidebox .navbar-collapse:after, .mck-sidebox .navbar-collapse:before, .mck-sidebox .navbar-header:after, .mck-sidebox .navbar-header:before, .mck-sidebox .navbar:after, .mck-sidebox .navbar:before, .mck-sidebox .pager:after, .mck-sidebox .pager:before, .mck-sidebox .panel-body:after, .mck-sidebox .panel-body:before, .mck-sidebox .mck-row:after, .mck-sidebox .mck-row:before {
     display: table;
     content: " ";
 }
 
-.mck-sidebox  .btn-group-vertical>.btn-group:after, .mck-sidebox  .btn-toolbar:after, .mck-sidebox  .clearfix:after, .mck-sidebox  .container-fluid:after, .mck-sidebox  .container:after, .mck-sidebox  .dl-horizontal dd:after, .mck-sidebox  .form-horizontal .form-group:after, .mck-sidebox-ft :after, .mck-sidebox .nav:after, .mck-sidebox  .navbar-collapse:after, .mck-sidebox  .navbar-header:after, .mck-sidebox  .navbar:after, .mck-sidebox  .pager:after, .mck-sidebox  .panel-body:after, .mck-sidebox  .mck-row:after {
+.mck-sidebox  .btn-group-vertical>.btn-group:after, .mck-sidebox  .btn-toolbar:after, .mck-sidebox  .clearfix:after, .mck-sidebox  .container-fluid:after, .mck-sidebox  .container:after, .mck-sidebox  .dl-horizontal dd:after, .mck-sidebox  .form-horizontal .mck-form-group:after, .mck-sidebox-ft :after, .mck-sidebox .nav:after, .mck-sidebox  .navbar-collapse:after, .mck-sidebox  .navbar-header:after, .mck-sidebox  .navbar:after, .mck-sidebox  .pager:after, .mck-sidebox  .panel-body:after, .mck-sidebox  .mck-row:after {
     clear: both;
 }
 
@@ -594,12 +591,12 @@
 }
 
 .mck-sidebox .mck-contact-list li a {
-    color: #444;
+    color: #444 !important;
     border-radius: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd !important;
     line-height: 18px;
     padding: 5px 8px;
-    background-color: #fff;
+    background-color: #fff !important;
     text-decoration: none;
 }
 
@@ -607,7 +604,7 @@
     text-decoration: none;
 }
 
-.mck-sidebox .btn span {
+.mck-sidebox .mck-btn span {
     display: block;
     float: left;
 }
@@ -659,7 +656,7 @@
     text-align: left;
 }
 
-.mck-box-ft-lt .btn {
+.mck-box-ft-lt .mck-btn {
     font-size: 16px;
     text-transform: none;
 }
@@ -728,6 +725,8 @@
     line-height: 1.3em;
     overflow-x: hidden;
     background-color: #fff;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-align: left;
     border: 0px !important;
     box-shadow: none !important;
 }
@@ -926,7 +925,8 @@
     background-color: rgba(0,0,0,0.2);
 }
 
-#mck-file-up .btn img {
+#mck-file-up .mck-btn img {
+    vertical-align: middle;
     height: 18px;
 }
 
@@ -944,7 +944,7 @@
 .mck-alpha-contact-image {
     text-align: center;
     height: 50px;
-    width: 50px;
+    max-width: 50px;
     color: rgb(255,252,226);
     font-size: 30px;
     position: relative;
@@ -1071,7 +1071,7 @@
 }
 
 #mck-contact-list>li>a:hover {
-    background: #ECF9FF;
+    background: #ECF9FF !important;
 }
 
 .mck-message-status {
@@ -1164,10 +1164,11 @@
 
 .mck-sidebox-launcher .mck-preview-content {
     cursor: pointer;
-    word-break: normal;
-    word-spacing: normal;
-    word-wrap: normal;
+    word-break: normal; 
+    word-spacing: normal; 
+    word-wrap: normal; 
     white-space: normal;
+    padding-left: 5px;
 }
 
 
@@ -1187,10 +1188,20 @@
     width: 0;
     position: absolute;
 }
+.mck-conversation-tab-link img {
+    margin-top: -2px;
+}
+.mck-preview-msg-content{
+    word-wrap: break-word;   
+}
 .mck-msg-preview:before {
     border-left-color: rgba(0,0,0,.14);
     border-width: 13px;
 }
+.mck-remove-file{
+    font-size: 20px !important;
+}
+
 .mck-msg-preview:after {
     border-color: transparent;
     border-left-color: #fff;
@@ -1207,6 +1218,10 @@
     float: left;
 }
 
+.mck-box-ft:after{
+    clear: both;  
+}
+
 @media (min-width: 768px){
     .mck-sidebox .modal-sm {
         width: 300px;
@@ -1216,6 +1231,10 @@
 @media (min-width: 1200px){
     .mck-sidebox  .blk-lg-1, .mck-sidebox  .blk-lg-10, .mck-sidebox  .blk-lg-11, .mck-sidebox  .blk-lg-12, .mck-sidebox  .blk-lg-2, .mck-sidebox  .blk-lg-3, .mck-sidebox  .blk-lg-4, .mck-sidebox  .blk-lg-5, .mck-sidebox  .blk-lg-6, .mck-sidebox  .blk-lg-7, .mck-sidebox  .blk-lg-8, .mck-sidebox  .blk-lg-9, .mck-sidebox-launcher .blk-lg-9 {
         float: left;
+    }
+
+    .mck-file-box .mck-file-content{
+        float: none;     
     }
 
     .blk-lg-3 {
@@ -1231,4 +1250,32 @@
     .blk-lg-12 {
         width: 100%;
     }
+}
+
+.mck-sidebox-content.vis {
+    display:table !important;
+}
+
+#mck-sidebox-search  input{
+    width: 215px;
+    height: 40px;
+    border: 0px;
+    border-bottom: 1px solid grey;
+    background-color: white;
+    box-shadow: none;
+    outline: none;
+    outline-offset: 1px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.mck-add-new	    {
+    height: 50px;
+    text-align: center;
+}
+
+.mck-conversation-tab-search img {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
 }

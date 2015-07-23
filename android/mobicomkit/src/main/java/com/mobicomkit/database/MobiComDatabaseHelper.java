@@ -25,6 +25,8 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
     public static final String TIME_TO_LIVE = "timeToLive";
     public static final String CONTACTID = "contactId";
     public static final String SCHEDULE_SMS_TABLE_NAME = "ScheduleSMS";
+    public static final String SMS_TABLE_NAME = "sms";
+    public static final String CONTACT_TABLE_NAME = "contact";
 
     public static final String FULL_NAME = "fullName";
 
@@ -146,5 +148,20 @@ public class MobiComDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public synchronized void close() {
         //super.close();
+    }
+
+    public int delDatabase() {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("delete from " + SCHEDULE_SMS_TABLE_NAME);
+
+        db.execSQL("delete from " + SMS_TABLE_NAME);
+
+        db.execSQL("delete from " + CONTACT_TABLE_NAME);
+
+        db.close();
+
+        return 0;
     }
 }
