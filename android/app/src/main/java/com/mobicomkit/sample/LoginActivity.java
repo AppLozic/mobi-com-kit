@@ -229,6 +229,10 @@ public class LoginActivity extends Activity {
         return password.length() > 4;
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -303,4 +307,6 @@ public class LoginActivity extends Activity {
             addEmailsToAutoComplete(emailAddressCollection);
         }
     }
+
+
 }

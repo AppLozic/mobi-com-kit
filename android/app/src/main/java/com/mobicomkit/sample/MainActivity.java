@@ -128,11 +128,11 @@ public class MainActivity extends MobiComActivityForFragment
 
             if (flag) {
                 Intent intent = new Intent(this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                finish();
                 return;
             }
-
-
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -174,7 +174,6 @@ public class MainActivity extends MobiComActivityForFragment
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
