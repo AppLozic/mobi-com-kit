@@ -107,7 +107,6 @@
     width: 310px;
 }
 #mck-sidebox div, #mck-conversation-title {
-    margin: 0px;
     font-family:Heslvetica Neue,Helvetica,Arial,sans-serif !important;
 }
 
@@ -758,6 +757,7 @@
 
 .mck-file-box .mck-file-content {
     padding: 0px;
+    width: 180px;
 }
 
 .mck-file-box .mck-file-lb {
@@ -779,6 +779,7 @@
     height: 20px;
     padding: 0px;
     margin: 0px;
+    width: 60px !important;
 }
 
 .mck-file-expr .progress .bar {
@@ -1314,10 +1315,6 @@
 @media (min-width: 1200px){
     .mck-sidebox  .blk-lg-1, .mck-sidebox  .blk-lg-10, .mck-sidebox  .blk-lg-11, .mck-sidebox  .blk-lg-12, .mck-sidebox  .blk-lg-2, .mck-sidebox  .blk-lg-3, .mck-sidebox  .blk-lg-4, .mck-sidebox  .blk-lg-5, .mck-sidebox  .blk-lg-6, .mck-sidebox  .blk-lg-7, .mck-sidebox  .blk-lg-8, .mck-sidebox  .blk-lg-9, .mck-sidebox-launcher .blk-lg-9 {
         float: left;
-    }
-
-    .mck-file-box .mck-file-content{
-        float: none;     
     }
 
     .blk-lg-3 {
