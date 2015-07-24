@@ -3,7 +3,7 @@ package net.mobitexter.mobiframework.people;
 import android.net.Uri;
 
 import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.group.Group;
+import net.mobitexter.people.group.Group;
 
 /**
  * This interface must be implemented by any activity that loads this fragment. When an

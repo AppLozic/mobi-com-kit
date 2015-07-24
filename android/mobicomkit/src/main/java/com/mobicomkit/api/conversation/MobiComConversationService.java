@@ -17,7 +17,7 @@ import net.mobitexter.mobiframework.json.AnnotationExclusionStrategy;
 import net.mobitexter.mobiframework.json.ArrayAdapterFactory;
 import net.mobitexter.mobiframework.json.GsonUtils;
 import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.group.Group;
+import net.mobitexter.people.group.Group;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -25,7 +25,7 @@ import net.mobitexter.mobiframework.people.contact.ContactUtils;
 
 import com.mobicomkit.uiwidgets.people.fragment.ContactsListFragment;
 
-import net.mobitexter.mobiframework.people.group.Group;
+import net.mobitexter.people.group.Group;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package net.mobitexter.mobiframework.people.group;
+package net.mobitexter.people.group;
 
 import android.content.Context;
 import android.database.Cursor;

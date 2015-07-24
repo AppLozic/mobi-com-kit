@@ -49,7 +49,7 @@ import net.mobitexter.mobiframework.emoticon.EmoticonUtils;
 import net.mobitexter.mobiframework.file.FileUtils;
 import net.mobitexter.mobiframework.json.GsonUtils;
 import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.group.Group;
+import net.mobitexter.people.group.Group;
 
 import java.io.File;
 import java.util.Arrays;

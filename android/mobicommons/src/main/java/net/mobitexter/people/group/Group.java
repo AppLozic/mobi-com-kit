@@ -1,4 +1,4 @@
-package net.mobitexter.mobiframework.people.group;
+package net.mobitexter.people.group;
 
 import net.mobitexter.mobiframework.people.contact.Contact;
 

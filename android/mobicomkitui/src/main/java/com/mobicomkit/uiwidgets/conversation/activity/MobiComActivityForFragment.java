@@ -35,8 +35,8 @@ import net.mobitexter.mobiframework.file.FilePathFinder;
 import net.mobitexter.mobiframework.json.GsonUtils;
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
-import net.mobitexter.mobiframework.people.group.Group;
-import net.mobitexter.mobiframework.people.group.GroupUtils;
+import net.mobitexter.people.group.Group;
+import net.mobitexter.people.group.GroupUtils;
 
 import java.util.ArrayList;
 

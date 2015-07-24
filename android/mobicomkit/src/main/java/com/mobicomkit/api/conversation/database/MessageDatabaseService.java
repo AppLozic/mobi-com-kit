@@ -17,7 +17,7 @@ import com.mobicomkit.database.MobiComDatabaseHelper;
 
 import net.mobitexter.mobiframework.commons.core.utils.DBUtils;
 import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.group.Group;
+import net.mobitexter.people.group.Group;
 
 import java.util.ArrayList;
 import java.util.Arrays;

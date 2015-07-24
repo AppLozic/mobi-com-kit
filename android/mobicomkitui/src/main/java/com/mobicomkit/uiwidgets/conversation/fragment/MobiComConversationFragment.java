@@ -74,7 +74,7 @@ import net.mobitexter.mobiframework.commons.core.utils.Utils;
 import net.mobitexter.mobiframework.emoticon.EmojiconHandler;
 import net.mobitexter.mobiframework.file.FilePathFinder;
 import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.group.Group;
+import net.mobitexter.people.group.Group;
 
 import java.util.ArrayList;
 import java.util.Date;

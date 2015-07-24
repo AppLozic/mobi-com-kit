@@ -42,8 +42,8 @@ import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
 import net.mobitexter.mobiframework.people.contact.Contact;
 import net.mobitexter.mobiframework.people.contact.ContactUtils;
-import net.mobitexter.mobiframework.people.group.Group;
-import net.mobitexter.mobiframework.people.group.GroupUtils;
+import net.mobitexter.people.group.Group;
+import net.mobitexter.people.group.GroupUtils;
 
 import java.util.ArrayList;
 
