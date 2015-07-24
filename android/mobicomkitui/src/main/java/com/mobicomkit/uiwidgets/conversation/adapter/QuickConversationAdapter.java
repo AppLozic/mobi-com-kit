@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.contact.AppContactService;
-import com.mobicomkit.contact.BaseContactService;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;

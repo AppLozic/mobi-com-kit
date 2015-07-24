@@ -28,9 +28,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mobicomkit.api.account.register.RegistrationResponse;
-import com.mobicomkit.api.account.user.User;
-import com.mobicomkit.api.account.user.UserLoginTask;
+import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
+import com.applozic.mobicomkit.api.account.user.User;
+import com.applozic.mobicomkit.api.account.user.UserLoginTask;
 import com.mobicomkit.sample.pushnotification.GCMRegistrationUtils;
 
 import com.applozic.mobicommons.commons.core.utils.Utils;

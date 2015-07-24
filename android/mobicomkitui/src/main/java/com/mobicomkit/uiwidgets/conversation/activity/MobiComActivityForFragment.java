@@ -13,10 +13,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mobicomkit.api.MobiComKitConstants;
-import com.mobicomkit.api.account.user.MobiComUserPreference;
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.api.MobiComKitConstants;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;

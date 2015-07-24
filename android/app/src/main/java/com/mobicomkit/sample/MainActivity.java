@@ -18,10 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.mobicomkit.api.account.user.MobiComUserPreference;
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.contact.AppContactService;
-import com.mobicomkit.database.MobiComDatabaseHelper;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.database.MobiComDatabaseHelper;
 import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.UIService;

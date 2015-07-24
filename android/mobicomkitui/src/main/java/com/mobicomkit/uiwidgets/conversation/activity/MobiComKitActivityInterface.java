@@ -3,7 +3,7 @@ package com.mobicomkit.uiwidgets.conversation.activity;
 import android.content.Intent;
 import android.view.View;
 
-import com.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.api.conversation.Message;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
 import com.applozic.mobicommons.people.contact.Contact;

@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
-import com.mobicomkit.api.attachment.FileClientService;
+import com.applozic.mobicomkit.api.attachment.FileClientService;
 import com.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicommons.file.FileUtils;

@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.api.conversation.Message;
 import com.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicommons.commons.image.ImageLoader;

@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.mobicomkit.api.attachment.AttachmentView
+    <com.applozic.mobicomkit.api.attachment.AttachmentView
         android:id="@+id/main_attachment_view"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:scaleType="center"
-        android:visibility="gone"></com.mobicomkit.api.attachment.AttachmentView>
+        android:visibility="gone"></com.applozic.mobicomkit.api.attachment.AttachmentView>
 
     <ImageView
         android:id="@+id/preview"
