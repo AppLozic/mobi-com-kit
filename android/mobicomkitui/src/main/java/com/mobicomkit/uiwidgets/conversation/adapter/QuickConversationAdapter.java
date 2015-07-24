@@ -64,19 +64,24 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
     }
 
     public QuickConversationAdapter(final Context context, List<Message> messageList, EmojiconHandler emojiconHandler) {
-        super(context,  R.layout.mobicom_message_row_view,  messageList);
+        super(context, R.layout.mobicom_message_row_view, messageList);
         this.context = context;
         this.emojiconHandler = emojiconHandler;
         this.contactService = new AppContactService(context);
         contactImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
             @Override
             protected Bitmap processBitmap(Object data) {
-                return  contactService.downloadContactImage((Activity) getContext(),(Contact)data);
+                return contactService.downloadContactImage((Activity) getContext(), (Contact) data);
             }
         };
         contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
         contactImageLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
         contactImageLoader.setImageFadeIn(false);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return getItem(position).isTypeOutbox() ? 1 : 0;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -121,7 +126,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
             } else {
                 contactImageLoader.loadImage(contactReceiver, contactImage, alphabeticTextView);
             }
-            if (alphabeticTextView != null && contactReceiver!=null) {
+            if (alphabeticTextView != null && contactReceiver != null) {
                 String contactNumber = contactReceiver.getContactNumber().toUpperCase();
                 char firstLetter = contactReceiver.getDisplayName().toUpperCase().charAt(0);
                 if (firstLetter != '+') {
