@@ -12,9 +12,8 @@ import android.support.v4.app.FragmentManager;
 
 import com.mobicomkit.api.attachment.FileClientService;
 import com.mobicomkit.uiwidgets.R;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 
-import net.mobitexter.mobiframework.file.FileUtils;
+import com.applozic.mobicommons.file.FileUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

@@ -8,7 +8,7 @@ import android.util.Log;
 //import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
 
-import net.mobitexter.mobiframework.commons.core.utils.DBUtils;
+import com.applozic.mobicommons.commons.core.utils.DBUtils;
 
 
 public class MobiComDatabaseHelper extends SQLiteOpenHelper {

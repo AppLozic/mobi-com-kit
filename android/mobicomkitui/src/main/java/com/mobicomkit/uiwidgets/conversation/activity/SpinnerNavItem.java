@@ -1,6 +1,6 @@
 package com.mobicomkit.uiwidgets.conversation.activity;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 /**
  * Created by devashish on 23/2/14.

@@ -33,7 +33,7 @@ import com.mobicomkit.api.account.user.User;
 import com.mobicomkit.api.account.user.UserLoginTask;
 import com.mobicomkit.sample.pushnotification.GCMRegistrationUtils;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
+import com.applozic.mobicommons.commons.core.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

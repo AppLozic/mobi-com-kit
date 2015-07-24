@@ -10,9 +10,9 @@ import android.util.Log;
 import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.commons.image.ImageUtils;
-import net.mobitexter.mobiframework.file.FileUtils;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.commons.image.ImageUtils;
+import com.applozic.mobicommons.file.FileUtils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

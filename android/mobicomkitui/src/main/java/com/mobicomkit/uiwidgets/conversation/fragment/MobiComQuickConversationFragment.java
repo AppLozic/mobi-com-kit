@@ -33,9 +33,9 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterfac
 import com.mobicomkit.uiwidgets.conversation.adapter.QuickConversationAdapter;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.ContactUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -19,13 +19,13 @@ import android.widget.Toast;
 
 import com.mobicomkit.uiwidgets.R;
 
-import net.mobitexter.mobiframework.people.OnContactsInteractionListener;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
+import com.applozic.mobicommons.people.OnContactsInteractionListener;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.ContactUtils;
 
 import com.mobicomkit.uiwidgets.people.fragment.ContactsListFragment;
 
-import net.mobitexter.people.group.Group;
+import com.applozic.mobicommons.people.group.Group;
 
 import java.util.Map;
 

@@ -25,7 +25,7 @@ import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 
 /**

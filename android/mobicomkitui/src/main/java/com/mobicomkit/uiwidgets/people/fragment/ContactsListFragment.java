@@ -36,14 +36,14 @@ import android.widget.TextView;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.commons.image.ImageLoader;
-import net.mobitexter.mobiframework.people.OnContactsInteractionListener;
-import net.mobitexter.mobiframework.people.SearchListFragment;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.commons.image.ImageLoader;
+import com.applozic.mobicommons.people.OnContactsInteractionListener;
+import com.applozic.mobicommons.people.SearchListFragment;
 
 import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
+import com.applozic.mobicommons.people.contact.ContactUtils;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;

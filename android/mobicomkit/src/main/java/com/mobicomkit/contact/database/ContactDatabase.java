@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.database.MobiComDatabaseHelper;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

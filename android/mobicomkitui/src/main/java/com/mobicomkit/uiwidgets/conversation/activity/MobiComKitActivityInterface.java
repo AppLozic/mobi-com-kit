@@ -6,7 +6,7 @@ import android.view.View;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 /**
  * Created by User on 23-05-2015.

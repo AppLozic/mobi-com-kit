@@ -11,11 +11,11 @@ import com.mobicomkit.api.conversation.selfdestruct.DisappearingMessageTask;
 import com.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.sync.SyncMessageFeed;
 
-import net.mobitexter.mobiframework.commons.core.utils.Support;
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
-import net.mobitexter.mobiframework.personalization.PersonalizedMessage;
+import com.applozic.mobicommons.commons.core.utils.Support;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.ContactUtils;
+import com.applozic.mobicommons.personalization.PersonalizedMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MobiComConversationService;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 /**
  * Created by devashish on 9/2/15.

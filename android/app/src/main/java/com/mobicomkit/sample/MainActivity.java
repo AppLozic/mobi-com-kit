@@ -29,8 +29,8 @@ import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment
 import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.people.contact.Contact;
 
 
 public class MainActivity extends MobiComActivityForFragment

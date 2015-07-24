@@ -1,7 +1,6 @@
 package com.mobicomkit.contact;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
@@ -9,12 +8,11 @@ import android.util.Log;
 
 import com.mobicomkit.api.MobiComKitClientService;
 import com.mobicomkit.api.attachment.FileClientService;
-import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.contact.database.ContactDatabase;
 
-import net.mobitexter.mobiframework.commons.image.ImageUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
+import com.applozic.mobicommons.commons.image.ImageUtils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.ContactUtils;
 
 import java.io.FileNotFoundException;
 import java.net.HttpURLConnection;

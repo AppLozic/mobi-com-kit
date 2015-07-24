@@ -21,8 +21,8 @@ import com.mobicomkit.api.attachment.AttachmentView;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.uiwidgets.R;
 
-import net.mobitexter.mobiframework.file.FileUtils;
-import net.mobitexter.mobiframework.json.GsonUtils;
+import com.applozic.mobicommons.file.FileUtils;
+import com.applozic.mobicommons.json.GsonUtils;
 
 import java.io.File;
 

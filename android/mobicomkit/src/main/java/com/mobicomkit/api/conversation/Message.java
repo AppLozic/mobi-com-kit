@@ -8,8 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.attachment.FileMeta;
 
-import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
+import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
 
 import java.util.ArrayList;
 import java.util.Date;

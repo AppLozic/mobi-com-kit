@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.activity.SpinnerNavItem;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 import java.util.ArrayList;
 

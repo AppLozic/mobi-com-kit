@@ -12,8 +12,8 @@ import com.mobicomkit.api.notification.NotificationService;
 import com.mobicomkit.contact.AppContactService;
 import com.mobicomkit.uiwidgets.R;
 
-import net.mobitexter.mobiframework.json.GsonUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.json.GsonUtils;
+import com.applozic.mobicommons.people.contact.Contact;
 
 /**
  * Created by adarsh on 3/5/15.

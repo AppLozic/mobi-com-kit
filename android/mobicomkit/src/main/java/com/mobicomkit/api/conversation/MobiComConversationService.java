@@ -13,11 +13,11 @@ import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.mobicomkit.broadcast.BroadcastService;
 
-import net.mobitexter.mobiframework.json.AnnotationExclusionStrategy;
-import net.mobitexter.mobiframework.json.ArrayAdapterFactory;
-import net.mobitexter.mobiframework.json.GsonUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.people.group.Group;
+import com.applozic.mobicommons.json.AnnotationExclusionStrategy;
+import com.applozic.mobicommons.json.ArrayAdapterFactory;
+import com.applozic.mobicommons.json.GsonUtils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.group.Group;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -9,7 +9,7 @@ import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.conversation.schedule.MessageSenderTimerTask;
 import com.mobicomkit.api.conversation.schedule.ScheduleMessageService;
 
-import net.mobitexter.mobiframework.json.GsonUtils;
+import com.applozic.mobicommons.json.GsonUtils;
 
 import java.util.HashMap;
 import java.util.Map;

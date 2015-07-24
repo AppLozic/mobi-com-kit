@@ -31,19 +31,19 @@ import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFr
 import com.mobicomkit.uiwidgets.conversation.fragment.MultimediaOptionFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
-import net.mobitexter.mobiframework.commons.core.utils.Support;
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.commons.image.ImageUtils;
-import net.mobitexter.mobiframework.file.FilePathFinder;
-import net.mobitexter.mobiframework.json.GsonUtils;
+import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
+import com.applozic.mobicommons.commons.core.utils.Support;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.commons.image.ImageUtils;
+import com.applozic.mobicommons.file.FilePathFinder;
+import com.applozic.mobicommons.json.GsonUtils;
 
 import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
-import net.mobitexter.people.group.Group;
-import net.mobitexter.people.group.GroupUtils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.ContactUtils;
+import com.applozic.mobicommons.people.group.Group;
+import com.applozic.mobicommons.people.group.GroupUtils;
 
 import java.util.ArrayList;
 

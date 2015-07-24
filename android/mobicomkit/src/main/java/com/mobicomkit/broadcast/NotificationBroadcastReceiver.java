@@ -14,8 +14,8 @@ import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.api.conversation.MessageIntentService;
 import com.mobicomkit.api.notification.WearableNotificationWithVoice;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.json.GsonUtils;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.json.GsonUtils;
 
 /**
  * Created by adarsh on 4/12/14.

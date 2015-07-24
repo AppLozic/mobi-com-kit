@@ -2,7 +2,6 @@ package com.mobicomkit.uiwidgets.conversation.fragment;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import com.mobicomkit.api.conversation.MobiComConversationService;
 import com.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.mobicomkit.uiwidgets.R;
 
-import net.mobitexter.mobiframework.commons.core.utils.LocationUtils;
+import com.applozic.mobicommons.commons.core.utils.LocationUtils;
 
 public class ConversationFragment extends MobiComConversationFragment {
 

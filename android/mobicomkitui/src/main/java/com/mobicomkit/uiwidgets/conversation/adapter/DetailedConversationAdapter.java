@@ -39,17 +39,17 @@ import com.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 
-import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
-import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
-import net.mobitexter.mobiframework.commons.core.utils.Support;
-import net.mobitexter.mobiframework.commons.image.ImageLoader;
-import net.mobitexter.mobiframework.commons.image.ImageUtils;
-import net.mobitexter.mobiframework.emoticon.EmojiconHandler;
-import net.mobitexter.mobiframework.emoticon.EmoticonUtils;
-import net.mobitexter.mobiframework.file.FileUtils;
-import net.mobitexter.mobiframework.json.GsonUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.people.group.Group;
+import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
+import com.applozic.mobicommons.commons.core.utils.DateUtils;
+import com.applozic.mobicommons.commons.core.utils.Support;
+import com.applozic.mobicommons.commons.image.ImageLoader;
+import com.applozic.mobicommons.commons.image.ImageUtils;
+import com.applozic.mobicommons.emoticon.EmojiconHandler;
+import com.applozic.mobicommons.emoticon.EmoticonUtils;
+import com.applozic.mobicommons.file.FileUtils;
+import com.applozic.mobicommons.json.GsonUtils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.group.Group;
 
 import java.io.File;
 import java.util.Arrays;

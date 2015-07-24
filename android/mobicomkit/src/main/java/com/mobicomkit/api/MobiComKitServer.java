@@ -2,8 +2,6 @@ package com.mobicomkit.api;
 
 import android.content.Context;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-
 /**
  * Created by devashish on 22/12/14.
  */

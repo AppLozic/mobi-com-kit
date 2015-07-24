@@ -11,8 +11,8 @@ import com.mobicomkit.api.account.user.MobiComUserPreference;
 import com.mobicomkit.api.account.user.User;
 import com.mobicomkit.exception.InvalidApplicationException;
 
-import net.mobitexter.mobiframework.commons.core.utils.ContactNumberUtils;
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
+import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
+import com.applozic.mobicommons.commons.core.utils.Utils;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;

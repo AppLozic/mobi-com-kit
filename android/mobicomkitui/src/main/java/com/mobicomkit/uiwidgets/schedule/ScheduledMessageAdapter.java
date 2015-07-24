@@ -19,10 +19,10 @@ import android.widget.TextView;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.uiwidgets.R;
 
-import net.mobitexter.mobiframework.commons.image.ImageLoader;
-import net.mobitexter.mobiframework.commons.image.ImageUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.mobiframework.people.contact.ContactUtils;
+import com.applozic.mobicommons.commons.image.ImageLoader;
+import com.applozic.mobicommons.commons.image.ImageUtils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.ContactUtils;
 
 import java.text.DateFormat;
 import java.util.Arrays;

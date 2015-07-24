@@ -3,7 +3,7 @@ package com.mobicomkit.contact;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 import java.util.List;
 

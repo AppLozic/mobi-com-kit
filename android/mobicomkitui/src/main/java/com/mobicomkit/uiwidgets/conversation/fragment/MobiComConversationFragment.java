@@ -68,13 +68,13 @@ import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 import com.mobicomkit.uiwidgets.schedule.ConversationScheduler;
 import com.mobicomkit.uiwidgets.schedule.ScheduledTimeHolder;
 
-import net.mobitexter.mobiframework.file.FileUtils;
-import net.mobitexter.mobiframework.commons.core.utils.Support;
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.emoticon.EmojiconHandler;
-import net.mobitexter.mobiframework.file.FilePathFinder;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.people.group.Group;
+import com.applozic.mobicommons.file.FileUtils;
+import com.applozic.mobicommons.commons.core.utils.Support;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.emoticon.EmojiconHandler;
+import com.applozic.mobicommons.file.FilePathFinder;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.group.Group;
 
 import java.util.ArrayList;
 import java.util.Date;

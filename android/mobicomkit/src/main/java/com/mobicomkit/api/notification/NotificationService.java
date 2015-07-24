@@ -13,8 +13,8 @@ import com.mobicomkit.api.MobiComKitConstants;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.broadcast.NotificationBroadcastReceiver;
 
-import net.mobitexter.mobiframework.json.GsonUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.json.GsonUtils;
+import com.applozic.mobicommons.people.contact.Contact;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;

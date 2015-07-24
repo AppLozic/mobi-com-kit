@@ -5,7 +5,7 @@ import android.util.Base64;
 
 import com.mobicomkit.api.account.user.MobiComUserPreference;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
+import com.applozic.mobicommons.commons.core.utils.Utils;
 
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.util.TextUtils;

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.mobicomkit.uiwidgets.R;
 
-import net.mobitexter.mobiframework.commons.core.utils.DateUtils;
+import com.applozic.mobicommons.commons.core.utils.DateUtils;
 
 /**
  * Created with IntelliJ IDEA.

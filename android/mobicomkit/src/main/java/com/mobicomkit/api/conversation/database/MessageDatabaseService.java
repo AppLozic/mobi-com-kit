@@ -15,9 +15,9 @@ import com.mobicomkit.api.attachment.FileMeta;
 import com.mobicomkit.api.conversation.Message;
 import com.mobicomkit.database.MobiComDatabaseHelper;
 
-import net.mobitexter.mobiframework.commons.core.utils.DBUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.people.group.Group;
+import com.applozic.mobicommons.commons.core.utils.DBUtils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.group.Group;
 
 import java.util.ArrayList;
 import java.util.Arrays;

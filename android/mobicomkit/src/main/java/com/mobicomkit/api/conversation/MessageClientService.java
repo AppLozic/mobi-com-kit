@@ -19,11 +19,11 @@ import com.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.sync.SmsSyncRequest;
 import com.mobicomkit.sync.SyncMessageFeed;
 
-import net.mobitexter.mobiframework.json.AnnotationExclusionStrategy;
-import net.mobitexter.mobiframework.json.ArrayAdapterFactory;
-import net.mobitexter.mobiframework.json.GsonUtils;
-import net.mobitexter.mobiframework.people.contact.Contact;
-import net.mobitexter.people.group.Group;
+import com.applozic.mobicommons.json.AnnotationExclusionStrategy;
+import com.applozic.mobicommons.json.ArrayAdapterFactory;
+import com.applozic.mobicommons.json.GsonUtils;
+import com.applozic.mobicommons.people.contact.Contact;
+import com.applozic.mobicommons.people.group.Group;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

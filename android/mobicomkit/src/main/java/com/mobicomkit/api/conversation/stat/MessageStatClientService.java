@@ -5,7 +5,7 @@ import android.content.Context;
 import com.mobicomkit.api.HttpRequestUtils;
 import com.mobicomkit.api.MobiComKitClientService;
 
-import net.mobitexter.mobiframework.json.GsonUtils;
+import com.applozic.mobicommons.json.GsonUtils;
 
 /**
  * Created by devashish on 26/12/14.

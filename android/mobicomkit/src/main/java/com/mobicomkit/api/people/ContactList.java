@@ -8,7 +8,7 @@ package com.mobicomkit.api.people;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;
 
 import java.util.List;
 

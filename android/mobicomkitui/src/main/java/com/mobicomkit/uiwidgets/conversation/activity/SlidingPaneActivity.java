@@ -27,10 +27,9 @@ import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
-import com.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import net.mobitexter.mobiframework.commons.core.utils.Support;
+import com.applozic.mobicommons.commons.core.utils.Support;
 
 import com.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 
