@@ -48,13 +48,13 @@ import android.widget.Toast;
 
 import com.mobicomkit.uiwidgets.R;
 
-import com.mobicomkit.api.account.user.MobiComUserPreference;
-import com.mobicomkit.api.attachment.FileMeta;
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.api.conversation.MobiComConversationService;
-import com.mobicomkit.api.conversation.database.MessageDatabaseService;
-import com.mobicomkit.api.conversation.selfdestruct.DisappearingMessageTask;
-import com.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
+import com.applozic.mobicomkit.api.attachment.FileMeta;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.api.conversation.MobiComConversationService;
+import com.applozic.mobicomkit.api.conversation.database.MessageDatabaseService;
+import com.applozic.mobicomkit.api.conversation.selfdestruct.DisappearingMessageTask;
+import com.applozic.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.uiwidgets.conversation.ConversationListView;
 import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.mobicomkit.uiwidgets.conversation.DeleteConversationAsyncTask;

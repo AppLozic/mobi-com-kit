@@ -106,7 +106,7 @@
         </activity>
 
         <service
-            android:name="com.mobicomkit.api.conversation.MessageIntentService"
+            android:name="com.applozic.mobicomkit.api.conversation.MessageIntentService"
             android:exported="false" />
 
         <activity
@@ -129,7 +129,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.mobicomkit.broadcast.NotificationBroadcastReceiver">
+        <receiver android:name="com.applozic.mobicomkit.broadcast.NotificationBroadcastReceiver">
             <intent-filter>
                 <action android:name="mobicom.LAUNCH_APP" />
             </intent-filter>

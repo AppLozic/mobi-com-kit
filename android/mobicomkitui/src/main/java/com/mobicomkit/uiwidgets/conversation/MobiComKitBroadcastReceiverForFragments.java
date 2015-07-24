@@ -7,13 +7,12 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.mobicomkit.api.MobiComKitConstants;
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.api.MobiComKitConstants;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.broadcast.BroadcastService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
-import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
 import com.applozic.mobicommons.json.GsonUtils;
 import com.applozic.mobicommons.people.contact.Contact;
 import com.applozic.mobicommons.people.contact.ContactUtils;

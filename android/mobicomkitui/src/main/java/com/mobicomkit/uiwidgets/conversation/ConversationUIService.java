@@ -14,11 +14,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mobicomkit.api.MobiComKitConstants;
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.api.conversation.MobiComConversationService;
-import com.mobicomkit.broadcast.BroadcastService;
-import com.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.api.MobiComKitConstants;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.api.conversation.MobiComConversationService;
+import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.contact.AppContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;

@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.mobicomkit.api.MobiComKitConstants;
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.api.notification.NotificationService;
-import com.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.api.MobiComKitConstants;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.api.notification.NotificationService;
+import com.applozic.mobicomkit.contact.AppContactService;
 import com.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicommons.json.GsonUtils;

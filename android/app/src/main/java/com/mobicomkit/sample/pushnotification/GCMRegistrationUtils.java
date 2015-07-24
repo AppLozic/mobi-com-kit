@@ -9,9 +9,9 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.mobicomkit.api.account.register.RegistrationResponse;
-import com.mobicomkit.api.account.user.MobiComUserPreference;
-import com.mobicomkit.api.account.user.PushNotificationTask;
+import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
+import com.applozic.mobicomkit.api.account.user.PushNotificationTask;
 
 import java.io.IOException;
 

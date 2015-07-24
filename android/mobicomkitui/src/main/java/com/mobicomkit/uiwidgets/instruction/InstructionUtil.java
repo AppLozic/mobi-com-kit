@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.mobicomkit.api.MobiComKitClientService;
+import com.applozic.mobicomkit.api.MobiComKitClientService;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -5,7 +5,7 @@
     android:background="@android:color/background_dark"
     android:orientation="vertical">
 
-    <com.mobicomkit.api.attachment.AttachmentView
+    <com.applozic.mobicomkit.api.attachment.AttachmentView
         android:id="@+id/full_screen_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
