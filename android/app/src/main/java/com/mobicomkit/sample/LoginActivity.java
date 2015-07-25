@@ -27,6 +27,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.os.Handler;
 
 import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
 import com.applozic.mobicomkit.api.account.user.User;
@@ -38,6 +40,7 @@ import com.applozic.mobicommons.commons.core.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -47,6 +50,10 @@ public class LoginActivity extends Activity {
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+
+    //flag variable for exiting the application
+    private boolean exit = false;
+
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -237,6 +244,22 @@ public class LoginActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+
+       if (exit) {
+            finish();
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
+            exit = true;
+
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3000);
+        }
+
     }
 
     /**

@@ -76,7 +76,10 @@ public class MainActivity extends MobiComActivityForFragment
         MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
         if (!userPreference.isRegistered()) {
             Intent intent = new Intent(this, LoginActivity.class);
+            //startActivity(intent);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finish();
             return;
         }
 
@@ -116,7 +119,7 @@ public class MainActivity extends MobiComActivityForFragment
 
         if (position == 2) {
 
-            Toast.makeText(getBaseContext(), "Logging out", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Log out successful", Toast.LENGTH_SHORT).show();
 
             MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
 
