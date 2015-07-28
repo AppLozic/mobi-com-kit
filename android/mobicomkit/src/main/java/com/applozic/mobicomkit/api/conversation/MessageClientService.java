@@ -43,7 +43,8 @@ public class MessageClientService extends MobiComKitClientService {
     private static final String TAG = "MessageClientService";
     public static final String MTEXT_DELIVERY_URL = "/rest/ws/sms/mtext/delivered?";
     public static final String SERVER_SYNC_URL = "/rest/ws/mobicomkit/sync/messages";
-    public static final String SEND_MESSAGE_URL = "/rest/ws/mobicomkit/v1/message/add";
+   // public static final String SEND_MESSAGE_URL = "/rest/ws/mobicomkit/v1/message/add";
+    public static final String SEND_MESSAGE_URL = "/rest/ws/mobicomkit/v1/message/send";
     public static final String SYNC_SMS_URL = "/rest/ws/sms/add/batch";
     public static final String MESSAGE_LIST_URL = "/rest/ws/mobicomkit/v1/message/list";
     public static final String MESSAGE_DELETE_URL = "/rest/ws/mobicomkit/v1/message/delete";
@@ -245,14 +246,17 @@ public class MessageClientService extends MobiComKitClientService {
         }
 
         //Todo: set filePaths
-        String keyString = new MessageClientService(context).sendMessage(message);
+        String [] response = new MessageClientService(context).sendMessage(message).split(",");
+        String keyString = response[0];
+        String createdAt = response[1];
+
         if (TextUtils.isEmpty(keyString)) {
             keyString = UUID.randomUUID().toString();
             message.setSentToServer(false);
+        }else{
+            message.setSentMessageTimeAtServer(Long.parseLong(createdAt));
         }
-
         message.setKeyString(keyString);
-
         if (!TextUtils.isEmpty(keyString)) {
             //Todo: Handle server message add failure due to internet disconnect.
         } else {
@@ -263,6 +267,9 @@ public class MessageClientService extends MobiComKitClientService {
         if (messageId != -1) {
             messageDatabaseService.updateMessageFileMetas(messageId, message);
         } else {
+            if (message.isSentToServer()){
+                message.setCreatedAtTime(message.getSentMessageTimeAtServer());
+            }
             messageDatabaseService.createMessage(message);
         }
 

@@ -36,6 +36,16 @@ public class Message {
     private List<String> fileMetaKeyStrings;
     private List<String> filePaths;
     private String pairedMessageKeyString;
+    private long sentMessageTimeAtServer;
+
+    public long getSentMessageTimeAtServer() {
+        return sentMessageTimeAtServer;
+    }
+
+    public void setSentMessageTimeAtServer(long sentMessageTimeAtServer) {
+        this.sentMessageTimeAtServer = sentMessageTimeAtServer;
+    }
+
 
     private boolean canceled = false;
 

@@ -79,6 +79,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
     private MessageDatabaseService messageDatabaseService;
     private BaseContactService contactService;
     private Contact senderContact;
+    private long deviceTimeOffset =0;
     static {
         messageTypeColorMap.put(Message.MessageType.INBOX.getValue(), R.color.message_type_inbox);
         messageTypeColorMap.put(Message.MessageType.OUTBOX.getValue(), R.color.message_type_outbox);
@@ -140,6 +141,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View customView;
+        deviceTimeOffset = MobiComUserPreference.getInstance(context).getDeviceTimeOffset();
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (getItemViewType(position) == 0) {
             customView = inflater.inflate(R.layout.mobicom_received_message_list_view, parent, false);
@@ -377,11 +379,9 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
             } else if (createdAtTime != null && message.isDummyEmptyMessage()) {
                 createdAtTime.setText("");
             } else if (createdAtTime != null) {
-                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime()));
+                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime()-deviceTimeOffset));
             }
-
             String mimeType = "";
-
             if (messageTextView != null) {
                 messageTextView.setText(EmoticonUtils.getSmiledText(context, message.getMessage(), emojiconHandler));
                 if (mimeType != null) {
