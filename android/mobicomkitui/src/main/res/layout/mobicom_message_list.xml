@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:visibility="visible">
 
-            <com.mobicomkit.uiwidgets.conversation.ConversationListView
+            <com.applozic.mobicomkit.uiwidgets.conversation.ConversationListView
                 android:id="@+id/messageList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

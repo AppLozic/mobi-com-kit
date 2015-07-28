@@ -22,12 +22,12 @@ import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.contact.AppContactService;
 import com.applozic.mobicomkit.database.MobiComDatabaseHelper;
-import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
-import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
-import com.mobicomkit.uiwidgets.conversation.UIService;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
-import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
-import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
+import com.applozic.mobicomkit.uiwidgets.conversation.ConversationUIService;
+import com.applozic.mobicomkit.uiwidgets.conversation.UIService;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
+import com.applozic.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.people.contact.Contact;
