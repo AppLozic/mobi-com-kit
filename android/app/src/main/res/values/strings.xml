@@ -46,7 +46,7 @@
     <string name="support_contact_userId">applozic</string>
     <string name="support_contact_emailId">devashish@applozic.com</string>
     <string name="support_contact_number">918042028425</string>
-    <string name="support_contact_image_url">http://www.applozic.com/resources/images/applozic.png</string>
+    <string name="support_contact_image_url">R.drawable.ic_launcher</string>
 
 
 </resources>
