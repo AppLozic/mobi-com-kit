@@ -9,12 +9,13 @@ import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.applozic.mobicomkit.api.conversation.selfdestruct.DisappearingMessageTask;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.applozic.mobicomkit.sync.SyncMessageFeed;
 
 import com.applozic.mobicommons.commons.core.utils.Support;
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.people.contact.Contact;
-import com.applozic.mobicommons.people.contact.ContactUtils;
 import com.applozic.mobicommons.personalization.PersonalizedMessage;
 
 import org.json.JSONArray;
@@ -42,6 +43,7 @@ public class MobiComMessageService {
     protected MessageDatabaseService messageDatabaseService;
     protected MessageClientService messageClientService;
     protected Class messageIntentServiceClass;
+    protected BaseContactService baseContactService;
 
     public MobiComMessageService(Context context, Class messageIntentServiceClass) {
         this.context = context;
@@ -49,6 +51,8 @@ public class MobiComMessageService {
         this.messageClientService = new MessageClientService(context);
         this.conversationService = new MobiComConversationService(context);
         this.messageIntentServiceClass = messageIntentServiceClass;
+        //Todo: this can be changed to DeviceContactService for device contacts usage.
+        this.baseContactService = new AppContactService(context);
     }
 
     public Message processMessage(final Message messageToProcess, String tofield) {
@@ -75,7 +79,7 @@ public class MobiComMessageService {
         message.setPairedMessageKeyString(messageToProcess.getPairedMessageKeyString());
 
         if (message.getMessage() != null && PersonalizedMessage.isPersonalized(message.getMessage())) {
-            Contact contact = ContactUtils.getContact(context, tofield);
+            Contact contact =  baseContactService.getContactById(tofield);
             if (contact != null) {
                 message.setMessage(PersonalizedMessage.prepareMessageFromTemplate(message.getMessage(), contact));
             }
@@ -87,7 +91,7 @@ public class MobiComMessageService {
         MobiComUserPreference userPreferences = MobiComUserPreference.getInstance(context);
 
         message.processContactIds(context);
-        Contact receiverContact = ContactUtils.getContact(context, message.getTo());
+        Contact receiverContact =  baseContactService.getContactById(message.getTo());
 
         if (message.getMessage() != null && PersonalizedMessage.isPersonalized(message.getMessage())) {
             message.setMessage(PersonalizedMessage.prepareMessageFromTemplate(message.getMessage(), receiverContact));
@@ -95,7 +99,7 @@ public class MobiComMessageService {
 
         messageDatabaseService.createMessage(message);
 
-        Contact contact = ContactUtils.getContact(context, message.getTo());
+        Contact contact = baseContactService.getContactById(message.getTo());
         BroadcastService.sendMessageUpdateBroadcast(context, BroadcastService.INTENT_ACTIONS.SYNC_MESSAGE.toString(), message);
 
         //Check if we are........container is already opened...don't send broadcast
@@ -186,7 +190,7 @@ public class MobiComMessageService {
             mTextMessageReceived.processContactIds(context);
 
             mTextMessageReceived.setTo(mTextMessageReceived.getTo());
-            Contact receiverContact = ContactUtils.getContact(context, receiverNumber);
+            Contact receiverContact = baseContactService.getContactById(receiverNumber);
 
             if (mTextMessageReceived.getMessage() != null && PersonalizedMessage.isPersonalized(mTextMessageReceived.getMessage())) {
                 mTextMessageReceived.setMessage(PersonalizedMessage.prepareMessageFromTemplate(mTextMessageReceived.getMessage(), receiverContact));
@@ -195,7 +199,7 @@ public class MobiComMessageService {
             try {
                 messageClientService.sendMessageToServer(mTextMessageReceived);
             } catch (Exception ex) {
-                Log.i(TAG, "Received Sms error " + ex.getMessage());
+                Log.i(TAG, "Received message error " + ex.getMessage());
             }
             messageClientService.updateDeliveryStatus(smsKeyString, null, receiverNumber);
         } catch (JSONException e) {

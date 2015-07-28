@@ -22,12 +22,12 @@ import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.contact.AppContactService;
 import com.applozic.mobicomkit.database.MobiComDatabaseHelper;
-import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
-import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
-import com.mobicomkit.uiwidgets.conversation.UIService;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
-import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
-import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
+import com.applozic.mobicomkit.uiwidgets.conversation.ConversationUIService;
+import com.applozic.mobicomkit.uiwidgets.conversation.UIService;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
+import com.applozic.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.people.contact.Contact;
@@ -40,7 +40,7 @@ public class MainActivity extends MobiComActivityForFragment
     public static final String MOBICOMKIT = "applozic.connect";
     public static final String USER_ID = "userId";
     public static final String TAKE_ORDER = "takeOrder";
-    public static final String TAKE_ORDER_USERID_METADATA = "com.mobicomkit.take.order.userId";
+    public static final String TAKE_ORDER_USERID_METADATA = "com.applozic.take.order.userId";
     public static final int DATABASE_VERSION = 1;
 
     /**
@@ -171,7 +171,7 @@ public class MainActivity extends MobiComActivityForFragment
         }
     }
 
-    public void restoreActionBar() {
+        public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
