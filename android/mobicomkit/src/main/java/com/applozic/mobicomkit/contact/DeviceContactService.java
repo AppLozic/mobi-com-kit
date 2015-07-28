@@ -54,11 +54,6 @@ public class DeviceContactService implements BaseContactService {
     }
 
     @Override
-    public Contact getContactWithFallback(String contactId) {
-        return null;
-    }
-
-    @Override
     public void updateContact(Contact contact) {
 
     }
@@ -80,6 +75,12 @@ public class DeviceContactService implements BaseContactService {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean isContactExists(String contactId) {
+        //Todo: write implementation for device contacts
+        return false;
     }
 
 }

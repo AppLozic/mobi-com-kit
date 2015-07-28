@@ -58,6 +58,28 @@ public class MainActivity extends MobiComActivityForFragment
 
     }
 
+    public static void addFragment(FragmentActivity fragmentActivity, Fragment fragmentToAdd, String fragmentTag) {
+        FragmentManager supportFragmentManager = fragmentActivity.getSupportFragmentManager();
+
+        Fragment activeFragment = UIService.getActiveFragment(fragmentActivity);
+        FragmentTransaction fragmentTransaction = supportFragmentManager
+                .beginTransaction();
+        if (null != activeFragment) {
+            fragmentTransaction.hide(activeFragment);
+        }
+
+        fragmentTransaction.replace(R.id.container, fragmentToAdd,
+                fragmentTag);
+
+        if (supportFragmentManager.getBackStackEntryCount() > 1) {
+            supportFragmentManager.popBackStack();
+        }
+        fragmentTransaction.addToBackStack(fragmentTag);
+        fragmentTransaction.commit();
+        supportFragmentManager.executePendingTransactions();
+        //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,6 +266,21 @@ public class MainActivity extends MobiComActivityForFragment
         new ConversationUIService(this).removeConversation(message, formattedContactNumber);
     }
 
+    private void buildSupportContactData() {
+        Context context = getApplicationContext();
+        AppContactService appContactService = new AppContactService(context);
+        // avoid each time update ....
+        if (!appContactService.isContactExists(getString(R.string.support_contact_userId))) {
+            Contact contact = new Contact();
+            contact.setUserId(getString(R.string.support_contact_userId));
+            contact.setFullName(getString(R.string.support_contact_display_name));
+            contact.setContactNumber(getString(R.string.support_contact_number));
+            contact.setImageURL(getString(R.string.support_contact_image_url));
+            contact.setEmailId(getString(R.string.support_contact_emailId));
+            appContactService.add(contact);
+        }
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -283,43 +320,6 @@ public class MainActivity extends MobiComActivityForFragment
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
 
-    }
-
-    public static void addFragment(FragmentActivity fragmentActivity, Fragment fragmentToAdd, String fragmentTag) {
-        FragmentManager supportFragmentManager = fragmentActivity.getSupportFragmentManager();
-
-        Fragment activeFragment = UIService.getActiveFragment(fragmentActivity);
-        FragmentTransaction fragmentTransaction = supportFragmentManager
-                .beginTransaction();
-        if (null != activeFragment) {
-            fragmentTransaction.hide(activeFragment);
-        }
-
-        fragmentTransaction.replace(R.id.container, fragmentToAdd,
-                fragmentTag);
-
-        if (supportFragmentManager.getBackStackEntryCount() > 1) {
-            supportFragmentManager.popBackStack();
-        }
-        fragmentTransaction.addToBackStack(fragmentTag);
-        fragmentTransaction.commit();
-        supportFragmentManager.executePendingTransactions();
-        //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
-    }
-
-    private void buildSupportContactData() {
-        Context context = getApplicationContext();
-        AppContactService appContactService = new AppContactService(context);
-        // avoid each time update ....
-        if (appContactService.getContactById(getString(R.string.support_contact_userId)) == null) {
-            Contact contact = new Contact();
-            contact.setUserId(getString(R.string.support_contact_userId));
-            contact.setFullName(getString(R.string.support_contact_display_name));
-            contact.setContactNumber(getString(R.string.support_contact_number));
-            contact.setImageURL(getString(R.string.support_contact_image_url));
-            contact.setEmailId(getString(R.string.support_contact_emailId));
-            appContactService.add(contact);
-        }
     }
 
 }
