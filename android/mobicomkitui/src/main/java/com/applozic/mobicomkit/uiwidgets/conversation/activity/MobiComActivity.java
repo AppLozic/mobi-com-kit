@@ -320,12 +320,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
 
         String userId = intent.getStringExtra("userId");
         if (!TextUtils.isEmpty(userId)) {
-            contact = new AppContactService(this).getContactById(userId);
-            if (contact != null) {
-                contact.processContactNumbers(this);
-            } else {
-                contact = new Contact(this, userId);
-            }
+            contact = baseContactService.getContactById(userId);
         }
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);

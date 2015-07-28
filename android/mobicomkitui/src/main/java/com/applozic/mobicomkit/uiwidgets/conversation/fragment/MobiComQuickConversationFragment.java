@@ -25,6 +25,8 @@ import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.api.conversation.MobiComConversationService;
 import com.applozic.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.applozic.mobicommons.commons.core.utils.DateUtils;
 import com.applozic.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.mobicomkit.uiwidgets.R;
@@ -66,6 +68,7 @@ public class MobiComQuickConversationFragment extends Fragment {
     protected boolean loadMore = true;
     private Long minCreatedAtTime;
     private DownloadConversation downloadConversation;
+    private BaseContactService baseContactService;
 
     public ConversationListView getListView() {
         return listView;
@@ -77,6 +80,7 @@ public class MobiComQuickConversationFragment extends Fragment {
         conversationService = new MobiComConversationService(getActivity());
         conversationAdapter = new QuickConversationAdapter(getActivity(),
                 messageList, null);
+        baseContactService = new AppContactService(getActivity());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -150,7 +154,7 @@ public class MobiComQuickConversationFragment extends Fragment {
 
         switch (item.getItemId()) {
             case 0:
-                Contact contact = ContactUtils.getContact(getActivity(), message.getContactIds());
+                Contact contact = baseContactService.getContactById(message.getContactIds());
                 new ConversationUIService(getActivity()).deleteConversationThread(contact, contact.getDisplayName());
                 break;
             default:

@@ -70,7 +70,6 @@ public class ConversationUIService {
             public void run() {
                 //Todo: load fragment from backstack if available and avoid creating new fragment.
                 ConversationFragment conversationFragment = new ConversationFragment();
-                //UIService.addFragment(fragmentActivity,conversationFragment,"Conversation");
                 ((MobiComKitActivityInterface) fragmentActivity).addFragment(conversationFragment);
                 conversationFragment.loadConversation(contact);
             }
@@ -254,7 +253,7 @@ public class ConversationUIService {
             intent.putExtra(MobiComKitPeopleActivity.SHARED_TEXT, messageContent);
         }
 
-        ((FragmentActivity) fragmentActivity).startActivityForResult(intent, REQUEST_CODE_CONTACT_GROUP_SELECTION);
+        fragmentActivity.startActivityForResult(intent, REQUEST_CODE_CONTACT_GROUP_SELECTION);
     }
 
     public void startContactActivityForResult() {
@@ -316,11 +315,6 @@ public class ConversationUIService {
         Log.d("userId","UserID="+userId);
         if (!TextUtils.isEmpty(userId)) {
             contact = baseContactService.getContactById(userId);
-            if (contact != null) {
-                contact.processContactNumbers(fragmentActivity);
-            } else {
-                contact = new Contact(fragmentActivity, userId);
-            }
         }
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);

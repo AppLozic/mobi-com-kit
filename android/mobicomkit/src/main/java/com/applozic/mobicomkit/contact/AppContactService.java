@@ -59,7 +59,13 @@ public class AppContactService implements BaseContactService {
 
     @Override
     public Contact getContactById(String contactId) {
-        return contactDatabase.getContactById(contactId);
+        Contact contact = contactDatabase.getContactById(contactId);
+        if (contact != null) {
+            contact.processContactNumbers(context);
+        } else {
+            contact = new Contact(context, contactId);
+        }
+        return contact;
     }
 
     public Contact getContactWithFallback(String contactId) {

@@ -46,7 +46,11 @@ public class DeviceContactService implements BaseContactService {
 
     @Override
     public Contact getContactById(String contactId) {
-        return ContactUtils.getContact(context, contactId);
+        Contact contact = ContactUtils.getContact(context, contactId);
+        if (contact != null) {
+            contact.processContactNumbers(context);
+        }
+        return contact;
     }
 
     @Override
