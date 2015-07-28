@@ -32,7 +32,6 @@ import com.applozic.mobicommons.commons.image.ImageUtils;
 import com.applozic.mobicommons.file.FilePathFinder;
 import com.applozic.mobicommons.json.GsonUtils;
 import com.applozic.mobicommons.people.contact.Contact;
-import com.applozic.mobicommons.people.contact.ContactUtils;
 import com.applozic.mobicommons.people.group.Group;
 import com.applozic.mobicommons.people.group.GroupUtils;
 
