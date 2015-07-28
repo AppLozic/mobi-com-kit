@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
@@ -22,7 +23,7 @@ import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
 import com.applozic.mobicomkit.contact.AppContactService;
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.applozic.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.applozic.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;
 import com.applozic.mobicomkit.uiwidgets.conversation.adapter.TitleNavigationAdapter;
@@ -30,20 +31,17 @@ import com.applozic.mobicomkit.uiwidgets.conversation.fragment.MobiComConversati
 import com.applozic.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConversationFragment;
 import com.applozic.mobicomkit.uiwidgets.conversation.fragment.MultimediaOptionFragment;
 import com.applozic.mobicomkit.uiwidgets.instruction.InstructionUtil;
-
+import com.applozic.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
 import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
 import com.applozic.mobicommons.commons.core.utils.Support;
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.commons.image.ImageUtils;
 import com.applozic.mobicommons.file.FilePathFinder;
 import com.applozic.mobicommons.json.GsonUtils;
-
-import com.applozic.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity;
-
 import com.applozic.mobicommons.people.contact.Contact;
-import com.applozic.mobicommons.people.contact.ContactUtils;
 import com.applozic.mobicommons.people.group.Group;
 import com.applozic.mobicommons.people.group.GroupUtils;
+import com.mobicomkit.uiwidgets.R;
 
 import java.util.ArrayList;
 
@@ -73,6 +71,13 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
     protected ArrayList<SpinnerNavItem> navSpinner;
     // Navigation adapter
     protected TitleNavigationAdapter adapter;
+    protected BaseContactService baseContactService;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        baseContactService = new AppContactService(this);
+    }
 
     @Override
     protected void onResume() {
@@ -220,7 +225,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         }
         String latestContact = quickConversationFragment.getLatestContact();
         if (latestContact != null) {
-            Contact contact = ContactUtils.getContact(this, latestContact);
+            Contact contact = baseContactService.getContactById(latestContact);
             conversationFragment.loadConversation(contact);
         }
     }
@@ -297,7 +302,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
                 //Todo: show warning that the user doesn't have any number stored.
                 return;
             }
-            contact = ContactUtils.getContact(this, contactId);
+            contact = baseContactService.getContactById(String.valueOf(contactId));
         }
 
         Long groupId = intent.getLongExtra("groupId", -1);
@@ -309,7 +314,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         String contactNumber = intent.getStringExtra("contactNumber");
         boolean firstTimeMTexterFriend = intent.getBooleanExtra("firstTimeMTexterFriend", false);
         if (!TextUtils.isEmpty(contactNumber)) {
-            contact = ContactUtils.getContact(this, contactNumber);
+            contact = baseContactService.getContactById(contactNumber);
             conversationFragment.setFirstTimeMTexterFriend(firstTimeMTexterFriend);
         }
 
@@ -326,7 +331,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);
         if (!TextUtils.isEmpty(messageJson)) {
             Message message = (Message) GsonUtils.getObjectFromJson(messageJson, Message.class);
-            contact = ContactUtils.getContact(this, message.getTo());
+            contact = baseContactService.getContactById(message.getTo());
         }
 
         boolean support = intent.getBooleanExtra(Support.SUPPORT_INTENT_KEY, false);

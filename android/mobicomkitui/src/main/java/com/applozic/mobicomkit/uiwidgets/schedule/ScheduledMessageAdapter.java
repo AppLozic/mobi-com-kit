@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicommons.commons.image.ImageLoader;
@@ -33,9 +35,11 @@ import java.util.List;
 
 public class ScheduledMessageAdapter extends ArrayAdapter<Message> {
     private ImageLoader mImageLoader;
+    private BaseContactService baseContactService;
 
     public ScheduledMessageAdapter(Context context, int textViewResourceId, List<Message> smsList) {
         super(context, textViewResourceId, smsList);
+        baseContactService = new AppContactService(context);
         mImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
             @Override
             protected Bitmap processBitmap(Object data) {
@@ -71,7 +75,7 @@ public class ScheduledMessageAdapter extends ArrayAdapter<Message> {
                 Contact contact1 = ContactUtils.getContact(getContext(), items.get(0));
                 String contactinfo = TextUtils.isEmpty(contact1.getFirstName()) ? contact1.getContactNumber() : contact1.getFirstName();
                 if (items.size() > 1) {
-                    Contact contact2 = ContactUtils.getContact(getContext(), items.get(1));
+                    Contact contact2 = baseContactService.getContactById(items.get(1));
                     contactinfo = contactinfo + " , " + (TextUtils.isEmpty(contact2.getFirstName()) ? contact2.getContactNumber() : contact2.getFirstName());
 
                 }

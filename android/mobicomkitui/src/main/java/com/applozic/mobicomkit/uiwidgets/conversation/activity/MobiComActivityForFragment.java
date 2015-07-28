@@ -17,6 +17,7 @@ import com.applozic.mobicomkit.api.MobiComKitConstants;
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.applozic.mobicomkit.uiwidgets.conversation.MessageCommunicator;
 import com.applozic.mobicomkit.uiwidgets.conversation.MobiComKitBroadcastReceiver;
@@ -66,6 +67,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
     protected ArrayList<SpinnerNavItem> navSpinner;
     // Navigation adapter
     protected TitleNavigationAdapter adapter;
+    protected BaseContactService baseContactService;
 
     @Override
     protected void onResume() {
@@ -213,7 +215,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
         }
         String latestContact = quickConversationFragment.getLatestContact();
         if (latestContact != null) {
-            Contact contact = ContactUtils.getContact(this, latestContact);
+            Contact contact = baseContactService.getContactById(latestContact);
             conversationFragment.loadConversation(contact);
         }
     }
@@ -290,7 +292,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
                 //Todo: show warning that the user doesn't have any number stored.
                 return;
             }
-            contact = ContactUtils.getContact(this, contactId);
+            contact = baseContactService.getContactById(String.valueOf(contactId));
         }
 
         Long groupId = intent.getLongExtra("groupId", -1);
@@ -302,7 +304,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
         String contactNumber = intent.getStringExtra("contactNumber");
         boolean firstTimeMTexterFriend = intent.getBooleanExtra("firstTimeMTexterFriend", false);
         if (!TextUtils.isEmpty(contactNumber)) {
-            contact = ContactUtils.getContact(this, contactNumber);
+            contact = baseContactService.getContactById(contactNumber);
             conversationFragment.setFirstTimeMTexterFriend(firstTimeMTexterFriend);
         }
 
@@ -315,7 +317,7 @@ abstract public class MobiComActivityForFragment extends ActionBarActivity imple
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);
         if (!TextUtils.isEmpty(messageJson)) {
             Message message = (Message) GsonUtils.getObjectFromJson(messageJson, Message.class);
-            contact = ContactUtils.getContact(this, message.getTo());
+            contact = baseContactService.getContactById(message.getTo());
         }
 
         boolean support = intent.getBooleanExtra(Support.SUPPORT_INTENT_KEY, false);

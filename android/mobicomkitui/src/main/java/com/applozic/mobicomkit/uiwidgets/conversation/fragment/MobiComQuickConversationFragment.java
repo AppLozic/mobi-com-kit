@@ -24,6 +24,8 @@ import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.api.conversation.MobiComConversationService;
 import com.applozic.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.applozic.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.mobicomkit.uiwidgets.R;
 import com.applozic.mobicomkit.uiwidgets.conversation.ConversationListView;
@@ -35,7 +37,6 @@ import com.applozic.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.people.contact.Contact;
-import com.applozic.mobicommons.people.contact.ContactUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +65,7 @@ public class MobiComQuickConversationFragment extends Fragment {
     protected boolean loadMore = true;
     private Long minCreatedAtTime;
     private DownloadConversation downloadConversation;
+    private BaseContactService baseContactService;
 
     public ConversationListView getListView() {
         return listView;
@@ -72,6 +74,7 @@ public class MobiComQuickConversationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        baseContactService = new AppContactService(getActivity());
         conversationService = new MobiComConversationService(getActivity());
         conversationAdapter = new QuickConversationAdapter(getActivity(),
                 messageList, null);
@@ -143,7 +146,7 @@ public class MobiComQuickConversationFragment extends Fragment {
 
         switch (item.getItemId()) {
             case 0:
-                Contact contact = ContactUtils.getContact(getActivity(), message.getContactIds());
+                Contact contact = baseContactService.getContactById(message.getContactIds());
                 new ConversationUIService(getActivity()).deleteConversationThread(contact, contact.getDisplayName());
                 break;
             default:

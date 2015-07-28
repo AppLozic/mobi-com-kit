@@ -10,6 +10,8 @@ import android.util.Log;
 import com.applozic.mobicomkit.api.MobiComKitConstants;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.applozic.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
@@ -25,9 +27,11 @@ public class MobiComKitBroadcastReceiverForFragments extends BroadcastReceiver {
     private static final String TAG = "MTBroadcastReceiver";
 
     private ConversationUIService conversationUIService;
+    private BaseContactService baseContactService;
 
     public MobiComKitBroadcastReceiverForFragments(FragmentActivity fragmentActivity) {
         this.conversationUIService = new ConversationUIService(fragmentActivity);
+        this.baseContactService = new AppContactService(fragmentActivity);
     }
 
     @Override
@@ -75,7 +79,7 @@ public class MobiComKitBroadcastReceiverForFragments extends BroadcastReceiver {
             conversationUIService.updateDeliveryStatus(message, userId);
         } else if (BroadcastService.INTENT_ACTIONS.DELETE_CONVERSATION.toString().equals(action)) {
             String contactNumber = intent.getStringExtra("contactNumber");
-            Contact contact = ContactUtils.getContact(context, contactNumber);
+            Contact contact = baseContactService.getContactById(contactNumber);
             conversationUIService.deleteConversation(contact);
         } else if (BroadcastService.INTENT_ACTIONS.UPLOAD_ATTACHMENT_FAILED.toString().equals(action) && message != null) {
             conversationUIService.updateUploadFailedStatus(message);

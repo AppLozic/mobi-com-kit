@@ -10,6 +10,7 @@ import android.util.Log;
 import com.applozic.mobicomkit.api.MobiComKitConstants;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.applozic.mobicomkit.uiwidgets.conversation.fragment.MobiComConversationFragment;
@@ -18,7 +19,6 @@ import com.applozic.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import com.applozic.mobicommons.json.GsonUtils;
 import com.applozic.mobicommons.people.contact.Contact;
-import com.applozic.mobicommons.people.contact.ContactUtils;
 
 /**
  * Created by devashish on 4/2/15.
@@ -29,6 +29,7 @@ public class MobiComKitBroadcastReceiver extends BroadcastReceiver {
 
     private MobiComQuickConversationFragment quickConversationFragment;
     private MobiComConversationFragment conversationFragment;
+    private BaseContactService baseContactService;
 
     public MobiComKitBroadcastReceiver(MobiComQuickConversationFragment quickConversationFragment, MobiComConversationFragment conversationFragment) {
         this.quickConversationFragment = quickConversationFragment;
@@ -95,7 +96,7 @@ public class MobiComKitBroadcastReceiver extends BroadcastReceiver {
         } else if (BroadcastService.INTENT_ACTIONS.DELETE_CONVERSATION.toString().equals(action)) {
             //Todo: If conversation fragment is visible then hide it.
             String contactNumber = intent.getStringExtra("contactNumber");
-            Contact contact = ContactUtils.getContact(context, contactNumber);
+            Contact contact = baseContactService.getContactById(contactNumber);
             conversationFragment.clearList();
             quickConversationFragment.removeConversation(contact);
         } else if (BroadcastService.INTENT_ACTIONS.UPLOAD_ATTACHMENT_FAILED.toString().equals(action) && message != null) {

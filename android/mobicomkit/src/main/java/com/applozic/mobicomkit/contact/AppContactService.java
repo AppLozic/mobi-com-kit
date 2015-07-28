@@ -27,11 +27,9 @@ public class AppContactService implements BaseContactService {
     ContactDatabase contactDatabase;
     Context context;
 
-
     public AppContactService(Context context) {
         this.context = context;
         this.contactDatabase = new ContactDatabase(context);
-
     }
 
     @Override
@@ -52,9 +50,7 @@ public class AppContactService implements BaseContactService {
     @Override
     public void deleteContactById(String contactId) {
         contactDatabase.deleteContactById(contactId);
-
     }
-
 
     @Override
     public List<Contact> getAll() {
@@ -145,7 +141,7 @@ public class AppContactService implements BaseContactService {
         if (userIds != null && !userIds.isEmpty()) {
             return getContactWithFallback(userIds.get(0));
         } else if (items != null && !items.isEmpty()) {
-            return ContactUtils.getContact(context, items.get(0));
+            return getContactWithFallback(items.get(0));
         }
 
         return null;

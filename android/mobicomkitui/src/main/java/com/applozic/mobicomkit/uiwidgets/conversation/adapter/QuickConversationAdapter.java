@@ -43,12 +43,12 @@ import java.util.Map;
 public class QuickConversationAdapter extends ArrayAdapter<Message> {
 
     private static Map<Short, Integer> messageTypeColorMap = new HashMap<Short, Integer>();
+    String mimeType = "";
     private ImageLoader contactImageLoader;
     private Context context;
     private Contact contact;
     private Group group;
     private boolean individual;
-    String mimeType = "";
     private BaseContactService contactService;
     private EmojiconHandler emojiconHandler;
 
@@ -113,7 +113,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
             if (contactReceiver != null) {
                 String contactInfo = contactReceiver.getDisplayName();
                 if (items.size() > 1) {
-                    Contact contact2 = ContactUtils.getContact(getContext(), items.get(1));
+                    Contact contact2 = contactService.getContactById(items.get(1));
                     contactInfo = TextUtils.isEmpty(contactReceiver.getFirstName()) ? contactReceiver.getContactNumber() : contactReceiver.getFirstName() + ", "
                             + (TextUtils.isEmpty(contact2.getFirstName()) ? contact2.getContactNumber() : contact2.getFirstName()) + (items.size() > 2 ? " & others" : "");
                 }

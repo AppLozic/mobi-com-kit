@@ -19,6 +19,7 @@ import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.api.conversation.MobiComConversationService;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
 import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.contact.BaseContactService;
 import com.mobicomkit.uiwidgets.R;
 import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.applozic.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
@@ -43,9 +44,11 @@ public class ConversationUIService {
     public static final int INSTRUCTION_DELAY = 5000;
     private static final String TAG = "ConversationUIService";
     private FragmentActivity fragmentActivity;
+    private BaseContactService baseContactService;
 
     public ConversationUIService(FragmentActivity fragmentActivity) {
         this.fragmentActivity = fragmentActivity;
+        this.baseContactService = new AppContactService(fragmentActivity);
     }
 
     public MobiComQuickConversationFragment getQuickConversationFragment() {
@@ -284,13 +287,14 @@ public class ConversationUIService {
 
         final Uri uri = intent.getData();
         if (uri != null) {
+            //Note: This is used only for the device contacts
             Long contactId = intent.getLongExtra("contactId", 0);
             if (contactId == 0) {
                 //Todo: show warning that the user doesn't have any number stored.
                 return;
             }
-            contact = ContactUtils.getContact(fragmentActivity, contactId);
-        }
+            contact = baseContactService.getContactById(String.valueOf(contactId));
+    }
 
         Long groupId = intent.getLongExtra("groupId", -1);
         String groupName = intent.getStringExtra("groupName");
@@ -303,7 +307,7 @@ public class ConversationUIService {
 
         boolean firstTimeMTexterFriend = intent.getBooleanExtra("firstTimeMTexterFriend", false);
         if (!TextUtils.isEmpty(contactNumber)) {
-            contact = ContactUtils.getContact(fragmentActivity, contactNumber);
+            contact = baseContactService.getContactById(contactNumber);
             if (BroadcastService.isIndividual()) {
                 getConversationFragment().setFirstTimeMTexterFriend(firstTimeMTexterFriend);
             }
@@ -312,7 +316,7 @@ public class ConversationUIService {
         String userId = intent.getStringExtra("userId");
         Log.d("userId","UserID="+userId);
         if (!TextUtils.isEmpty(userId)) {
-            contact = new AppContactService(fragmentActivity).getContactById(userId);
+            contact = baseContactService.getContactById(userId);
             if (contact != null) {
                 contact.processContactNumbers(fragmentActivity);
             } else {
@@ -323,7 +327,7 @@ public class ConversationUIService {
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);
         if (!TextUtils.isEmpty(messageJson)) {
             Message message = (Message) GsonUtils.getObjectFromJson(messageJson, Message.class);
-            contact = new AppContactService(fragmentActivity).getContactWithFallback(message.getTo());
+            contact = baseContactService.getContactById(message.getTo());
         }
 
         boolean support = intent.getBooleanExtra(Support.SUPPORT_INTENT_KEY, false);
