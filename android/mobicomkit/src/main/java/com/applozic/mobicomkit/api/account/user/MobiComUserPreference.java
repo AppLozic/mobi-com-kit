@@ -42,6 +42,8 @@ public class MobiComUserPreference {
     private static String last_sms_sync_time = "last_sms_sync_time";
     private static String new_message_flag = "new_message_flag";
 
+    private static String device_time_offset_from_UTC = "device_time_offset_from_UTC";
+
     public SharedPreferences sharedPreferences;
     private Context context;
     private String countryCode;
@@ -271,6 +273,15 @@ public class MobiComUserPreference {
     public boolean getNewMessageFlag(){
         return sharedPreferences.getBoolean(new_message_flag, false);
     }
+
+    public long getDeviceTimeOffset(){
+        return sharedPreferences.getLong(device_time_offset_from_UTC, 0L);
+    }
+
+    public boolean setDeviceTimeOffset(long diiference){
+        return sharedPreferences.edit().putLong(device_time_offset_from_UTC, diiference).commit();
+    }
+
     //Local initialization of few fields)
     public void initialize(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

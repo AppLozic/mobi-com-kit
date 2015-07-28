@@ -1,5 +1,10 @@
 package com.applozic.mobicommons.commons.core.utils;
 
+import android.content.Context;
+import android.os.SystemClock;
+
+import net.mobitexter.mobiframework.commons.core.utils.SntpClient;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,4 +32,16 @@ public class DateUtils {
         SimpleDateFormat fullDateFormat = new SimpleDateFormat("dd MMM");
         return sameDay ? simpleDateFormat.format(date) : fullDateFormat.format(date) + " " + simpleDateFormat.format(date);
     }
+
+    public static long getTimeDiffFromUtc(){
+        SntpClient sntpClient =  new SntpClient();
+        long diff=0;
+        if (sntpClient.requestTime("0.africa.pool.ntp.org", 30000)) {
+          long utcTime = sntpClient.getNtpTime() + SystemClock.elapsedRealtime() - sntpClient.getNtpTimeReference();
+          diff =  utcTime -System.currentTimeMillis();
+        }
+        return diff;
+    }
+
+
 }

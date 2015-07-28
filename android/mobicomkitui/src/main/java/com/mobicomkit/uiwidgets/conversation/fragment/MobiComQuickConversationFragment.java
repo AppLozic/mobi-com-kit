@@ -20,10 +20,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.api.conversation.MobiComConversationService;
 import com.applozic.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.applozic.mobicomkit.broadcast.BroadcastService;
+import com.applozic.mobicommons.commons.core.utils.DateUtils;
 import com.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.mobicomkit.uiwidgets.R;
 import com.mobicomkit.uiwidgets.conversation.ConversationListView;
@@ -75,7 +77,12 @@ public class MobiComQuickConversationFragment extends Fragment {
         conversationService = new MobiComConversationService(getActivity());
         conversationAdapter = new QuickConversationAdapter(getActivity(),
                 messageList, null);
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MobiComUserPreference.getInstance(getActivity()).setDeviceTimeOffset(DateUtils.getTimeDiffFromUtc());
+            }
+        }).start();
         setHasOptionsMenu(true);
 
     }

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.contact.AppContactService;
 import com.applozic.mobicomkit.contact.BaseContactService;
@@ -51,7 +52,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
     String mimeType = "";
     private BaseContactService contactService;
     private EmojiconHandler emojiconHandler;
-
+    private long deviceTimeOffset =0;
 
     static {
         messageTypeColorMap.put(Message.MessageType.INBOX.getValue(), R.color.message_type_inbox);
@@ -85,7 +86,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        deviceTimeOffset = MobiComUserPreference.getInstance(context).getDeviceTimeOffset();
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.mobicom_message_row_view, parent, false);
         TextView smTime = (TextView) customView.findViewById(R.id.smTime);
@@ -121,11 +122,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
             }
 
             //Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactReceiver.getContactId()));
-            if (contactReceiver != null && new Support(context).isSupportNumber(contactReceiver.getContactNumber()) && (!message.isTypeOutbox())) {
-                contactImage.setImageResource(R.drawable.ic_launcher);
-            } else {
-                contactImageLoader.loadImage(contactReceiver, contactImage, alphabeticTextView);
-            }
+
             if (alphabeticTextView != null && contactReceiver != null) {
                 String contactNumber = contactReceiver.getContactNumber().toUpperCase();
                 char firstLetter = contactReceiver.getDisplayName().toUpperCase().charAt(0);
@@ -138,6 +135,11 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 Character colorKey = AlphaNumberColorUtil.alphabetBackgroundColorMap.containsKey(firstLetter) ? firstLetter : null;
                 alphabeticTextView.setTextColor(context.getResources().getColor(AlphaNumberColorUtil.alphabetTextColorMap.get(colorKey)));
                 alphabeticTextView.setBackgroundResource(AlphaNumberColorUtil.alphabetBackgroundColorMap.get(colorKey));
+            }
+            if (contactReceiver != null && new Support(context).isSupportNumber(contactReceiver.getContactNumber()) && (!message.isTypeOutbox())) {
+                contactImage.setImageResource(R.drawable.ic_launcher);
+            } else {
+                contactImageLoader.loadImage(contactReceiver, contactImage, alphabeticTextView);
             }
             if (attachedFile != null) {
                 attachedFile.setText("");
@@ -184,7 +186,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 }
             }
             if (createdAtTime != null) {
-                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime()));
+                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime()- deviceTimeOffset ));
             }
         }
 

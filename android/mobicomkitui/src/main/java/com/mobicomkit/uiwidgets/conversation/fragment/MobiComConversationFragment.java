@@ -709,6 +709,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
 
         messageToSend.setRead(Boolean.TRUE);
         messageToSend.setStoreOnDevice(Boolean.TRUE);
+        messageToSend.setCreatedAtTime(System.currentTimeMillis() + userPreferences.getDeviceTimeOffset());
         messageToSend.setSendToDevice(Boolean.FALSE);
         messageToSend.setType(sendType.getSelectedItemId() == 1 ? Message.MessageType.MT_OUTBOX.getValue() : Message.MessageType.OUTBOX.getValue());
         messageToSend.setTimeToLive(getTimeToLive());
@@ -752,6 +753,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                 if (index != -1) {
                     Message messageListItem = messageList.get(index);
                     messageListItem.setKeyString(message.getKeyString());
+                    messageListItem.setCreatedAtTime(message.getSentMessageTimeAtServer());
                     messageListItem.setFileMetaKeyStrings(message.getFileMetaKeyStrings());
                     View view = listView.getChildAt(index - listView.getFirstVisiblePosition() + 1);
                     if (view != null) {
