@@ -40,7 +40,7 @@ public class MainActivity extends MobiComActivityForFragment
     public static final String MOBICOMKIT = "applozic.connect";
     public static final String USER_ID = "userId";
     public static final String TAKE_ORDER = "takeOrder";
-    public static final String TAKE_ORDER_USERID_METADATA = "com.mobicomkit.take.order.userId";
+    public static final String TAKE_ORDER_USERID_METADATA = "com.applozic.take.order.userId";
     public static final int DATABASE_VERSION = 1;
 
     /**
@@ -171,7 +171,7 @@ public class MainActivity extends MobiComActivityForFragment
         }
     }
 
-    public void restoreActionBar() {
+        public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);

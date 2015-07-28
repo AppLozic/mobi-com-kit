@@ -24,7 +24,7 @@ public class MobiComKitServer {
     //public static final String ERROR_BASE_URL = "http://onlinesmsutility.appspot.com";
     public static final String ERROR_BASE_URL = "https://osu-alpha.appspot.com";
     public static final String SUBMIT_ERROR_URL = ERROR_BASE_URL + "/rest/ws/error/submit";
-    public static String SUPPORT_PHONE_NUMBER_METADATA = "com.mobicomkit.support.phone.number";
+    public static String SUPPORT_PHONE_NUMBER_METADATA = "com.applozic.support.phone.number";
 //    public static String APPLICATION_KEY_HEADER_VALUE = "c";
 
 

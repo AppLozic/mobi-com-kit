@@ -10,7 +10,7 @@ import com.applozic.mobicommons.people.contact.Contact;
  */
 public class Support {
     public static final String SUPPORT_INTENT_KEY = "SUPPORT_INTENT_KEY";
-    private static final String SUPPORT_PHONE_NUMBER_METADATA = "com.mobicomkit.support.phone.number";
+    private static final String SUPPORT_PHONE_NUMBER_METADATA = "com.applozic.support.phone.number";
     private String SUPPORT_PHONE_NUMBER;
 
     public Support(Context context) {

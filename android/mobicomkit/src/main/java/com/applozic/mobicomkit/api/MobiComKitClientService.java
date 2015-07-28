@@ -22,9 +22,9 @@ public class MobiComKitClientService {
 
     protected Context context;
     protected UsernamePasswordCredentials credentials;
-    public static final String BASE_URL_METADATA = "com.mobicomkit.server.url";
+    public static final String BASE_URL_METADATA = "com.applozic.server.url";
     public static String APPLICATION_KEY_HEADER = "Application-Key";
-    public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "com.mobicomkit.application.id";
+    public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "com.applozic.application.id";
     public static final String FILE_URL = "/rest/ws/file/";
     public static final String DEFAULT_BASE_URl = "https://applozic.appspot.com";
 
