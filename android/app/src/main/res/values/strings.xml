@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AppLozic</string>
-    <string name="mobicomkit_label">AppLozic</string>
+    <string name="app_name">Applozic</string>
+    <string name="mobicomkit_label">Applozic</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Chat using Fragment </string>
@@ -19,7 +19,7 @@
     <string name="button_text">Test</string>
     <string name="title_activity_test">Test</string>
     <string name="hello_world">Hello world test!</string>
-    <string name="ecommerce">AppLozic</string>
+    <string name="ecommerce">Applozic</string>
     <string name="user_id">devashish.mamgain@gmail.com</string>
     <string name="ecommerce_button1_text">Gadgets</string>
     <string name="ecommerce_button2_text">Home</string>
