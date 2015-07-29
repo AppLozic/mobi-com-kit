@@ -46,7 +46,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.attachment.FileMeta;
@@ -145,6 +145,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         listView = (ConversationListView) list.findViewById(R.id.messageList);
         listView.setScrollToBottomOnSizeChange(Boolean.TRUE);
         listView.setDivider(null);
+        messageList = new ArrayList<Message>();
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -164,10 +165,6 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         listView.addHeaderView(spinnerLayout);
         sentIcon = getResources().getDrawable(R.drawable.ic_action_message_sent);
         deliveredIcon = getResources().getDrawable(R.drawable.ic_action_message_delivered);
-
-        if (contact != null) {
-            loadConversation(contact);
-        }
 
         listView.setLongClickable(true);
 
@@ -933,6 +930,8 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             if ( MobiComUserPreference.getInstance(getActivity()).getNewMessageFlag()){
                 loadnewMessageOnResume(contact, group);
                 MobiComUserPreference.getInstance(getActivity()).setNewMessageFlag(false);
+            } else if (messageList.isEmpty()) {
+                loadConversation(contact, group);
             }
         }
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

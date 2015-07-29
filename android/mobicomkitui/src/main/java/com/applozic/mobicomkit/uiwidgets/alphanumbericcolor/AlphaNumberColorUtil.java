@@ -1,6 +1,6 @@
 package com.applozic.mobicomkit.uiwidgets.alphanumbericcolor;
 
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 
 import java.util.HashMap;
 import java.util.Map;

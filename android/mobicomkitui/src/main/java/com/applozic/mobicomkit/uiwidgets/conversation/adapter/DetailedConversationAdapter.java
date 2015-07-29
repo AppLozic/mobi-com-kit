@@ -34,7 +34,7 @@ import com.applozic.mobicomkit.api.conversation.MobiComConversationService;
 import com.applozic.mobicomkit.api.conversation.database.MessageDatabaseService;
 import com.applozic.mobicomkit.contact.AppContactService;
 import com.applozic.mobicomkit.contact.BaseContactService;
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 import com.applozic.mobicomkit.uiwidgets.alphanumbericcolor.AlphaNumberColorUtil;
 import com.applozic.mobicomkit.uiwidgets.conversation.activity.FullScreenImageActivity;
 import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
@@ -79,7 +79,8 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
     private MessageDatabaseService messageDatabaseService;
     private BaseContactService contactService;
     private Contact senderContact;
-    private long deviceTimeOffset =0;
+    private long deviceTimeOffset = 0;
+
     static {
         messageTypeColorMap.put(Message.MessageType.INBOX.getValue(), R.color.message_type_inbox);
         messageTypeColorMap.put(Message.MessageType.OUTBOX.getValue(), R.color.message_type_outbox);
@@ -113,11 +114,11 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         this.messageDatabaseService = new MessageDatabaseService(context);
         this.conversationService = new MobiComConversationService(context);
         this.contactService = new AppContactService(context);
-        this.senderContact = contactService.getContactWithFallback(MobiComUserPreference.getInstance(context).getUserId());
+        this.senderContact = contactService.getContactById(MobiComUserPreference.getInstance(context).getUserId());
         contactImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
             @Override
             protected Bitmap processBitmap(Object data) {
-                return contactService.downloadContactImage((Activity) getContext(), (Contact) data );
+                return contactService.downloadContactImage((Activity) getContext(), (Contact) data);
             }
         };
         contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
@@ -248,11 +249,11 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
 
             if (message.isCall()) {
                 deliveryStatus.setText("");
-            } else if (message.getType().equals(Message.MessageType.MT_OUTBOX.getValue()) || message.getType().equals(Message.MessageType.MT_INBOX.getValue())) {
+            } /*else if (message.getType().equals(Message.MessageType.MT_OUTBOX.getValue()) || message.getType().equals(Message.MessageType.MT_INBOX.getValue())) {
                 deliveryStatus.setText("via MT");
             } else {
                 deliveryStatus.setText("via Carrier");
-            }
+            }*/
 
             if (message.isTypeOutbox()) {
                 loadContactImage(senderContact, contactImage, alphabeticTextView);
@@ -379,7 +380,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
             } else if (createdAtTime != null && message.isDummyEmptyMessage()) {
                 createdAtTime.setText("");
             } else if (createdAtTime != null) {
-                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime()-deviceTimeOffset));
+                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime() - deviceTimeOffset));
             }
             String mimeType = "";
             if (messageTextView != null) {

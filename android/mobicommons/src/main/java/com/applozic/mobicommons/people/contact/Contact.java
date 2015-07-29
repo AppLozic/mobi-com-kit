@@ -1,14 +1,12 @@
 package com.applozic.mobicommons.people.contact;
 
 import android.content.Context;
-import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
+import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +80,15 @@ public class Contact {
     public void processContactNumbers(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = telephonyManager.getSimCountryIso().toUpperCase();
+        if (TextUtils.isEmpty(getFormattedContactNumber())) {
+            setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(getContactNumber(), countryCode));
+        }
+    }
+
+/*  Todo: Will be used for device contacts
+    public void processContactNumbers(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCode = telephonyManager.getSimCountryIso().toUpperCase();
         phoneNumbers = ContactUtils.getPhoneNumbers(context, getContactId());
         if (TextUtils.isEmpty(getFormattedContactNumber()) && !TextUtils.isEmpty(getContactNumber())) {
             setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(getContactNumber(), countryCode));
@@ -126,7 +133,7 @@ public class Contact {
         }
 
         setFormattedContactNumber(ContactNumberUtils.getPhoneNumber(getContactNumber(), countryCode));
-    }
+    }*/
 
     public String getContactNumber() {
         return contactNumber;

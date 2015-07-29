@@ -10,7 +10,7 @@ import com.applozic.mobicomkit.api.MobiComKitConstants;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.api.notification.NotificationService;
 import com.applozic.mobicomkit.contact.AppContactService;
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicommons.json.GsonUtils;
 import com.applozic.mobicommons.people.contact.Contact;
@@ -33,7 +33,7 @@ public class MTNotificationBroadcastReceiver extends BroadcastReceiver {
             final NotificationService notificationService =
                     new NotificationService(R.drawable.ic_launcher, context, R.string.wearable_action_label, R.string.wearable_action_title, R.drawable.mobicom_ic_action_send);
 
-            final Contact contact = new AppContactService(context).getContactWithFallback(message.getContactIds());
+            final Contact contact = new AppContactService(context).getContactById(message.getContactIds());
             new Thread(new Runnable() {
                 @Override
                 public void run() {

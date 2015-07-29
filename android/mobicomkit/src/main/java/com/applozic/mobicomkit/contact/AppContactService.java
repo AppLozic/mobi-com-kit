@@ -59,15 +59,11 @@ public class AppContactService implements BaseContactService {
 
     @Override
     public Contact getContactById(String contactId) {
-        return contactDatabase.getContactById(contactId);
-    }
-
-    public Contact getContactWithFallback(String contactId) {
-        Contact contact = getContactById(contactId);
-        if (contact == null) {
-            //Todo: fix it,
-            // contact = new Contact(context, contactId);
-            contact = ContactUtils.getContact(context, contactId);
+        Contact contact = contactDatabase.getContactById(contactId);
+        if (contact != null) {
+            contact.processContactNumbers(context);
+        } else {
+            contact = new Contact(context, contactId);
         }
         return contact;
     }
@@ -139,12 +135,17 @@ public class AppContactService implements BaseContactService {
 
     public Contact getContactReceiver(List<String> items, List<String> userIds) {
         if (userIds != null && !userIds.isEmpty()) {
-            return getContactWithFallback(userIds.get(0));
+            return getContactById(userIds.get(0));
         } else if (items != null && !items.isEmpty()) {
-            return getContactWithFallback(items.get(0));
+            return getContactById(items.get(0));
         }
 
         return null;
+    }
+
+    @Override
+    public boolean isContactExists(String contactId) {
+        return contactDatabase.getContactById(contactId) != null;
     }
 
 }

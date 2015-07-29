@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.contact.AppContactService;
 import com.applozic.mobicomkit.contact.BaseContactService;
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicommons.commons.image.ImageLoader;
 import com.applozic.mobicommons.commons.image.ImageUtils;

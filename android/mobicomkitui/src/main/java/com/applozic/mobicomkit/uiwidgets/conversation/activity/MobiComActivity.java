@@ -41,7 +41,7 @@ import com.applozic.mobicommons.json.GsonUtils;
 import com.applozic.mobicommons.people.contact.Contact;
 import com.applozic.mobicommons.people.group.Group;
 import com.applozic.mobicommons.people.group.GroupUtils;
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 
 import java.util.ArrayList;
 
@@ -320,12 +320,7 @@ abstract public class MobiComActivity extends ActionBarActivity implements Actio
 
         String userId = intent.getStringExtra("userId");
         if (!TextUtils.isEmpty(userId)) {
-            contact = new AppContactService(this).getContactById(userId);
-            if (contact != null) {
-                contact.processContactNumbers(this);
-            } else {
-                contact = new Contact(this, userId);
-            }
+            contact = baseContactService.getContactById(userId);
         }
 
         String messageJson = intent.getStringExtra(MobiComKitConstants.MESSAGE_JSON_INTENT);

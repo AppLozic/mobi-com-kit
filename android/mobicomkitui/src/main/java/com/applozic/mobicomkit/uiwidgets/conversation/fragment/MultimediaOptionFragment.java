@@ -11,7 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
 import com.applozic.mobicomkit.api.attachment.FileClientService;
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 
 import com.applozic.mobicommons.file.FileUtils;
 

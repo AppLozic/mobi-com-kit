@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.mobicomkit.uiwidgets.R;
+import com.applozic.mobicomkit.uiwidgets.R;
 
 import java.util.Calendar;
 

@@ -25,7 +25,7 @@ import com.applozic.mobicommons.json.GsonUtils;
  */
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
-    public static String LAUNCH_APP = "mobicom.LAUNCH_APP";
+    public static String LAUNCH_APP = "applozic.LAUNCH_APP";
     public static String TAG = "NotificationBroadcastReceiver";
 
     @Override

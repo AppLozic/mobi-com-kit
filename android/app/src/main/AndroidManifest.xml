@@ -130,7 +130,7 @@
 
         <receiver android:name="com.applozic.mobicomkit.broadcast.NotificationBroadcastReceiver">
             <intent-filter>
-                <action android:name="mobicom.LAUNCH_APP" />
+                <action android:name="applozic.LAUNCH_APP" />
             </intent-filter>
             <meta-data
                 android:name="activity.open.on.notification"
