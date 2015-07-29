@@ -577,7 +577,8 @@
 }
 
 .mck-sidebox .mck-contact-list {
-    margin-bottom: 15px;
+    margin: 0 !important;
+    margin-bottom: 15px !important;
     background-color: white;
     border-bottom: none;
 }
