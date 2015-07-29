@@ -106,6 +106,17 @@
     color: #333;
     width: 310px;
 }
+
+.mck-sidebox a.mck-msg-run{
+    text-decoration: none !important;
+    color: darkgray !important;
+}
+.mck-sidebox a.mck-msg-runn{
+    text-decoration: underline !important;
+    color: #168eea !important;
+}
+
+
 #mck-sidebox div, #mck-conversation-title {
     font-family:Heslvetica Neue,Helvetica,Arial,sans-serif !important;
 }
