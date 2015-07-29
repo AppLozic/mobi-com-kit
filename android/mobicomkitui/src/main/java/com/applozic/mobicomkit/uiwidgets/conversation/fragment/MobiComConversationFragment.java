@@ -527,7 +527,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         }
         emoticonsFrameLayout.setVisibility(View.GONE);
 
-        InstructionUtil.showInstruction(getActivity(), R.string.instruction_go_back_to_recent_conversation_list, MobiComActivity.INSTRUCTION_DELAY, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
+        InstructionUtil.showInstruction(getActivity(), R.string.instruction_go_back_to_recent_conversation_list, MobiComKitActivityInterface.INSTRUCTION_DELAY, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
     }
 
     public boolean isBroadcastedToGroup(Long groupId) {
@@ -870,7 +870,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                     navSpinner.add(new SpinnerNavItem(contact, phoneNumber, contact.getPhoneNumbers().get(phoneNumber), R.drawable.ic_action_email));
                 }
             }
-            // title drop down adapter
+       // title drop down adapter
             MobiComActivity activity = ((MobiComActivity) getActivity());
             TitleNavigationAdapter adapter = new TitleNavigationAdapter(getActivity().getApplicationContext(), navSpinner);
             activity.setNavSpinner(navSpinner);
@@ -927,7 +927,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
             if (downloadConversation != null) {
                 downloadConversation.cancel(true);
             }
-            if ( MobiComUserPreference.getInstance(getActivity()).getNewMessageFlag()){
+            if (MobiComUserPreference.getInstance(getActivity()).getNewMessageFlag()) {
                 loadnewMessageOnResume(contact, group);
                 MobiComUserPreference.getInstance(getActivity()).setNewMessageFlag(false);
             } else if (messageList.isEmpty()) {
@@ -1005,9 +1005,9 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         @Override
         protected Long doInBackground(Void... voids) {
             if (initial) {
-                Long lastConversationloadTime = messageList.isEmpty() ? 1L: messageList.get(messageList.size()-1).getCreatedAtTime();
+                Long lastConversationloadTime = messageList.isEmpty() ? 1L : messageList.get(messageList.size() - 1).getCreatedAtTime();
                 Log.i(TAG, " loading conversation with  lastConversationloadTime " + lastConversationloadTime);
-                nextSmsList = conversationService.getMessages(lastConversationloadTime+1L , null, contact, group);
+                nextSmsList = conversationService.getMessages(lastConversationloadTime + 1L, null, contact, group);
             } else if (firstVisibleItem == 1 && loadMore && !messageList.isEmpty()) {
                 loadMore = false;
                 Long endTime = messageList.get(0).getCreatedAtTime();

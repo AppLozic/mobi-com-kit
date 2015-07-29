@@ -249,7 +249,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
 
             if (message.isCall()) {
                 deliveryStatus.setText("");
-            } /*else if (message.getType().equals(Message.MessageType.MT_OUTBOX.getValue()) || message.getType().equals(Message.MessageType.MT_INBOX.getValue())) {
+            }/* else if (message.getType().equals(Message.MessageType.MT_OUTBOX.getValue()) || message.getType().equals(Message.MessageType.MT_INBOX.getValue())) {
                 deliveryStatus.setText("via MT");
             } else {
                 deliveryStatus.setText("via Carrier");

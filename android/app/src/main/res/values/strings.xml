@@ -39,7 +39,7 @@
     <string name="default_server_url">https://applozic.appspot.com</string>
     <string name="default_meadia_location_folder">/Applozic</string>
     <string name="order_sample_button">Order taking sample</string>
-    <string name="take_order_userid">AppLozicShop</string>
+    <string name="take_order_userid">ApplozicShop</string>
 
     <!-- support or admin  contact information ...please add details here  -->
     <string name="support_contact_display_name">AppLozic Support</string>

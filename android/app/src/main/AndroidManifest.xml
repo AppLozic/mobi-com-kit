@@ -45,33 +45,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.applozic.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/MobiComAppBaseTheme">
-
-            <!-- Parent activity meta-data to support API level 7+ -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SENDTO" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.applozic.mobicomkit.uiwidgets.people.activity.MobiComKitPeopleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/activity_contacts_list"
@@ -137,7 +110,7 @@
                 android:value="com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity" />
         </receiver>
 
-        <receiver android:name="com.applozic.mobicomkit.broadcast.TimeChangeBroadcastReceiver" >
+        <receiver android:name="com.applozic.mobicomkit.broadcast.TimeChangeBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />

@@ -26,7 +26,6 @@ import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActiv
 import com.applozic.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.applozic.mobicomkit.uiwidgets.conversation.UIService;
 import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
-import com.applozic.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
 import com.applozic.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
 
 import com.applozic.mobicommons.commons.core.utils.Utils;
@@ -111,11 +110,6 @@ public class MainActivity extends MobiComActivityForFragment
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
 
-        /*if (position == 1) {
-            Intent intent = new Intent(this, SlidingPaneActivity.class);
-            startActivity(intent);
-            return;
-        }*/
         if (position == 1) {
             Intent intent = new Intent(this, ConversationActivity.class);
             startActivity(intent);
@@ -164,12 +158,6 @@ public class MainActivity extends MobiComActivityForFragment
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
-    }
-
-    public void startChat(View v) {
-        Intent chatIntent = new Intent(this, SlidingPaneActivity.class);
-        chatIntent.putExtra(USER_ID, MOBICOMKIT);
-        startActivity(chatIntent);
     }
 
     public void takeOrder(View v) {

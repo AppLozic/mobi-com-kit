@@ -32,14 +32,12 @@ import com.applozic.mobicomkit.uiwidgets.MobiComKitApplication;
 import com.applozic.mobicomkit.uiwidgets.R;
 import com.applozic.mobicomkit.uiwidgets.conversation.ConversationListView;
 import com.applozic.mobicomkit.uiwidgets.conversation.ConversationUIService;
-import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComActivity;
 import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComKitActivityInterface;
 import com.applozic.mobicomkit.uiwidgets.conversation.adapter.QuickConversationAdapter;
 import com.applozic.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.people.contact.Contact;
-import com.applozic.mobicommons.people.contact.ContactUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -431,7 +429,7 @@ public class MobiComQuickConversationFragment extends Fragment {
             loadMore = !nextMessageList.isEmpty();
 
             if (context != null && showInstruction) {
-                InstructionUtil.showInstruction(context, R.string.instruction_open_conversation_thread, MobiComActivity.INSTRUCTION_DELAY, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
+                InstructionUtil.showInstruction(context, R.string.instruction_open_conversation_thread, MobiComKitActivityInterface.INSTRUCTION_DELAY, BroadcastService.INTENT_ACTIONS.INSTRUCTION.toString());
             }
         }
     }
