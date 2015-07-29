@@ -22,6 +22,26 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="0dp"
+        android:text="@string/mobicomkit_label"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/mobicomkitdemo"
+        android:textColor="#FFFFFF"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="fill_parent"
@@ -36,23 +56,7 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="0dp"
-                android:text="@string/mobicomkit_label"
-                android:textSize="24sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:text="@string/mobicomkitdemo"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <EditText
                 android:id="@+id/userId"
@@ -63,7 +67,9 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLines="1"
+                android:background="#FFF"
                 android:padding="10dip"
+                android:layout_margin="10dip"
                 android:password="false"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
@@ -77,7 +83,9 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
+                android:background="#FFF"
                 android:padding="10dip"
+                android:layout_margin="10dip"
                 android:password="false"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
@@ -91,7 +99,9 @@
                 android:imeOptions="actionNext"
                 android:inputType="phone|number"
                 android:maxLines="1"
+                android:background="#FFF"
                 android:padding="10dip"
+                android:layout_margin="10dip"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
 
@@ -106,7 +116,9 @@
                 android:imeOptions="actionUnspecified|actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:background="#FFF"
                 android:padding="10dip"
+                android:layout_margin="10dip"
                 android:phoneNumber="false"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
@@ -122,8 +134,11 @@
         android:configChanges="orientation"
         android:imeOptions="flagNoExtractUi"
         android:padding="20dip"
+        android:layout_margin="10dip"
+        android:layout_marginTop="10dip"
         android:text="@string/action_sign_in"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:textSize="20sp"/>
 
 
 </LinearLayout>
