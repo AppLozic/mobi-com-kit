@@ -111,7 +111,7 @@
     text-decoration: none !important;
     color: darkgray !important;
 }
-.mck-sidebox a.mck-msg-runn{
+.mck-sidebox a.mck-msg-run .mck-msg-runn{
     text-decoration: underline !important;
     color: #168eea !important;
 }
