@@ -1,8 +1,20 @@
 <html>
 
     <head>
-          <script type="text/javascript" src="https://applozic.appspot.com/sidebox.app?appId=applozic-sample-app&userId=customer-1&desktopNotification=true"></script>
 
+        <script type="text/javascript">(function (d, n) {
+                var s, h;
+                s = document.createElement("script");
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://applozic.appspot.com/sidebox.app";
+                h = document.getElementsByTagName('head')[0];
+                h.appendChild(s);
+                window.applozic = n;
+                n.init = function (t) {
+                    n._globals = t;
+                }
+            })(document, window.applozic || {});</script>
     </head>
     <body>
         <div>
@@ -21,5 +33,9 @@
 
         </div>
 
+        <script type="text/javascript">
+            window.applozic.init({userId: 'customer1', appId: 'applozic-sample-app', desktopNotification: true});
+        </script>
     </body>
 </html>
+
