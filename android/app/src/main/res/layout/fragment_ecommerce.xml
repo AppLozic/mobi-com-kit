@@ -183,10 +183,12 @@
 
         <Button
             android:id="@+id/button_order"
-            android:layout_width="188dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/holo_blue"
             android:onClick="takeOrder"
             android:text="@string/order_sample_button"
