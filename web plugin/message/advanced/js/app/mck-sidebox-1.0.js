@@ -270,7 +270,7 @@ function MobiComKit() {
         var $modal_footer_content = $applozic(".mck-box-ft .modal-form");
         var $mck_sidebox_search = $applozic("#mck-sidebox-search");
         var $mck_add_new = $applozic(".mck-add-new");
-        var $mck_search = $applozic("#mck-search");
+		var $mck_search = $applozic("#mck-search");
 		
 		var $mck_message_delete = $applozic(".mck-message-delete");
 
@@ -697,10 +697,10 @@ function MobiComKit() {
         var $mck_text_box = $applozic("#mck-text-box");
         var $modal_footer_content = $applozic(".modal-footer .modal-form");
         var $mck_sidebox_search = $applozic("#mck-sidebox-search");
-        var $mck_add_new = $applozic(".mck-add-new");
+		var $mck_add_new = $applozic(".mck-add-new");
         ;
 
-        var markup = '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}"  data-msgtime="${msgCreatedAtTime}" data-msgcontent="${replyIdExpr}" data-msgkeystring="${msgKeyExpr}" data-contact="${contactIdsExpr}" class="row-fluid mck-m-b ${msgKeyExpr}"><div class="clear"><div class="blk-lg-12"><button type="button"  class="mck-message-delete hide">detele</button><div class="${msgFloatExpr} mck-msg-box ${msgClassExpr}">' +
+        var markup = '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}"  data-msgtime="${msgCreatedAtTime}" data-msgcontent="${replyIdExpr}" data-msgkeystring="${msgKeyExpr}" data-contact="${contactIdsExpr}" class="row-fluid mck-m-b ${msgKeyExpr}"><div class="clear"><div class="blk-lg-12"><button type="button"  class="mck-message-delete n-vis">detele</button><div class="${msgFloatExpr} mck-msg-box ${msgClassExpr}">' +
                 '<div class="mck-msg-text mck-msg-content"></div>' +
                 '<div class="mck-file-text mck-msg-text notranslate blk-lg-12 attachment n-vis" data-filemetakeystring="${fileMetaKeyExpr}" data-filename="${fileNameExpr}" data-filesize="${fileSizeExpr}">{{html fileExpr}}</div>' +
                 '</div></div>' +
@@ -742,7 +742,7 @@ function MobiComKit() {
 
             $mck_sidebox_search.removeClass('vis').addClass('n-vis');
             $mck_sidebox_content.removeClass('n-vis').addClass('vis');
-            $mck_loading.removeClass('vis').addClass('n-vis');
+			$mck_loading.removeClass('n-vis').addClass('vis');
             mckMessageService.loadMessageList(userId);
             mckMessageLayout.openConversation();
         };
