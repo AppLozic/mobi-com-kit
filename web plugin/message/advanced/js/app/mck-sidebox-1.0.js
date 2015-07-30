@@ -272,13 +272,13 @@ function MobiComKit() {
         var $mck_add_new = $applozic(".mck-add-new");
         var $mck_search = $applozic("#mck-search");
 		
-		var $mck_single_delete = $applozic(".single-delete");
+		var $mck_message_delete = $applozic(".mck-message-delete");
 
-        $(document).on("click", ".single-delete", function () {
-            mckMessageService.deleteSms($(this).parents('.mck-m-b').data("msgkeystring"));
+        $(document).on("click", ".mck-message-delete", function () {
+            mckMessageService.deleteMessage($(this).parents('.mck-m-b').data("msgkeystring"));
         });
 
-        _this.deleteSms = function deleteSms(msgkeystring) {
+        _this.deleteMessage = function deleteMessage(msgkeystring) {
                $.ajax({
                 url: MCK_BASE_URL +"/rest/ws/mobicomkit/v1/message/delete?key=" + msgkeystring,
                 type: 'get',
@@ -700,7 +700,7 @@ function MobiComKit() {
         var $mck_add_new = $applozic(".mck-add-new");
         ;
 
-        var markup = '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}"  data-msgtime="${msgCreatedAtTime}" data-msgcontent="${replyIdExpr}" data-msgkeystring="${msgKeyExpr}" data-contact="${contactIdsExpr}" class="row-fluid mck-m-b ${msgKeyExpr}"><div class="clear"><div class="blk-lg-12"><button type="button" id="single-delete" class="single-delete hide">detele</button><div class="${msgFloatExpr} mck-msg-box ${msgClassExpr}">' +
+        var markup = '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}"  data-msgtime="${msgCreatedAtTime}" data-msgcontent="${replyIdExpr}" data-msgkeystring="${msgKeyExpr}" data-contact="${contactIdsExpr}" class="row-fluid mck-m-b ${msgKeyExpr}"><div class="clear"><div class="blk-lg-12"><button type="button"  class="mck-message-delete hide">detele</button><div class="${msgFloatExpr} mck-msg-box ${msgClassExpr}">' +
                 '<div class="mck-msg-text mck-msg-content"></div>' +
                 '<div class="mck-file-text mck-msg-text notranslate blk-lg-12 attachment n-vis" data-filemetakeystring="${fileMetaKeyExpr}" data-filename="${fileNameExpr}" data-filesize="${fileSizeExpr}">{{html fileExpr}}</div>' +
                 '</div></div>' +
