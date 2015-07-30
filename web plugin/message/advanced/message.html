@@ -101,9 +101,9 @@
                                             <input type="file" name="files[]">
                                         </label>
                                     </div>
-									<div class="mck-form-group mck-running-on ">
-                               <a href="http://www.applozic.com" target="_blank" class="mck-msg-run">Running on <span class="mck-msg-runn">Applozic</span></a>
-                           </div>
+                                    <div class="mck-form-group mck-running-on n-vis">
+                                        <a href="http://www.applozic.com" target="_blank" class="mck-msg-run">Running on<span class="mck-msg-runn">Applozic</span></a>
+                                    </div>
                                 </form>
                             </div>
                             <div class="mck-add-new">
@@ -111,11 +111,11 @@
                                     <span>New Message</span>
                                 </button>
                             </div>
-                            
-						   
+
+
                         </div>
-						
-						
+
+
                     </div>
                     <div id="mck-sidebox-search" class="mck-sidebox-content n-vis">
                         <div class="mck-box-top">
@@ -167,7 +167,7 @@
                 var mckSupportId = "applozic";
 
                 this.load = function () {
-                    $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
+                    $applozic.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
                         readConversation: readMessage, contactDisplayName: displayName,
                         desktopNotification: true
                     });
