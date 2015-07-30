@@ -700,7 +700,7 @@ function MobiComKit() {
         var $mck_add_new = $applozic(".mck-add-new");
         ;
 
-        var markup = '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}"  data-msgtime="${msgCreatedAtTime}" data-msgcontent="${replyIdExpr}" data-msgkeystring="${msgKeyExpr}" data-contact="${contactIdsExpr}" class="row-fluid mck-m-b ${msgKeyExpr}"><div class="clear"><div class="blk-lg-12"><button type="button" id="single-delete" class="single-delete">detele</button><div class="${msgFloatExpr} mck-msg-box ${msgClassExpr}">' +
+        var markup = '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}"  data-msgtime="${msgCreatedAtTime}" data-msgcontent="${replyIdExpr}" data-msgkeystring="${msgKeyExpr}" data-contact="${contactIdsExpr}" class="row-fluid mck-m-b ${msgKeyExpr}"><div class="clear"><div class="blk-lg-12"><button type="button" id="single-delete" class="single-delete hide">detele</button><div class="${msgFloatExpr} mck-msg-box ${msgClassExpr}">' +
                 '<div class="mck-msg-text mck-msg-content"></div>' +
                 '<div class="mck-file-text mck-msg-text notranslate blk-lg-12 attachment n-vis" data-filemetakeystring="${fileMetaKeyExpr}" data-filename="${fileNameExpr}" data-filesize="${fileSizeExpr}">{{html fileExpr}}</div>' +
                 '</div></div>' +
