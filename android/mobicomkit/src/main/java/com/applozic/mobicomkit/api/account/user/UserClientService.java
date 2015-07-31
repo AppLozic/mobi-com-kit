@@ -6,6 +6,7 @@ import android.util.Log;
 //import com.applozic.mobicomkit.api.HttpRequestUtils;
 import com.applozic.mobicomkit.api.HttpRequestUtils;
 import com.applozic.mobicomkit.api.MobiComKitClientService;
+import com.applozic.mobicomkit.database.MobiComDatabaseHelper;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -54,6 +55,10 @@ public class UserClientService extends MobiComKitClientService {
 
     public  String getTimezoneUpdataeUrl() { return getBaseUrl() + TIMEZONE_UPDATAE_URL; }
 
+    public void logout() {
+        MobiComUserPreference.getInstance(context).clearAll();
+        MobiComDatabaseHelper.getInstance(context).delDatabase();
+    }
 
     public String updateTimezone(String osuUserKeyString) {
         //Note: This can be used if user decides to change the timezone

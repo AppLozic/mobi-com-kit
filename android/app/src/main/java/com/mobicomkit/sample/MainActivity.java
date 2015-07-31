@@ -19,15 +19,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
+import com.applozic.mobicomkit.api.account.user.UserClientService;
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.contact.AppContactService;
-import com.applozic.mobicomkit.database.MobiComDatabaseHelper;
-import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 import com.applozic.mobicomkit.uiwidgets.conversation.ConversationUIService;
 import com.applozic.mobicomkit.uiwidgets.conversation.UIService;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
 import com.applozic.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
-
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.people.contact.Contact;
 
@@ -137,21 +136,13 @@ public class MainActivity extends MobiComActivityForFragment
 
             Toast.makeText(getBaseContext(), "Log out successful", Toast.LENGTH_SHORT).show();
 
-            MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
+            new UserClientService(this).logout();
 
-            MobiComDatabaseHelper databaseHelper = MobiComDatabaseHelper.getInstance(this);
-
-            databaseHelper.delDatabase();
-
-            boolean flag = userPreference.clearAll();
-
-            if (flag) {
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                finish();
-                return;
-            }
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+            return;
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -181,7 +172,7 @@ public class MainActivity extends MobiComActivityForFragment
         }
     }
 
-        public void restoreActionBar() {
+    public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);

@@ -191,7 +191,7 @@ public class LoginActivity extends Activity {
                     mAuthTask = null;
                     showProgress(false);
 
-                    //Start GCM registartion....
+                    //Start GCM registration....
                     GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
                     gcmRegistrationUtils.setUpGcmNotification();
 
