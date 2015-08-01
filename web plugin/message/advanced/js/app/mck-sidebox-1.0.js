@@ -557,6 +557,9 @@ function MobiComKit() {
                     displayName = userId;
                 }
                 $mck_conversation_title.html('<div class="mck-tab-link blk-lg-4"><a href="#" role="link" class="mck-conversation-tab-link"><img src="' + MCK_BASE_URL + '/resources/sidebox/images/ic_action_backward.png" alt="Back"></a></div>&nbsp ' + displayName);
+                if (MCK_MODE == 'support') {
+                    $applozic('.mck-tab-link').removeClass('vis').addClass('n-vis');
+                }
             } else {
                 userId = "";
                 individual = false;
