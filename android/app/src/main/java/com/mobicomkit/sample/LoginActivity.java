@@ -15,8 +15,10 @@ import android.os.Build.VERSION;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +35,12 @@ import android.os.Handler;
 import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
 import com.applozic.mobicomkit.api.account.user.User;
 import com.applozic.mobicomkit.api.account.user.UserLoginTask;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.mobicomkit.sample.pushnotification.GCMRegistrationUtils;
 
 import com.applozic.mobicommons.commons.core.utils.Utils;
@@ -63,10 +71,15 @@ public class LoginActivity extends Activity {
     private View mProgressView;
     private View mLoginFormView;
     private Button mEmailSignInButton;
+    CallbackManager callbackManager;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(this);
+
         setContentView(R.layout.activity_login);
         setupUI(findViewById(R.id.layout));
 
@@ -100,6 +113,30 @@ public class LoginActivity extends Activity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
+        callbackManager = CallbackManager.Factory.create();
+        final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+
+        loginButton.setReadPermissions("user_friends");
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                mUserIdView.setText(loginResult.getAccessToken().getUserId());
+                mPasswordView.setText(loginResult.getAccessToken().getToken());
+                attemptLogin();
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+            }
+        });
     }
 
     public void setupUI(View view) {
@@ -165,9 +202,9 @@ public class LoginActivity extends Activity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            /*mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
-            cancel = true;
+            cancel = true;*/
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
@@ -335,6 +372,12 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(List<String> emailAddressCollection) {
             addEmailsToAutoComplete(emailAddressCollection);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
