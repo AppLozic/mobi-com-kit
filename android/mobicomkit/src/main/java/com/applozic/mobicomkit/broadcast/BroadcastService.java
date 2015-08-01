@@ -92,7 +92,7 @@ public class BroadcastService {
         Log.i(TAG, "Sending notification broadcast....");
         Intent notificationIntent = new Intent();
         notificationIntent.putExtra(MobiComKitConstants.MESSAGE_JSON_INTENT, GsonUtils.getJsonFromObject(message, Message.class));
-        notificationIntent.setAction("com.mobicomkit.notification");
+        notificationIntent.setAction("com.applozic.mobicomkit.notification");
         context.sendBroadcast(notificationIntent);
     }
 

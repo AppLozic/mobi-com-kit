@@ -97,7 +97,7 @@
 
         <receiver android:name="com.applozic.mobicomkit.uiwidgets.notification.MTNotificationBroadcastReceiver">
             <intent-filter>
-                <action android:name="com.mobicomkit.notification" />
+                <action android:name="com.applozic.mobicomkit.notification" />
             </intent-filter>
         </receiver>
 
