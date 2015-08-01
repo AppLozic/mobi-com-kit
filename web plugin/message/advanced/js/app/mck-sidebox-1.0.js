@@ -1,6 +1,5 @@
 var $applozic = jQuery.noConflict(true);
 var appModal = $applozic.fn.modal.noConflict();
-$.fn.modal = appModal;
 $applozic.fn.modal = appModal;
 (function ($applozic) {
 
@@ -19,6 +18,10 @@ $applozic.fn.modal = appModal;
             $ = options.ojq;
             jQuery = options.ojq;
 
+        } else {
+            $ = $applozic;
+            jQuery = $applozic;
+            $.fn.modal = appModal;
         }
         options = $applozic.extend({}, default_options.defaults, options);
         mobiComKit.init(options);
@@ -287,7 +290,7 @@ function MobiComKit() {
         var $mck_sidebox_search = $applozic("#mck-sidebox-search");
         var $mck_add_new = $applozic(".mck-add-new");
         var $mck_search = $applozic("#mck-search");
-        $(document).on("click", ".mck-message-delete", function () {
+        $applozic(document).on("click", ".mck-message-delete", function () {
             mckMessageService.deleteMessage($(this).parents('.mck-m-b').data("msgkeystring"));
         });
 
@@ -557,7 +560,7 @@ function MobiComKit() {
                     displayName = userId;
                 }
                 $mck_conversation_title.html('<div class="mck-tab-link blk-lg-4"><a href="#" role="link" class="mck-conversation-tab-link"><img src="' + MCK_BASE_URL + '/resources/sidebox/images/ic_action_backward.png" alt="Back"></a></div>&nbsp ' + displayName);
-                if (MCK_MODE == 'support') {
+                if (MCK_MODE === 'support') {
                     $applozic('.mck-tab-link').removeClass('vis').addClass('n-vis');
                 }
             } else {
