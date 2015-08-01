@@ -94,7 +94,7 @@ public class LoginActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(User.AuthenticationType.APPLOZIC);
                     return true;
                 }
                 return false;
@@ -107,7 +107,7 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
 
                 Utils.toggleSoftKeyBoard(LoginActivity.this, true);
-                attemptLogin();
+                attemptLogin(User.AuthenticationType.APPLOZIC);
             }
         });
 
@@ -126,7 +126,7 @@ public class LoginActivity extends Activity {
             public void onSuccess(LoginResult loginResult) {
                 mUserIdView.setText(loginResult.getAccessToken().getUserId());
                 mPasswordView.setText(loginResult.getAccessToken().getToken());
-                attemptLogin();
+                attemptLogin(User.AuthenticationType.FACEBOOK);
             }
 
             @Override
@@ -175,7 +175,7 @@ public class LoginActivity extends Activity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
+    public void attemptLogin(User.AuthenticationType authenticationType) {
         if (mAuthTask != null) {
             return;
         }
@@ -262,6 +262,7 @@ public class LoginActivity extends Activity {
             user.setEmailId(email);
             user.setPassword(password);
             user.setContactNumber(phoneNumber);
+            user.setAuthenticationTypeId(authenticationType.getValue());
 
             mAuthTask = new UserLoginTask(user, listener, this);
             mEmailSignInButton.setVisibility(View.INVISIBLE);
