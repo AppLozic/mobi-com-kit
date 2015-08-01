@@ -1437,13 +1437,13 @@ function MobiComKit() {
                 $mck_preview_icon.html(imgsrctag);
                 $mck_msg_preview.data('mck-id', contact.contactId);
                 $mck_sidebox_launcher.addClass('mck-sidebox-launcher-with-preview');
-
+                $mck_msg_preview.show();
+                setTimeout(function () {
+                    $mck_msg_preview.fadeOut(3000);
+                    $mck_sidebox_launcher.removeClass('mck-sidebox-launcher-with-preview');
+                }, 10000);
             }
-            $mck_msg_preview.show();
-            setTimeout(function () {
-                $mck_msg_preview.fadeOut(3000);
-                $mck_sidebox_launcher.removeClass('mck-sidebox-launcher-with-preview');
-            }, 10000);
+ 
         };
 
         _this.showNotification = function showNotification(notification) {
