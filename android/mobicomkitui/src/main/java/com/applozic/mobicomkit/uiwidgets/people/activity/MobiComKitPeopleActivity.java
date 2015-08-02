@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.applozic.mobicomkit.uiwidgets.R;
 
+import com.applozic.mobicomkit.uiwidgets.contacts.fragment.AppContactFragment;
 import com.applozic.mobicommons.people.OnContactsInteractionListener;
 import com.applozic.mobicommons.people.contact.Contact;
 import com.applozic.mobicommons.people.contact.ContactUtils;
@@ -36,7 +37,7 @@ public class MobiComKitPeopleActivity extends ActionBarActivity implements OnCon
     public static final String FORWARD_MESSAGE = "forwardMessage";
     protected SearchView searchView;
     protected String searchTerm;
-    ContactsListFragment mContactsListFragment;
+    AppContactFragment mContactsListFragment;
     private boolean isSearchResultView = false;
 
     @Override
@@ -51,7 +52,7 @@ public class MobiComKitPeopleActivity extends ActionBarActivity implements OnCon
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(R.string.activity_contacts_title);
 
-        mContactsListFragment = (ContactsListFragment)
+        mContactsListFragment = (AppContactFragment)
                 getSupportFragmentManager().findFragmentById(R.id.contact_list);
 
         // This flag notes that the Activity is doing a search, and so the result will be
@@ -125,7 +126,9 @@ public class MobiComKitPeopleActivity extends ActionBarActivity implements OnCon
 
     @Override
     public void onCustomContactSelected(Contact contact) {
-
+        Intent intent = new Intent();
+        intent.putExtra("userId", contact.getUserId());
+        finishActivity(intent);
     }
 
     public void finishActivity(Intent intent) {
