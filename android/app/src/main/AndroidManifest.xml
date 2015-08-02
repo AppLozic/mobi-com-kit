@@ -97,7 +97,7 @@
 
         <receiver android:name="com.applozic.mobicomkit.uiwidgets.notification.MTNotificationBroadcastReceiver">
             <intent-filter>
-                <action android:name="com.mobicomkit.notification" />
+                <action android:name="com.applozic.mobicomkit.notification" />
             </intent-filter>
         </receiver>
 
@@ -131,6 +131,15 @@
         <meta-data
             android:name="com.applozic.take.order.userId"
             android:value="@string/take_order_userid" />
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
 
     </application>
 
