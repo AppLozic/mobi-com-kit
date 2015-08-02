@@ -171,6 +171,7 @@ public class ConversationActivity extends ActionBarActivity implements MessageCo
     @Override
     public void addFragment(ConversationFragment conversationFragment) {
         addFragment(this, conversationFragment, "ConversationFragment");
+        conversation = conversationFragment;
     }
 
     @Override
