@@ -30,6 +30,9 @@ import com.applozic.mobicomkit.uiwidgets.conversation.fragment.ConversationFragm
 import com.applozic.mobicommons.commons.core.utils.Utils;
 import com.applozic.mobicommons.people.contact.Contact;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends MobiComActivityForFragment
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, EcommerceFragment.OnFragmentInteractionListener {
@@ -92,7 +95,13 @@ public class MainActivity extends MobiComActivityForFragment
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        //Put Support Contact Data
         buildSupportContactData();
+
+        //Contact data for demo...
+        buildContactData();
+
         MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
         if (!userPreference.isRegistered()) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -104,6 +113,7 @@ public class MainActivity extends MobiComActivityForFragment
         }
 
     }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -199,7 +209,7 @@ public class MainActivity extends MobiComActivityForFragment
 
     @Override
     public void startContactActivityForResult() {
-
+        new ConversationUIService(this).startContactActivityForResult();
     }
 
     @Override
@@ -257,6 +267,49 @@ public class MainActivity extends MobiComActivityForFragment
             contact.setImageURL(getString(R.string.support_contact_image_url));
             contact.setEmailId(getString(R.string.support_contact_emailId));
             appContactService.add(contact);
+        }
+    }
+
+    /**
+     * Don't use this method...this is only for demo purpose..
+     */
+    private void buildContactData() {
+
+        Context context = getApplicationContext();
+        AppContactService appContactService = new AppContactService(context);
+        // avoid each time update ....
+        if (!appContactService.isContactExists("adarshk")) {
+
+            List<Contact> contactList= new ArrayList<Contact>();
+
+            //Adarsh....
+            Contact contact = new Contact();
+            contact.setUserId("adarshk");
+            contact.setFullName("Adarsh");
+            contact.setContactNumber("9742689004");
+            contact.setImageURL("R.drawable.ic_launcher");
+            contact.setEmailId("applozic.connect@gmail.com");
+            contactList.add(contact);
+            //Adarsh
+            Contact contact2 = new Contact();
+            contact2.setUserId("rathan");
+            contact2.setFullName("Rathan");
+            contact2.setContactNumber("9742944366");
+            contact2.setImageURL("R.drawable.contact_rathan");
+            contact2.setEmailId("rathu.rathan@gmail.com");
+            contactList.add(contact2);
+
+            Contact contact3 = new Contact();
+            contact3.setUserId("shanki.gupta");
+            contact3.setFullName("Shanki Gupta");
+            contact3.setContactNumber("9738150491");
+            contact3.setImageURL("R.drawable.ic_launcher");
+            contact3.setEmailId("gupta.shanki91@gmail.com");
+            contactList.add(contact3);
+
+            appContactService.addAll(contactList);
+
+
         }
     }
 

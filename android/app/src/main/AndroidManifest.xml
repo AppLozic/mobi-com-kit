@@ -123,9 +123,6 @@
             android:name="com.applozic.application.id"
             android:value="@string/application_key" />
         <meta-data
-            android:name="com.applozic.support.phone.number"
-            android:value="@string/support_phone_number" />
-        <meta-data
             android:name="com.applozic.server.url"
             android:value="@string/default_server_url" />
         <meta-data

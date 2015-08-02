@@ -121,8 +121,6 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 smReceivers.setText(contactInfo);
             }
 
-            //Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactReceiver.getContactId()));
-
             if (alphabeticTextView != null && contactReceiver != null) {
                 String contactNumber = contactReceiver.getContactNumber().toUpperCase();
                 char firstLetter = contactReceiver.getDisplayName().toUpperCase().charAt(0);
@@ -136,8 +134,9 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 alphabeticTextView.setTextColor(context.getResources().getColor(AlphaNumberColorUtil.alphabetTextColorMap.get(colorKey)));
                 alphabeticTextView.setBackgroundResource(AlphaNumberColorUtil.alphabetBackgroundColorMap.get(colorKey));
             }
-            if (contactReceiver != null && new Support(context).isSupportNumber(contactReceiver.getContactNumber()) && (!message.isTypeOutbox())) {
-                contactImage.setImageResource(R.drawable.ic_launcher);
+            if (contactReceiver.isDrawableResources()) {
+                int drawableResourceId =context.getResources().getIdentifier(contactReceiver.getrDrawableName(), "drawable", context.getPackageName());
+                contactImage.setImageResource(drawableResourceId);
             } else {
                 contactImageLoader.loadImage(contactReceiver, contactImage, alphabeticTextView);
             }
