@@ -1,4 +1,4 @@
-package com.applozic.mobicomkit.uiwidgets.contacts.fragment;
+package com.applozic.mobicomkit.uiwidgets.people.contact;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

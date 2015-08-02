@@ -19,12 +19,10 @@ import android.widget.Toast;
 
 import com.applozic.mobicomkit.uiwidgets.R;
 
-import com.applozic.mobicomkit.uiwidgets.contacts.fragment.AppContactFragment;
+import com.applozic.mobicomkit.uiwidgets.people.contact.AppContactFragment;
 import com.applozic.mobicommons.people.OnContactsInteractionListener;
 import com.applozic.mobicommons.people.contact.Contact;
 import com.applozic.mobicommons.people.contact.ContactUtils;
-
-import com.applozic.mobicomkit.uiwidgets.people.fragment.ContactsListFragment;
 
 import com.applozic.mobicommons.people.group.Group;
 
