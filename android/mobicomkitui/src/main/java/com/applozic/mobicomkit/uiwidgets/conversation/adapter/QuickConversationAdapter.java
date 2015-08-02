@@ -44,7 +44,6 @@ import java.util.Map;
 public class QuickConversationAdapter extends ArrayAdapter<Message> {
 
     private static Map<Short, Integer> messageTypeColorMap = new HashMap<Short, Integer>();
-    String mimeType = "";
     private ImageLoader contactImageLoader;
     private Context context;
     private Contact contact;
@@ -152,11 +151,10 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 group = message.getBroadcastGroupId() != null ? GroupUtils.fetchGroup(context, message.getBroadcastGroupId()) : null;
             }
 
-            if (message.hasAttachment() && message.getFilePaths() != null &&
-                    !message.getFilePaths().isEmpty()) {
+            if (message.hasAttachment() ) {
                 //Todo: handle it for fileKeyStrings when filePaths is empty
-                String filePath = message.getFilePaths().get(0);
-                mimeType = FileUtils.getMimeType(filePath);
+                String filePath = message.isAttachmentDownloaded()  ? message.getFilePaths().get(0):
+                        message.getFileMetas().get(0).getName();
                 attachmentIcon.setVisibility(View.VISIBLE);
                 messageTextView.setText(filePath.substring(filePath.lastIndexOf("/") + 1) + " " + messageTextView.getText());
             } else {

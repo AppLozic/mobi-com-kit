@@ -285,7 +285,6 @@ public class MainActivity extends MobiComActivityForFragment
             Contact contact = new Contact();
             contact.setUserId("adarshk");
             contact.setFullName("Adarsh");
-            contact.setContactNumber("9742689004");
             contact.setImageURL("R.drawable.ic_contact_picture_holo_light");
             contact.setEmailId("applozic.connect@gmail.com");
             contactList.add(contact);
@@ -293,7 +292,6 @@ public class MainActivity extends MobiComActivityForFragment
             Contact contact2 = new Contact();
             contact2.setUserId("rathan");
             contact2.setFullName("Rathan");
-            contact2.setContactNumber("9742944366");
             contact2.setImageURL("R.drawable.contact_rathan");
             contact2.setEmailId("rathu.rathan@gmail.com");
             contactList.add(contact2);
@@ -301,7 +299,6 @@ public class MainActivity extends MobiComActivityForFragment
             Contact contact3 = new Contact();
             contact3.setUserId("shanki.gupta");
             contact3.setFullName("Shanki Gupta");
-            contact3.setContactNumber("9738150491");
             contact3.setImageURL("R.drawable.contact_shanki");
             contact3.setEmailId("gupta.shanki91@gmail.com");
             contactList.add(contact3);
