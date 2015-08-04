@@ -10,6 +10,26 @@
     margin-right: -15px;
     margin-left: -15px;
 }
+.show {
+
+    z-index:1000;
+    position: absolute;
+    background-color:silver;
+    border: 1px solid blue;
+    padding: 2px;
+    display: block;
+    margin: 0;
+    list-style-type: none;
+    list-style: none;
+}
+
+.hide {
+    display: none;
+}
+
+.show li{ list-style: none; }
+.show a { border: 0 !important; text-decoration: none; }
+.show a:hover { text-decoration: underline !important; }
 
 .mck-message-status{
     font-size: 11px;
@@ -1305,6 +1325,31 @@
 .mck-tab-search {
     opacity: 0.5
 }
+.mck-context-menu{
+		z-index: 100030;
+    float: right;
+    position: absolute;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    min-width: 96px;
+    padding: 0px 20px 0px 0px;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 6px;
+    background-clip: padding-box;
+    right: 0;
+    left: auto;
+    text-align: center;
+    top: 30px;
+    margin: 7px 0px 0px 0px;
+    height: 19px;
+	}
+	.mck-msg-delete{
+		cursor:pointer;
+	}
 
 
 
