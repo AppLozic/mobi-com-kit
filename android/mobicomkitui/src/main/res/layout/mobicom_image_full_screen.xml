@@ -9,6 +9,7 @@
         android:id="@+id/full_screen_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:scaleType="centerInside"
         android:adjustViewBounds="true" />
 
     <ProgressBar
