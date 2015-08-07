@@ -50,7 +50,6 @@ public class MobiComKitClientService {
         if (!userPreferences.isRegistered()) {
             return null;
         }
-        //Todo: use userPreferences.getUserId() once server side authentication logic is added based on userId.
         return new UsernamePasswordCredentials(userPreferences.getUserId(), userPreferences.getDeviceKeyString());
     }
 
