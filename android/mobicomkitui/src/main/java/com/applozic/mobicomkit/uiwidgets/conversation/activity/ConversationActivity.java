@@ -1,16 +1,25 @@
 package com.applozic.mobicomkit.uiwidgets.conversation.activity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.applozic.mobicomkit.api.conversation.Message;
 import com.applozic.mobicomkit.api.conversation.MessageIntentService;
@@ -26,18 +35,30 @@ import com.applozic.mobicomkit.uiwidgets.conversation.fragment.MobiComQuickConve
 import com.applozic.mobicomkit.uiwidgets.instruction.InstructionUtil;
 
 import com.applozic.mobicommons.people.contact.Contact;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 
 /**
  * Created by devashish on 6/25/2015.
  */
-public class ConversationActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface {
+public class ConversationActivity extends ActionBarActivity implements MessageCommunicator, MobiComKitActivityInterface, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    protected static final long UPDATE_INTERVAL = 5;
+    protected static final long FASTEST_INTERVAL = 1;
+    public static final int LOCATION_SERVICE_ENABLE = 1001;
     protected ConversationFragment conversation;
     protected MobiComQuickConversationFragment quickConversationFragment;
     protected MobiComKitBroadcastReceiverForFragments mobiComKitBroadcastReceiver;
     protected ActionBar mActionBar;
     FragmentActivity fragmentActivity;
+    private LocationRequest locationRequest;
+    protected GoogleApiClient googleApiClient;
     public static final String TAKE_ORDER = "takeOrder";
 
     public ConversationActivity() {
@@ -106,6 +127,10 @@ public class ConversationActivity extends ActionBarActivity implements MessageCo
         });
         mActionBar.setTitle(R.string.conversations);
 
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
         new ConversationUIService(this).checkForStartNewConversation(getIntent());
     }
 
@@ -128,7 +153,43 @@ public class ConversationActivity extends ActionBarActivity implements MessageCo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         new ConversationUIService(this).onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOCATION_SERVICE_ENABLE) {
+            if (((LocationManager) getSystemService(Context.LOCATION_SERVICE))
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                googleApiClient.connect();
+            } else {
+                Toast.makeText(ConversationActivity.this, R.string.unable_to_fetch_location, Toast.LENGTH_LONG).show();
+            }
+            return;
+        }
     }
+
+    public void processLocation() {
+        if (!((LocationManager) getSystemService(Context.LOCATION_SERVICE))
+                .isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.location_services_disabled_title)
+                    .setMessage(R.string.location_services_disabled_message)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.location_service_settings, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivityForResult(intent, LOCATION_SERVICE_ENABLE);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            Toast.makeText(ConversationActivity.this, R.string.location_sending_cancelled, Toast.LENGTH_LONG).show();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            googleApiClient.connect();
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -193,4 +254,59 @@ public class ConversationActivity extends ActionBarActivity implements MessageCo
     public void removeConversation(Message message, String formattedContactNumber) {
         new ConversationUIService(this).removeConversation(message, formattedContactNumber);
     }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        if (mCurrentLocation == null) {
+            Toast.makeText(this, R.string.waiting_for_current_location, Toast.LENGTH_SHORT).show();
+            locationRequest = new LocationRequest();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(UPDATE_INTERVAL);
+            locationRequest.setFastestInterval(FASTEST_INTERVAL);
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        }
+        if (mCurrentLocation != null) {
+            conversation.attachLocation(mCurrentLocation);
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.w(((Object) this).getClass().getSimpleName(),
+                "onConnectionSuspended() called.");
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+        conversation.attachLocation(location);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(
+                        this,
+                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+            showErrorDialog(connectionResult.getErrorCode());
+        }
+
+    }
+
+    void showErrorDialog(int code) {
+        GooglePlayServicesUtil.getErrorDialog(code, this,
+                CONNECTION_FAILURE_RESOLUTION_REQUEST).show();
+    }
+
 }

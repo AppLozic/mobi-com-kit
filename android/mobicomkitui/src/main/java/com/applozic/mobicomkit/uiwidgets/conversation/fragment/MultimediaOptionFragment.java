@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import com.applozic.mobicomkit.api.attachment.FileClientService;
 import com.applozic.mobicomkit.uiwidgets.R;
 
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 import com.applozic.mobicommons.file.FileUtils;
 
 import java.io.File;
@@ -75,7 +76,7 @@ public class MultimediaOptionFragment extends DialogFragment {
                         getActivity().startActivityForResult(intentPick, REQUEST_CODE_ATTACH_PHOTO);
                         break;
                     case 0:
-                       /* ((MobiComActivity) getActivity()).processLocation();*/
+                        ((ConversationActivity) getActivity()).processLocation();
                         break;
                     default:
                 }
