@@ -4,6 +4,7 @@ import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 
+import com.applozic.mobicomkit.api.JsonMarker;
 import com.google.gson.annotations.SerializedName;
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.attachment.FileMeta;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Message {
+public class Message extends JsonMarker {
 
     private Long createdAtTime = new Date().getTime();
     private String to;
@@ -115,7 +116,7 @@ public class Message {
     }
 
     public boolean hasAttachment() {
-        return (filePaths != null && !filePaths.isEmpty()) || (fileMetas != null && !fileMetas.isEmpty()) || (getFileMetaKeyStrings() != null && !getFileMetaKeyStrings().isEmpty());
+        return ((filePaths != null && !filePaths.isEmpty()) || (fileMetas != null && !fileMetas.isEmpty()));
     }
 
     public boolean isAttachmentUploadInProgress() {

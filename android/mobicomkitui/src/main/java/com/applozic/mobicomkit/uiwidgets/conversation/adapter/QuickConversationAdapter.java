@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,17 +42,15 @@ import java.util.Map;
 /**
  * Created by adarsh on 4/7/15.
  */
-public class QuickConversationAdapter extends ArrayAdapter<Message> {
+public class QuickConversationAdapter extends BaseAdapter {
 
     private static Map<Short, Integer> messageTypeColorMap = new HashMap<Short, Integer>();
     private ImageLoader contactImageLoader;
     private Context context;
-    private Contact contact;
-    private Group group;
-    private boolean individual;
+    private List<Message> messageList;
     private BaseContactService contactService;
     private EmojiconHandler emojiconHandler;
-    private long deviceTimeOffset =0;
+    private long deviceTimeOffset = 0;
 
     static {
         messageTypeColorMap.put(Message.MessageType.INBOX.getValue(), R.color.message_type_inbox);
@@ -64,14 +63,14 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
     }
 
     public QuickConversationAdapter(final Context context, List<Message> messageList, EmojiconHandler emojiconHandler) {
-        super(context, R.layout.mobicom_message_row_view, messageList);
         this.context = context;
         this.emojiconHandler = emojiconHandler;
         this.contactService = new AppContactService(context);
-        contactImageLoader = new ImageLoader(getContext(), ImageUtils.getLargestScreenDimension((Activity) getContext())) {
+        this.messageList = messageList;
+        contactImageLoader = new ImageLoader(context, ImageUtils.getLargestScreenDimension((Activity) context)) {
             @Override
             protected Bitmap processBitmap(Object data) {
-                return contactService.downloadContactImage((Activity) getContext(), (Contact) data);
+                return contactService.downloadContactImage((Activity) context, (Contact) data);
             }
         };
         contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
@@ -79,14 +78,11 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
         contactImageLoader.setImageFadeIn(false);
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return getItem(position).isTypeOutbox() ? 1 : 0;
-    }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         deviceTimeOffset = MobiComUserPreference.getInstance(context).getDeviceTimeOffset();
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.mobicom_message_row_view, parent, false);
         TextView smTime = (TextView) customView.findViewById(R.id.smTime);
         smTime.setVisibility(View.GONE);
@@ -134,7 +130,7 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 alphabeticTextView.setBackgroundResource(AlphaNumberColorUtil.alphabetBackgroundColorMap.get(colorKey));
             }
             if (contactReceiver.isDrawableResources()) {
-                int drawableResourceId =context.getResources().getIdentifier(contactReceiver.getrDrawableName(), "drawable", context.getPackageName());
+                int drawableResourceId = context.getResources().getIdentifier(contactReceiver.getrDrawableName(), "drawable", context.getPackageName());
                 contactImage.setImageResource(drawableResourceId);
             } else {
                 contactImageLoader.loadImage(contactReceiver, contactImage, alphabeticTextView);
@@ -148,13 +144,13 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 attachmentIcon.setVisibility(View.GONE);
             }
             if (message.isSentToMany()) {
-                group = message.getBroadcastGroupId() != null ? GroupUtils.fetchGroup(context, message.getBroadcastGroupId()) : null;
+                Group group = message.getBroadcastGroupId() != null ? GroupUtils.fetchGroup(context, message.getBroadcastGroupId()) : null;
             }
 
-            if (message.hasAttachment() ) {
+            if (message.hasAttachment()) {
                 //Todo: handle it for fileKeyStrings when filePaths is empty
-                String filePath = message.isAttachmentDownloaded()  ? message.getFilePaths().get(0):
-                        message.getFileMetas().get(0).getName();
+                String filePath = message.isAttachmentDownloaded() ? message.getFilePaths().get(0) :
+                        message.getFileMetas() != null ? message.getFileMetas().get(0).getName() : "";
                 attachmentIcon.setVisibility(View.VISIBLE);
                 messageTextView.setText(filePath.substring(filePath.lastIndexOf("/") + 1) + " " + messageTextView.getText());
             } else {
@@ -183,11 +179,31 @@ public class QuickConversationAdapter extends ArrayAdapter<Message> {
                 }
             }
             if (createdAtTime != null) {
-                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime()- deviceTimeOffset ));
+                createdAtTime.setText(DateUtils.getFormattedDate(message.getCreatedAtTime() - deviceTimeOffset));
             }
         }
 
         return customView;
+    }
+
+
+    @Override
+    public int getCount() {
+        return messageList.size();
+    }
+
+    @Override
+    public Message getItem(int position) {
+        return messageList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    public int getItemViewType(int position) {
+        return getItem(position).isTypeOutbox() ? 1 : 0;
     }
 
 }

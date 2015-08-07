@@ -1,11 +1,13 @@
 package com.applozic.mobicomkit.api.account.user;
 
+import com.applozic.mobicomkit.api.JsonMarker;
+
 import java.io.Serializable;
 
 /**
  * Created by devashish on 22/12/14.
  */
-public class User implements Serializable {
+public class User extends JsonMarker {
 
     private String userId;
     private String emailId;

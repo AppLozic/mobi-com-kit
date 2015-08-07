@@ -1,9 +1,11 @@
 package com.applozic.mobicomkit.api.account.register;
 
+import com.applozic.mobicomkit.api.JsonMarker;
+
 /**
  * @author devashish
  */
-public class RegistrationResponse {
+public class RegistrationResponse extends JsonMarker {
 
     private String message;
     private String deviceKeyString;

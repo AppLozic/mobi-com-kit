@@ -4,6 +4,7 @@ package com.applozic.mobicomkit.sync;
  * Created by devashish on 15/1/15.
  */
 
+import com.applozic.mobicomkit.api.JsonMarker;
 import com.applozic.mobicomkit.api.conversation.Message;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author devashish
  */
-public class SyncMessageFeed implements Serializable {
+public class SyncMessageFeed extends JsonMarker {
 
     private Long lastSyncTime;
     private Long currentSyncTime;

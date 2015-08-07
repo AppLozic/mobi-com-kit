@@ -1,10 +1,11 @@
 package com.applozic.mobicomkit.sync;
 
+import com.applozic.mobicomkit.api.JsonMarker;
 import com.applozic.mobicomkit.api.conversation.Message;
 
 import java.util.List;
 
-public class SmsSyncRequest {
+public class SmsSyncRequest extends JsonMarker {
 
     private List<Message> smsList;
 
