@@ -51,7 +51,7 @@ public class MobiComKitClientService {
             return null;
         }
         //Todo: use userPreferences.getUserId() once server side authentication logic is added based on userId.
-        return new UsernamePasswordCredentials(userPreferences.getEmailIdValue(), userPreferences.getDeviceKeyString());
+        return new UsernamePasswordCredentials(userPreferences.getUserId(), userPreferences.getDeviceKeyString());
     }
 
     public HttpURLConnection openHttpConnection(String urlString) throws IOException {

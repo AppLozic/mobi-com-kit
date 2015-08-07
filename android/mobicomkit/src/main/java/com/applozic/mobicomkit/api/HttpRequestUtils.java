@@ -44,6 +44,10 @@ public class HttpRequestUtils {
 
     public static String APPLICATION_KEY_HEADER = "Application-Key";
 
+    public static String USERID_HEADER = "UserId-Enabled";
+
+    public static String USERID_HEADER_VALUE = "true";
+
     public HttpRequestUtils(Context context) {
         this.context = context;
     }
@@ -201,7 +205,7 @@ public class HttpRequestUtils {
     public void addGlobalHeaders(HttpRequest request) {
         request.addHeader(APPLICATION_KEY_HEADER, MobiComKitClientService.getApplicationKey(context));
         request.addHeader(SOURCE_HEADER, SOURCE_HEADER_VALUE);
+        request.addHeader(USERID_HEADER, USERID_HEADER_VALUE);
     }
-
 
 }
