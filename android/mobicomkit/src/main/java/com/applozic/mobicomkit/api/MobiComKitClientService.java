@@ -71,6 +71,7 @@ public class MobiComKitClientService {
             String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.NO_WRAP);
             httpConn.setRequestProperty("Authorization", basicAuth);
             httpConn.setRequestProperty(APPLICATION_KEY_HEADER, getApplicationKey(context));
+            httpConn.setRequestProperty(HttpRequestUtils.USERID_HEADER, HttpRequestUtils.USERID_HEADER_VALUE);
             httpConn.connect();
             //Shifting this Code to individual class..this is needed so that caller can decide ..what should be done with the error
 //            response = httpConn.getResponseCode();
