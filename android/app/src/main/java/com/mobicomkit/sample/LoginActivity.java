@@ -87,7 +87,7 @@ public class LoginActivity extends Activity {
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
-        mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        //mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
         mUserIdView = (EditText) findViewById(R.id.userId);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -186,7 +186,7 @@ public class LoginActivity extends Activity {
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        String phoneNumber = mPhoneNumberView.getText().toString();
+       // String phoneNumber = mPhoneNumberView.getText().toString();
         String userId = mUserIdView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -261,7 +261,7 @@ public class LoginActivity extends Activity {
             user.setUserId(userId);
             user.setEmailId(email);
             user.setPassword(password);
-            user.setContactNumber(phoneNumber);
+            //user.setContactNumber("phoneNumber");
             user.setAuthenticationTypeId(authenticationType.getValue());
 
             mAuthTask = new UserLoginTask(user, listener, this);
@@ -288,7 +288,6 @@ public class LoginActivity extends Activity {
         } else {
             Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
             exit = true;
-
 
             new Handler().postDelayed(new Runnable() {
                 @Override
