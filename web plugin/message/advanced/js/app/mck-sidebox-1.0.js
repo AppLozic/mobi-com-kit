@@ -256,6 +256,7 @@ function MobiComKit() {
         var $mck_text_box = $("#mck-text-box");
         var $mck_minimize_icon = $(".mck-minimize-icon");
         var $mck_show_more_icon = $("#mck-show-more-icon");
+        var $modal_footer = $(".modal-footer");
         var $mck_sidebox_content = $(".mck-sidebox-content");
 
         $(".mck-minimize-icon").click(function () {
@@ -337,6 +338,11 @@ function MobiComKit() {
                 $mck_msg_inner.html("");
                 $mck_loading.removeClass('vis').addClass('n-vis');
                 mckMessageService.loadMessageList($(this).data("mck-id"));
+
+                if(options.mode == 'support'){
+                $('a.mck-conversation-tab-link').hide();
+                }
+
                 mckMessageLayout.openConversation();
             });
 

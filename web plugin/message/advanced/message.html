@@ -167,11 +167,15 @@
             function MobiComKitSidebox() {
                 var mckClientId = "mobicomkit";
                 var mckClientAppId = "mobicomkit-sample-app";
+                var mckMode = "support";
+                var mckSupportId = "TryKaro";
+                <!--var mckMode = "test";-->
+                <!--var mckSupportId = "";-->
 
                 this.load = function () {
                     $.fn.mobicomkit({userId: mckClientId, appId: mckClientAppId,
                       readConversation: readMessage, contactDisplayName: displayName,
-                      desktopNotification: true
+                      desktopNotification: true, mode: mckMode, supportId : mckSupportId
                     });
                 };
 

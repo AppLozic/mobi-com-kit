@@ -115,7 +115,7 @@
             android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <receiver
-            android:name="com.mobicomkit.sample.pushnotification.GcmBroadcastReceiver"
+            android:name="com.mobicomkit.sample.com.applozic.connect.pushnotification.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
