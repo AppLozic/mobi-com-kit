@@ -87,22 +87,21 @@
                 android:password="false"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
-            <!--
-                        <EditText
-                            android:id="@+id/phoneNumber"
-                            style="@style/EditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/prompt_phone_number"
-                            android:imeOptions="actionNext"
-                            android:inputType="phone|number"
-                            android:maxLines="1"
-                            android:background="#FFF"
-                            android:padding="10dip"
-                            android:layout_margin="10dip"
-                            android:singleLine="true"
-                            android:windowSoftInputMode="adjustResize" />
-            -->
+
+            <EditText
+                android:id="@+id/phoneNumber"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="#FFF"
+                android:hint="@string/prompt_phone_number"
+                android:imeOptions="actionNext"
+                android:inputType="phone|number"
+                android:maxLines="1"
+                android:padding="10dip"
+                android:singleLine="true"
+                android:windowSoftInputMode="adjustResize" />
 
             <EditText
                 android:id="@+id/password"
