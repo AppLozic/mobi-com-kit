@@ -23,7 +23,6 @@ import android.widget.AlphabetIndexer;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.QuickContactBadge;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.applozic.mobicomkit.contact.AppContactService;
@@ -47,7 +46,7 @@ import java.util.Locale;
  * Created by adarsh on 30/5/15.
  */
 @SuppressLint("ValidFragment")
-public class AppContactFragment  extends ListFragment implements SearchListFragment,
+public class AppContactFragment extends ListFragment implements SearchListFragment,
         AdapterView.OnItemClickListener {
 
     // Defines a tag for identifying log entries
@@ -81,18 +80,18 @@ public class AppContactFragment  extends ListFragment implements SearchListFragm
     /**
      * Fragments require an empty constructor.
      */
-    public AppContactFragment(){
+    public AppContactFragment() {
 
     }
 
     public AppContactFragment(List<Contact> contacts) {
-        this.contactList =  contacts;
+        this.contactList = contacts;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        contactService =  new AppContactService(getActivity().getApplicationContext());
+        contactService = new AppContactService(getActivity().getApplicationContext());
         contactList = contactService.getAll();
         mAdapter = new ContactsAdapter(getActivity().getApplicationContext());
 
@@ -108,7 +107,7 @@ public class AppContactFragment  extends ListFragment implements SearchListFragm
         mImageLoader = new ImageLoader(getActivity(), getListPreferredItemHeight()) {
             @Override
             protected Bitmap processBitmap(Object data) {
-                return contactService.downloadContactImage(getActivity() , (Contact) data );
+                return contactService.downloadContactImage(getActivity(), (Contact) data);
             }
         };
         // Set a placeholder loading image for the image loader
@@ -305,20 +304,18 @@ public class AppContactFragment  extends ListFragment implements SearchListFragm
     }
 
 
-
     /**
      * This is a subclass of CursorAdapter that supports binding Cursor columns to a view layout.
      * If those items are part of search results, the search string is marked by highlighting the
      * query text. An {@link android.widget.AlphabetIndexer} is used to allow quicker navigation up and down the
      * ListView.
      */
-    private class ContactsAdapter extends BaseAdapter implements SectionIndexer {
+    private class ContactsAdapter extends BaseAdapter {
         private LayoutInflater mInflater; // Stores the layout inflater
         private AlphabetIndexer mAlphabetIndexer; // Stores the AlphabetIndexer instance
         private TextAppearanceSpan highlightTextSpan; // Stores the highlight text appearance style
         Context context;
         /**
-         *
          * Instantiates a new Contacts Adapter.
          *
          * @param context A context that has access to the app's layout.
@@ -376,17 +373,16 @@ public class AppContactFragment  extends ListFragment implements SearchListFragm
             QuickContactBadge icon = (QuickContactBadge) itemLayout.findViewById(android.R.id.icon);
             text1.setText(contact.getFullName());
             text2.setText(contact.getUserId());
-            if( contact.isDrawableResources() ){
-                int drawableResourceId =context.getResources().getIdentifier(contact.getrDrawableName(), "drawable", context.getPackageName());
+            if (contact.isDrawableResources()) {
+                int drawableResourceId = context.getResources().getIdentifier(contact.getrDrawableName(), "drawable", context.getPackageName());
                 icon.setImageResource(drawableResourceId);
-            }else {
+            } else {
                 mImageLoader.loadImage(contact, icon);
             }
 
             // Returns the item layout view
             return itemLayout;
         }
-
 
 
         /**
@@ -405,24 +401,6 @@ public class AppContactFragment  extends ListFragment implements SearchListFragm
 
         @Override
         public long getItemId(int position) {
-            return 0;
-        }
-
-        /**
-         * Defines the SectionIndexer.getSections() interface.
-         */
-        @Override
-        public Object[] getSections() {
-            return mAlphabetIndexer.getSections();
-        }
-
-        @Override
-        public int getPositionForSection(int sectionIndex) {
-            return 0;
-        }
-
-        @Override
-        public int getSectionForPosition(int position) {
             return 0;
         }
 

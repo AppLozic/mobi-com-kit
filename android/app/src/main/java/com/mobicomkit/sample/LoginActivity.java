@@ -74,7 +74,6 @@ public class LoginActivity extends Activity {
     CallbackManager callbackManager;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +87,7 @@ public class LoginActivity extends Activity {
         populateAutoComplete();
 
         mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        mPhoneNumberView.setVisibility(View.GONE);
         mUserIdView = (EditText) findViewById(R.id.userId);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -283,12 +283,11 @@ public class LoginActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-       if (exit) {
+        if (exit) {
             finish();
         } else {
             Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
             exit = true;
-
 
             new Handler().postDelayed(new Runnable() {
                 @Override

@@ -28,9 +28,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="0dp"
         android:text="@string/mobicomkit_label"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView"
@@ -39,8 +39,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:text="@string/mobicomkitdemo"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF" />
 
     <ScrollView
         android:id="@+id/login_form"
@@ -56,20 +56,18 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-
-
             <EditText
                 android:id="@+id/userId"
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="#FFF"
                 android:hint="@string/prompt_user_id"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLines="1"
-                android:background="#FFF"
                 android:padding="10dip"
-                android:layout_margin="10dip"
                 android:password="false"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
@@ -79,13 +77,13 @@
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="#FFF"
                 android:hint="@string/prompt_email"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:background="#FFF"
                 android:padding="10dip"
-                android:layout_margin="10dip"
                 android:password="false"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
@@ -95,13 +93,13 @@
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="#FFF"
                 android:hint="@string/prompt_phone_number"
                 android:imeOptions="actionNext"
                 android:inputType="phone|number"
                 android:maxLines="1"
-                android:background="#FFF"
                 android:padding="10dip"
-                android:layout_margin="10dip"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
 
@@ -110,15 +108,15 @@
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="#FFF"
                 android:hint="@string/prompt_password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified|actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:background="#FFF"
                 android:padding="10dip"
-                android:layout_margin="10dip"
                 android:phoneNumber="false"
                 android:singleLine="true"
                 android:windowSoftInputMode="adjustResize" />
@@ -131,23 +129,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_margin="10dip"
+        android:layout_marginTop="10dip"
         android:configChanges="orientation"
         android:imeOptions="flagNoExtractUi"
         android:padding="20dip"
-        android:layout_margin="10dip"
-        android:layout_marginTop="10dip"
         android:text="@string/action_sign_in"
         android:textColor="#ffffff"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
-
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp" />
 
 </LinearLayout>
 

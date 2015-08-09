@@ -24,7 +24,7 @@ public class MobiComKitClientService {
     protected UsernamePasswordCredentials credentials;
     public static final String BASE_URL_METADATA = "com.applozic.server.url";
     public static String APPLICATION_KEY_HEADER = "Application-Key";
-    public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "com.applozic.application.id";
+    public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "com.applozic.application.key";
     public static final String FILE_URL = "/rest/ws/file/";
     public static final String DEFAULT_BASE_URl = "https://applozic.appspot.com";
 
@@ -71,6 +71,7 @@ public class MobiComKitClientService {
             String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.NO_WRAP);
             httpConn.setRequestProperty("Authorization", basicAuth);
             httpConn.setRequestProperty(APPLICATION_KEY_HEADER, getApplicationKey(context));
+            httpConn.setRequestProperty(HttpRequestUtils.USERID_HEADER, HttpRequestUtils.USERID_HEADER_VALUE);
             httpConn.connect();
             //Shifting this Code to individual class..this is needed so that caller can decide ..what should be done with the error
 //            response = httpConn.getResponseCode();
