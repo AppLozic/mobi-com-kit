@@ -16,6 +16,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix ".debug"
+        }
     }
 
 
@@ -36,4 +42,5 @@ dependencies {
     compile project(':mobicomkitui')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.1.0'
 }

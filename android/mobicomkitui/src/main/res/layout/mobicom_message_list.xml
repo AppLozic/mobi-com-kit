@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:visibility="visible">
 
-            <com.mobicomkit.uiwidgets.conversation.ConversationListView
+            <com.applozic.mobicomkit.uiwidgets.conversation.ConversationListView
                 android:id="@+id/messageList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,8 +40,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="14dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/circle"
             android:src="@drawable/ic_action_add"
             android:visibility="gone" />

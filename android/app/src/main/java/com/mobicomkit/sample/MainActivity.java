@@ -16,19 +16,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.mobicomkit.api.account.user.MobiComUserPreference;
-import com.mobicomkit.api.conversation.Message;
-import com.mobicomkit.contact.AppContactService;
-import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
-import com.mobicomkit.uiwidgets.conversation.ConversationUIService;
-import com.mobicomkit.uiwidgets.conversation.UIService;
-import com.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
-import com.mobicomkit.uiwidgets.conversation.activity.SlidingPaneActivity;
-import com.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
+import com.applozic.mobicomkit.api.account.user.UserClientService;
+import com.applozic.mobicomkit.api.conversation.Message;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.uiwidgets.conversation.ConversationUIService;
+import com.applozic.mobicomkit.uiwidgets.conversation.UIService;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.MobiComActivityForFragment;
+import com.applozic.mobicomkit.uiwidgets.conversation.fragment.ConversationFragment;
+import com.applozic.mobicommons.commons.core.utils.Utils;
+import com.applozic.mobicommons.people.contact.Contact;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
-import net.mobitexter.mobiframework.people.contact.Contact;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends MobiComActivityForFragment
@@ -38,7 +41,7 @@ public class MainActivity extends MobiComActivityForFragment
     public static final String MOBICOMKIT = "applozic.connect";
     public static final String USER_ID = "userId";
     public static final String TAKE_ORDER = "takeOrder";
-    public static final String TAKE_ORDER_USERID_METADATA = "com.mobicomkit.take.order.userId";
+    public static final String TAKE_ORDER_USERID_METADATA = "com.applozic.take.order.userId";
     public static final int DATABASE_VERSION = 1;
 
     /**
@@ -56,9 +59,32 @@ public class MainActivity extends MobiComActivityForFragment
 
     }
 
+    public static void addFragment(FragmentActivity fragmentActivity, Fragment fragmentToAdd, String fragmentTag) {
+        FragmentManager supportFragmentManager = fragmentActivity.getSupportFragmentManager();
+
+        Fragment activeFragment = UIService.getActiveFragment(fragmentActivity);
+        FragmentTransaction fragmentTransaction = supportFragmentManager
+                .beginTransaction();
+        if (null != activeFragment) {
+            fragmentTransaction.hide(activeFragment);
+        }
+
+        fragmentTransaction.replace(R.id.container, fragmentToAdd,
+                fragmentTag);
+
+        if (supportFragmentManager.getBackStackEntryCount() > 1) {
+            supportFragmentManager.popBackStack();
+        }
+        fragmentTransaction.addToBackStack(fragmentTag);
+        fragmentTransaction.commit();
+        supportFragmentManager.executePendingTransactions();
+        //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -69,25 +95,30 @@ public class MainActivity extends MobiComActivityForFragment
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        //Put Support Contact Data
         buildSupportContactData();
+
+        //Contact data for demo...
+        buildContactData();
+
         MobiComUserPreference userPreference = MobiComUserPreference.getInstance(this);
         if (!userPreference.isRegistered()) {
             Intent intent = new Intent(this, LoginActivity.class);
+            //startActivity(intent);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finish();
             return;
         }
 
     }
 
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
 
-        /*if (position == 1) {
-            Intent intent = new Intent(this, SlidingPaneActivity.class);
-            startActivity(intent);
-            return;
-        }*/
         if (position == 1) {
             Intent intent = new Intent(this, ConversationActivity.class);
             startActivity(intent);
@@ -110,16 +141,24 @@ public class MainActivity extends MobiComActivityForFragment
                     .commit();
             return;
         }
+
+        if (position == 2) {
+
+            Toast.makeText(getBaseContext(), "Log out successful", Toast.LENGTH_SHORT).show();
+
+            new UserClientService(this).logout();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
-    }
-
-    public void startChat(View v) {
-        Intent chatIntent = new Intent(this, SlidingPaneActivity.class);
-        chatIntent.putExtra(USER_ID, MOBICOMKIT);
-        startActivity(chatIntent);
     }
 
     public void takeOrder(View v) {
@@ -150,7 +189,6 @@ public class MainActivity extends MobiComActivityForFragment
         actionBar.setTitle(mTitle);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -171,7 +209,7 @@ public class MainActivity extends MobiComActivityForFragment
 
     @Override
     public void startContactActivityForResult() {
-
+        new ConversationUIService(this).startContactActivityForResult();
     }
 
     @Override
@@ -217,6 +255,60 @@ public class MainActivity extends MobiComActivityForFragment
         new ConversationUIService(this).removeConversation(message, formattedContactNumber);
     }
 
+    private void buildSupportContactData() {
+        Context context = getApplicationContext();
+        AppContactService appContactService = new AppContactService(context);
+        // avoid each time update ....
+        if (!appContactService.isContactExists(getString(R.string.support_contact_userId))) {
+            Contact contact = new Contact();
+            contact.setUserId(getString(R.string.support_contact_userId));
+            contact.setFullName(getString(R.string.support_contact_display_name));
+            contact.setContactNumber(getString(R.string.support_contact_number));
+            contact.setImageURL(getString(R.string.support_contact_image_url));
+            contact.setEmailId(getString(R.string.support_contact_emailId));
+            appContactService.add(contact);
+        }
+    }
+
+    /**
+     * Don't use this method...this is only for demo purpose..
+     */
+    private void buildContactData() {
+
+        Context context = getApplicationContext();
+        AppContactService appContactService = new AppContactService(context);
+        // avoid each time update ....
+        if (!appContactService.isContactExists("adarshk")) {
+
+            List<Contact> contactList= new ArrayList<Contact>();
+            //Adarsh....
+            Contact contact = new Contact();
+            contact.setUserId("adarshk");
+            contact.setFullName("Adarsh");
+            contact.setImageURL("R.drawable.ic_contact_picture_holo_light");
+            contact.setEmailId("applozic.connect@gmail.com");
+            contactList.add(contact);
+            //Adarsh
+            Contact contact2 = new Contact();
+            contact2.setUserId("rathan");
+            contact2.setFullName("Rathan");
+            contact2.setImageURL("R.drawable.contact_rathan");
+            contact2.setEmailId("rathu.rathan@gmail.com");
+            contactList.add(contact2);
+
+            Contact contact3 = new Contact();
+            contact3.setUserId("shanki.gupta");
+            contact3.setFullName("Shanki Gupta");
+            contact3.setImageURL("R.drawable.contact_shanki");
+            contact3.setEmailId("gupta.shanki91@gmail.com");
+            contactList.add(contact3);
+
+            appContactService.addAll(contactList);
+
+
+        }
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -256,43 +348,6 @@ public class MainActivity extends MobiComActivityForFragment
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
 
-    }
-
-    public static void addFragment(FragmentActivity fragmentActivity, Fragment fragmentToAdd, String fragmentTag) {
-        FragmentManager supportFragmentManager = fragmentActivity.getSupportFragmentManager();
-
-        Fragment activeFragment = UIService.getActiveFragment(fragmentActivity);
-        FragmentTransaction fragmentTransaction = supportFragmentManager
-                .beginTransaction();
-        if (null != activeFragment) {
-            fragmentTransaction.hide(activeFragment);
-        }
-
-        fragmentTransaction.replace(R.id.container, fragmentToAdd,
-                fragmentTag);
-
-        if (supportFragmentManager.getBackStackEntryCount() > 1) {
-            supportFragmentManager.popBackStack();
-        }
-        fragmentTransaction.addToBackStack(fragmentTag);
-        fragmentTransaction.commit();
-        supportFragmentManager.executePendingTransactions();
-        //Log.i(TAG, "BackStackEntryCount: " + supportFragmentManager.getBackStackEntryCount());
-    }
-
-    private void  buildSupportContactData(){
-        Context context = getApplicationContext();
-        AppContactService appContactService = new AppContactService(context);
-        // avoid each time update ....
-        if( appContactService.getContactById(getString(R.string.support_contact_userId))== null){
-            Contact contact = new Contact();
-            contact.setUserId(getString(R.string.support_contact_userId));
-            contact.setFullName(getString(R.string.support_contact_display_name));
-            contact.setContactNumber(getString(R.string.support_contact_number));
-            contact.setImageURL(getString(R.string.support_contact_image_url));
-            contact.setEmailId(getString(R.string.support_contact_emailId));
-            appContactService.add(contact);
-        }
     }
 
 }

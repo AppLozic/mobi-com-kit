@@ -1,25 +1,25 @@
 <html>
 
     <head>
-          <script type="text/javascript" src="http://mobi-com.appspot.com/sidebox.app?appId=mobicomkit-sample-app&userId=mobicomkit&lib=jquery"></script>
 
+        <script type="text/javascript">(function (d, n) {
+                var s, h;
+                s = document.createElement("script");
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://applozic.appspot.com/sidebox.app";
+                h = document.getElementsByTagName('head')[0];
+                h.appendChild(s);
+                window.applozic = n;
+                n.init = function (t) {
+                    n._globals = t;
+                }
+            })(document, window.applozic || {});</script>
     </head>
     <body>
-        <div>
-            <a href="#" class="btn btn-primary mobicomkit-launcher">
-                <span>Start Messaging</span>
-            </a>
-        </div>
-
-        <div>
-            <a href="#" class="btn mobicomkit-launcher" data-mck-id="adarsh.cse.hit@gmail.com">
-                Adarsh
-            </a>
-            <a href="#" class="btn mobicomkit-launcher" data-mck-id="devashish.mamgain@mobitexter.net">
-                Devashish
-            </a>
-
-        </div>
-
+        <script type="text/javascript">
+            window.applozic.init({userId: 'customer1', appId: 'applozic-sample-app', desktopNotification: true});
+        </script>
     </body>
 </html>
+

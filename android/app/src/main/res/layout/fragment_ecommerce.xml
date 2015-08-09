@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:text="@string/ecommerce_text1"
             android:textColor="#000000" />
 
@@ -29,43 +31,46 @@
                 android:id="@+id/tableRow1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp">
+                >
 
                 <Button
                     android:id="@+id/button1"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#AB47BC"
                     android:drawableTop="@drawable/ic_action"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button1_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/button2"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#d3d3d3"
+                    android:background="#E91E63"
                     android:drawableTop="@drawable/ic_action1"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button2_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#cac9c9"
+                    android:background="#3F51B5"
                     android:drawableTop="@drawable/ic_action2"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button3_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
             </TableRow>
 
@@ -73,43 +78,46 @@
                 android:id="@+id/tableRow2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp">
+                >
 
                 <Button
                     android:id="@+id/button4"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#FFB74D"
                     android:drawableTop="@drawable/ic_action3"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button4_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/button5"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#d3d3d3"
+                    android:background="#CDDC39"
                     android:drawableTop="@drawable/ic_action4"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button5_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/button6"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#cac9c9"
+                    android:background="#8BC34A"
                     android:drawableTop="@drawable/ic_action5"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button6_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
             </TableRow>
 
@@ -117,43 +125,46 @@
                 android:id="@+id/tableRow3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp">
+                >
 
                 <Button
                     android:id="@+id/button7"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#F44336"
                     android:drawableTop="@drawable/ic_action6"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button7_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/button8"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#d3d3d3"
+                    android:background="#1DE9B6"
                     android:drawableTop="@drawable/ic_action7"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button8_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/button9"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="#cac9c9"
+                    android:background="#26A69A"
                     android:drawableTop="@drawable/ic_action8"
                     android:gravity="center"
                     android:padding="20dip"
+                    android:layout_margin="5dip"
                     android:singleLine="true"
                     android:text="@string/ecommerce_button9_text"
-                    android:textColor="#000000" />
+                    android:textColor="#FFFFFF" />
 
             </TableRow>
 
@@ -172,10 +183,12 @@
 
         <Button
             android:id="@+id/button_order"
-            android:layout_width="188dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/holo_blue"
             android:onClick="takeOrder"
             android:text="@string/order_sample_button"

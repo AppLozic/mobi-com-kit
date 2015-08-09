@@ -6,15 +6,19 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build.VERSION;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,16 +29,25 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.os.Handler;
 
-import com.mobicomkit.api.account.user.User;
-import com.mobicomkit.api.account.user.UserLoginTask;
+import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
+import com.applozic.mobicomkit.api.account.user.User;
+import com.applozic.mobicomkit.api.account.user.UserLoginTask;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.mobicomkit.sample.pushnotification.GCMRegistrationUtils;
-import com.mobicomkit.api.account.register.RegisterUserClientService;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
+import com.applozic.mobicommons.commons.core.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * A login screen that offers login via email/password.
@@ -46,6 +59,10 @@ public class LoginActivity extends Activity {
      */
     private UserLoginTask mAuthTask = null;
 
+    //flag variable for exiting the application
+    private boolean exit = false;
+
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mUserIdView;
@@ -54,10 +71,14 @@ public class LoginActivity extends Activity {
     private View mProgressView;
     private View mLoginFormView;
     private Button mEmailSignInButton;
+    CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(this);
+
         setContentView(R.layout.activity_login);
         setupUI(findViewById(R.id.layout));
 
@@ -66,13 +87,14 @@ public class LoginActivity extends Activity {
         populateAutoComplete();
 
         mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        mPhoneNumberView.setVisibility(View.GONE);
         mUserIdView = (EditText) findViewById(R.id.userId);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(User.AuthenticationType.APPLOZIC);
                     return true;
                 }
                 return false;
@@ -85,12 +107,36 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
 
                 Utils.toggleSoftKeyBoard(LoginActivity.this, true);
-                attemptLogin();
+                attemptLogin(User.AuthenticationType.APPLOZIC);
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
+        callbackManager = CallbackManager.Factory.create();
+        final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+
+        loginButton.setReadPermissions("user_friends");
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                mUserIdView.setText(loginResult.getAccessToken().getUserId());
+                mPasswordView.setText(loginResult.getAccessToken().getToken());
+                attemptLogin(User.AuthenticationType.FACEBOOK);
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+            }
+        });
     }
 
     public void setupUI(View view) {
@@ -129,7 +175,7 @@ public class LoginActivity extends Activity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
+    public void attemptLogin(User.AuthenticationType authenticationType) {
         if (mAuthTask != null) {
             return;
         }
@@ -156,9 +202,9 @@ public class LoginActivity extends Activity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            /*mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
-            cancel = true;
+            cancel = true;*/
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
@@ -176,30 +222,38 @@ public class LoginActivity extends Activity {
 
             // callback for login process
             UserLoginTask.TaskListener listener = new UserLoginTask.TaskListener() {
+
                 @Override
-                public void onFinished(Boolean result, Exception exception) {
-                    // Do Something after the task has finished
+                public void onSuccess(RegistrationResponse registrationResponse, Context context) {
                     mAuthTask = null;
                     showProgress(false);
 
-                    if (result) {
-                        //Start GCM registartion....
-                        GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
-                        gcmRegistrationUtils.setUpGcmNotification();
-                        finish();
-                    } else {
-                        mEmailSignInButton.setVisibility(View.VISIBLE);
-                        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-                        alertDialog.setTitle(getString(R.string.text_alert));
-                        alertDialog.setMessage(exception.toString());
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-                    }
+                    //Start GCM registration....
+                    GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
+                    gcmRegistrationUtils.setUpGcmNotification();
+
+                    //starting main MainActivity
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
+                    mAuthTask = null;
+                    showProgress(false);
+
+                    mEmailSignInButton.setVisibility(View.VISIBLE);
+                    AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+                    alertDialog.setTitle(getString(R.string.text_alert));
+                    alertDialog.setMessage(exception.toString());
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                 }
             };
 
@@ -208,6 +262,7 @@ public class LoginActivity extends Activity {
             user.setEmailId(email);
             user.setPassword(password);
             user.setContactNumber(phoneNumber);
+            user.setAuthenticationTypeId(authenticationType.getValue());
 
             mAuthTask = new UserLoginTask(user, listener, this);
             mEmailSignInButton.setVisibility(View.INVISIBLE);
@@ -223,6 +278,25 @@ public class LoginActivity extends Activity {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (exit) {
+            finish();
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
+            exit = true;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3000);
+        }
+
     }
 
     /**
@@ -299,4 +373,12 @@ public class LoginActivity extends Activity {
             addEmailsToAutoComplete(emailAddressCollection);
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+
 }
