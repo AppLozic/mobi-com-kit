@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -28,11 +29,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mobicomkit.api.account.user.User;
-import com.mobicomkit.api.account.user.UserLoginTask;
-import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
+import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
+import com.applozic.mobicomkit.api.account.user.User;
+import com.applozic.mobicomkit.api.account.user.UserLoginTask;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
+import com.applozic.mobicommons.commons.core.utils.Utils;
 
-import net.mobitexter.mobiframework.commons.core.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,33 +197,39 @@ public class LoginActivity extends Activity {
             // callback for login process
             UserLoginTask.TaskListener listener = new UserLoginTask.TaskListener() {
                 @Override
-                public void onFinished(Boolean result, Exception exception) {
-                    // Do Something after the task has finished
+                public void onSuccess(RegistrationResponse registrationResponse, Context context) {
                     mAuthTask = null;
                     showProgress(false);
 
-                    if (result) {
-                        //Start GCM registartion....
-                        GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
-                        gcmRegistrationUtils.setUpGcmNotification();
-                        finish();
-                        startActivity(intent);
-                        return;
-                    } else {
-                        mEmailSignInButton.setVisibility(View.VISIBLE);
-                        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-                        alertDialog.setTitle(getString(R.string.text_alert));
-                        alertDialog.setMessage(exception.toString());
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-                    }
+                    //Start GCM registration....
+                    GCMRegistrationUtils gcmRegistrationUtils = new GCMRegistrationUtils(LoginActivity.this);
+                    gcmRegistrationUtils.setUpGcmNotification();
+
+                    //starting main MainActivity
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
+                    mAuthTask = null;
+                    showProgress(false);
+
+                    mEmailSignInButton.setVisibility(View.VISIBLE);
+                    AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+                    alertDialog.setTitle(getString(R.string.text_alert));
+                    alertDialog.setMessage(exception.toString());
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                 }
             };
+
 
             User user = new User();
             user.setUserId(userId);

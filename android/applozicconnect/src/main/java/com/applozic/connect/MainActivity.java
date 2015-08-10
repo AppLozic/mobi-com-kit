@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.mobicomkit.api.account.user.MobiComUserPreference;
-import com.mobicomkit.contact.AppContactService;
-import com.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
+import com.applozic.mobicomkit.contact.AppContactService;
+import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 
-import net.mobitexter.mobiframework.people.contact.Contact;
+import com.applozic.mobicommons.people.contact.Contact;;
 
 public class MainActivity extends FragmentActivity {
 

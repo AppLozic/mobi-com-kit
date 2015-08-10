@@ -166,7 +166,7 @@ public class QuickConversationAdapter extends BaseAdapter {
             });
 
             if (contactReceiver != null && new Support(context).isSupportNumber(contactReceiver.getContactNumber()) && (!message.isTypeOutbox())) {
-                contactImage.setImageResource(R.drawable.ic_launcher);
+                contactImage.setImageResource(R.drawable.mobicom_ic_launcher);
             }
             if (sentOrReceived != null) {
                 if (message.isCall()) {
