@@ -24,8 +24,8 @@
     <string name="applozicconnect_label">AppLozicConnect</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="support_phone_number">+918042028425</string>
-    <string name="default_server_url">https://mobi-com.appspot.com</string>
-    <string name="application_key">mobicomkit-sample-app</string>
+    <string name="default_server_url">https://applozic.appspot.com</string>
+    <string name="application_key">applozic-sample-app</string>
     <string name="support_contact_display_name">AppLozic Support</string>
     <string name="support_contact_userId">applozic.connect</string>
     <string name="support_contact_emailId">applozic.connect@gmail.com</string>

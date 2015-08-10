@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.contact.AppContactService;
-import com.applozic.mobicomkit.uiwidgets.conversation.activity.ConversationActivity;
 
 import com.applozic.mobicommons.people.contact.Contact;;
 
