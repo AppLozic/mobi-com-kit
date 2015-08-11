@@ -34,7 +34,7 @@ import java.util.ArrayList;
 /**
  * This task downloads bytes from a resource addressed by a URL.  When the task
  * has finished, it calls handleState to report its results.
- * <p/>
+ * <p>
  * Objects of this class are instantiated and managed by instances of PhotoTask, which
  * implements the methods of TaskRunnableDecodeMethods. PhotoTask objects call
  * {@link #AttachmentDownloader(AttachmentDownloader.TaskRunnableDownloadMethods) PhotoDownloadRunnable()} with
@@ -150,39 +150,42 @@ class AttachmentDownloader implements Runnable {
             FileMeta fileMeta = message.getFileMetas().get(0);
             String contentType = fileMeta.getContentType();
             String fileKey = fileMeta.getKeyString();
-            HttpURLConnection connection = new MobiComKitClientService(context).openHttpConnection( new MobiComKitClientService(context).getFileUrl()+ fileKey);
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                inputStream = connection.getInputStream();
-            } else {
-                //TODO: Error Handling...
-                Log.i(TAG, "Got Error response while uploading file : " + connection.getResponseCode());
-                return;
-            }
+            HttpURLConnection connection = null;
             File file = FileClientService.getFilePath(fileMeta.getName(), context, contentType);
-            OutputStream output = new FileOutputStream(file);
-            byte data[] = new byte[1024];
-            int totalSize = fileMeta.getSize();
-            int progressCount = 0;
-            int count = 0;
-            while ((count = inputStream.read(data)) != -1) {
-                output.write(data, 0, count);
-                progressCount = progressCount + count;
-                android.os.Message msg = new android.os.Message();
-                int percentage = progressCount * 100 / totalSize;
-                //TODO: pecentage should be transfer via handler
-                //Message code 2 represents image is successfully downloaded....
-                if ((percentage % 10 == 0)) {
-                    msg.what = 1;
-                    msg.obj = this;
+            if (!file.exists()) {
+                connection = new MobiComKitClientService(context).openHttpConnection(new MobiComKitClientService(context).getFileUrl() + fileKey);
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    inputStream = connection.getInputStream();
+                } else {
+                    //TODO: Error Handling...
+                    Log.i(TAG, "Got Error response while uploading file : " + connection.getResponseCode());
+                    return;
                 }
-                if (Thread.interrupted()) {
-                    throw new InterruptedException();
-                }
-            }
-            output.flush();
-            output.close();
-            inputStream.close();
 
+                OutputStream output = new FileOutputStream(file);
+                byte data[] = new byte[1024];
+                int totalSize = fileMeta.getSize();
+                int progressCount = 0;
+                int count = 0;
+                while ((count = inputStream.read(data)) != -1) {
+                    output.write(data, 0, count);
+                    progressCount = progressCount + count;
+                    android.os.Message msg = new android.os.Message();
+                    int percentage = progressCount * 100 / totalSize;
+                    //TODO: pecentage should be transfer via handler
+                    //Message code 2 represents image is successfully downloaded....
+                    if ((percentage % 10 == 0)) {
+                        msg.what = 1;
+                        msg.obj = this;
+                    }
+                    if (Thread.interrupted()) {
+                        throw new InterruptedException();
+                    }
+                }
+                output.flush();
+                output.close();
+                inputStream.close();
+            }
             //Todo: Fix this, so that attach package can be moved to mobicom mobicom.
             new MessageDatabaseService(context).updateInternalFilePath(message.getKeyString(), file.getAbsolutePath());
 
