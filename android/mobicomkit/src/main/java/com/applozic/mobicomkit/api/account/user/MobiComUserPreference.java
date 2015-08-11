@@ -10,7 +10,6 @@ import com.applozic.mobicomkit.api.MobiComKitClientService;
 import com.applozic.mobicommons.commons.core.utils.ContactNumberUtils;
 
 
-
 import java.util.Date;
 
 
@@ -41,6 +40,7 @@ public class MobiComUserPreference {
     private static String mobitexter_contact_sync_key = "mobitexter_contact_sync_key";
     private static String last_sms_sync_time = "last_sms_sync_time";
     private static String new_message_flag = "new_message_flag";
+    private static String base_url = "base_url";
 
     private static String device_time_offset_from_UTC = "device_time_offset_from_UTC";
 
@@ -266,19 +266,19 @@ public class MobiComUserPreference {
         sharedPreferences.edit().putBoolean(call_history_display_within_messages_pref_key, enable).commit();
     }
 
-    public void setNewMessageFlag(boolean enable){
+    public void setNewMessageFlag(boolean enable) {
         sharedPreferences.edit().putBoolean(new_message_flag, enable).commit();
     }
 
-    public boolean getNewMessageFlag(){
+    public boolean getNewMessageFlag() {
         return sharedPreferences.getBoolean(new_message_flag, false);
     }
 
-    public long getDeviceTimeOffset(){
+    public long getDeviceTimeOffset() {
         return sharedPreferences.getLong(device_time_offset_from_UTC, 0L);
     }
 
-    public boolean setDeviceTimeOffset(long diiference){
+    public boolean setDeviceTimeOffset(long diiference) {
         return sharedPreferences.edit().putLong(device_time_offset_from_UTC, diiference).commit();
     }
 
@@ -305,6 +305,14 @@ public class MobiComUserPreference {
                 putBoolean(mobitexter_contact_sync_key, status).commit();
     }
 
+    public String getUrl() {
+        return sharedPreferences.getString(base_url, null);
+    }
+
+    public void setUrl(String url) {
+        sharedPreferences.edit().putString(base_url, url).commit();
+    }
+
     @Override
     public String toString() {
         return "MobiComUserPreference{" +
@@ -315,12 +323,12 @@ public class MobiComUserPreference {
                 '}';
     }
 
-    public boolean clearAll(){
+    public boolean clearAll() {
 
-         return sharedPreferences.edit().clear().commit();
+        return sharedPreferences.edit().clear().commit();
 
-         //Intent intent = new Intent(this, LoginActivity.class);
-         //startActivity(intent);
+        //Intent intent = new Intent(this, LoginActivity.class);
+        //startActivity(intent);
 
 
     }

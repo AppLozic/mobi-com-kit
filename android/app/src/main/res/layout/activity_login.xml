@@ -23,6 +23,7 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -41,6 +42,15 @@
         android:text="@string/mobicomkitdemo"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#FFFFFF" />
+
+    <Spinner
+        android:id="@+id/spinner_for_url"
+        android:layout_width="300dp"
+        android:layout_height="32dp"
+        android:entries="@array/select_url"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:background="#FFFFFF"/>
 
     <ScrollView
         android:id="@+id/login_form"

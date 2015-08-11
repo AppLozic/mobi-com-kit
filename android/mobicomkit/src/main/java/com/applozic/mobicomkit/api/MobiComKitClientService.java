@@ -2,6 +2,7 @@ package com.applozic.mobicomkit.api;
 
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 
@@ -26,7 +27,6 @@ public class MobiComKitClientService {
     public static String APPLICATION_KEY_HEADER = "Application-Key";
     public static String APPLICATION_KEY_HEADER_VALUE_METADATA = "com.applozic.application.key";
     public static final String FILE_URL = "/rest/ws/file/";
-    public static final String DEFAULT_BASE_URl = "https://applozic.appspot.com";
 
     public MobiComKitClientService() {
 
@@ -38,9 +38,11 @@ public class MobiComKitClientService {
     }
 
     protected String getBaseUrl() {
+        String SELECTED_BASE_URL = MobiComUserPreference.getInstance(context).getUrl();
+        Log.d("stored URL", "URL" + SELECTED_BASE_URL);
         String BASE_URl = Utils.getMetaDataValue(context, BASE_URL_METADATA);
         if (TextUtils.isEmpty(BASE_URl)) {
-            return DEFAULT_BASE_URl;
+            return SELECTED_BASE_URL;
         } else
             return BASE_URl;
     }

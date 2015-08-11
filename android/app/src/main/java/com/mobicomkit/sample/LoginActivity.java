@@ -15,24 +15,25 @@ import android.os.Build.VERSION;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
 
 import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.account.user.User;
 import com.applozic.mobicomkit.api.account.user.UserLoginTask;
 import com.facebook.CallbackManager;
@@ -72,6 +73,11 @@ public class LoginActivity extends Activity {
     private View mLoginFormView;
     private Button mEmailSignInButton;
     CallbackManager callbackManager;
+    private TextView mTitleView;
+    private Spinner mSpinnerView;
+    private int touchCount = 0;
+    private MobiComUserPreference mobiComUserPreference;
+    private LoginButton loginButton;
 
 
     @Override
@@ -116,7 +122,7 @@ public class LoginActivity extends Activity {
 
 
         callbackManager = CallbackManager.Factory.create();
-        final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
 
         loginButton.setReadPermissions("user_friends");
 
@@ -137,7 +143,38 @@ public class LoginActivity extends Activity {
             public void onError(FacebookException exception) {
             }
         });
+
+       mSpinnerView = (Spinner) findViewById(R.id.spinner_for_url);
+        mSpinnerView.setVisibility(View.INVISIBLE);
+        mTitleView = (TextView) findViewById(R.id.textViewTitle);
+        mTitleView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                touchCount += 1;
+                if (touchCount == 5) {
+                    mSpinnerView.setVisibility(View.VISIBLE);
+                    touchCount = 0;
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Click more  " + Integer.toString(5 - touchCount), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mobiComUserPreference = MobiComUserPreference.getInstance(this);
+        mSpinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mobiComUserPreference.setUrl(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
     }
+
 
     public void setupUI(View view) {
         //Set up touch listener for non-text box views to hide keyboard.
@@ -266,6 +303,8 @@ public class LoginActivity extends Activity {
 
             mAuthTask = new UserLoginTask(user, listener, this);
             mEmailSignInButton.setVisibility(View.INVISIBLE);
+            mSpinnerView.setVisibility(View.INVISIBLE);
+            loginButton.setVisibility(View.INVISIBLE);
             mAuthTask.execute((Void) null);
         }
     }

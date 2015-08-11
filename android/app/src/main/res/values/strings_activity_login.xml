@@ -4,7 +4,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_user_id">UserId</string>
-    <string name="prompt_phone_number">Phone Number (optional)</string>
+    <string name="prompt_phone_number">Phone Number</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign up</string>
     <string name="action_sign_in_short">Sign up</string>
@@ -15,4 +15,15 @@
     <string name="error_field_required">This field is required</string>
     <string name="text_alert">Alert</string>
     <string name="mobicomkitdemo">Demo App</string>
+    <string name="applozic_appspot">https://applozic.appspot.com</string>
+    <string name="mobi_com_appspot">https://mobi-com.appspot.com</string>
+    <string name="mobi_com_alpha_appspot">https://mobi-com-alpha.appspot.com</string>
+    <string name="mobicomkit_test_appspot">https://mobicomkit-test.appspot.com</string>
+    <string-array name="select_url">
+        <item>https://applozic.appspot.com</item>
+        <item>https://mobi-com.appspot.com</item>
+        <item>https://mobi-com-alpha.appspot.com</item>
+        <item>https://mobicomkit-test.appspot.com</item>
+    </string-array>
+
 </resources>
