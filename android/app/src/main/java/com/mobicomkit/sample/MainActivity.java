@@ -285,7 +285,7 @@ public class MainActivity extends MobiComActivityForFragment
             Contact contact = new Contact();
             contact.setUserId("adarshk");
             contact.setFullName("Adarsh");
-            contact.setImageURL("R.drawable.ic_contact_picture_holo_light");
+            contact.setImageURL("R.drawable.applozic_ic_contact_picture_holo_light");
             contact.setEmailId("applozic.connect@gmail.com");
             contactList.add(contact);
             //Adarsh

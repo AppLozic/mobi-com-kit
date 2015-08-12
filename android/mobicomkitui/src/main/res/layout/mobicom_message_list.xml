@@ -43,7 +43,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/circle"
-            android:src="@drawable/ic_action_add"
+            android:src="@drawable/applozic_ic_action_add"
             android:visibility="gone" />
 
     </RelativeLayout>
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/ic_action_cancel" />
+            android:src="@drawable/applozic_ic_action_cancel" />
 
     </RelativeLayout>
 
@@ -218,7 +218,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:scaleType="center"
-            android:src="@drawable/ic_action_attachment"
+            android:src="@drawable/applozic_ic_action_attachment"
             android:visibility="visible" />
 
         <ImageButton

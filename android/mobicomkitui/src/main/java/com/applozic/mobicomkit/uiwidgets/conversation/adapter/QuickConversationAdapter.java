@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,9 +27,7 @@ import com.applozic.mobicommons.commons.image.ImageLoader;
 import com.applozic.mobicommons.commons.image.ImageUtils;
 import com.applozic.mobicommons.emoticon.EmojiconHandler;
 import com.applozic.mobicommons.emoticon.EmoticonUtils;
-import com.applozic.mobicommons.file.FileUtils;
 import com.applozic.mobicommons.people.contact.Contact;
-import com.applozic.mobicommons.people.contact.ContactUtils;
 import com.applozic.mobicommons.people.group.Group;
 import com.applozic.mobicommons.people.group.GroupUtils;
 
@@ -73,7 +70,7 @@ public class QuickConversationAdapter extends BaseAdapter {
                 return contactService.downloadContactImage((Activity) context, (Contact) data);
             }
         };
-        contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
+        contactImageLoader.setLoadingImage(R.drawable.applozic_ic_contact_picture_180_holo_light);
         contactImageLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
         contactImageLoader.setImageFadeIn(false);
     }
@@ -170,7 +167,7 @@ public class QuickConversationAdapter extends BaseAdapter {
             }
             if (sentOrReceived != null) {
                 if (message.isCall()) {
-                    sentOrReceived.setImageResource(R.drawable.ic_action_call_holo_light);
+                    sentOrReceived.setImageResource(R.drawable.applozic_ic_action_call_holo_light);
                     messageTextView.setTextColor(context.getResources().getColor(message.isIncomingCall() ? R.color.incoming_call : R.color.outgoing_call));
                 } else if (getItemViewType(position) == 0) {
                     sentOrReceived.setImageResource(R.drawable.mobicom_social_forward);

@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:background="@color/contact_name"
         android:gravity="center"
-        android:drawableLeft="@drawable/ic_action_add"
+        android:drawableLeft="@drawable/applozic_ic_action_add"
         android:layout_margin="2dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"

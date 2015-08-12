@@ -6,7 +6,7 @@
     <item
         android:id="@+id/conversations"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_action_chat"
+        android:icon="@drawable/applozic_ic_action_chat"
         mobitexter:showAsAction="ifRoom"
         android:showAsAction="ifRoom"
         android:title="Conversations" />
@@ -14,7 +14,7 @@
     <item
         android:id="@+id/start_new"
         android:orderInCategory="2"
-        android:icon="@drawable/ic_action_add"
+        android:icon="@drawable/applozic_ic_action_add"
         mobitexter:showAsAction="ifRoom|collapseActionView"
         android:showAsAction="ifRoom|collapseActionView"
         android:title="Start New" />
@@ -22,7 +22,7 @@
     <item
         android:id="@+id/dial"
         android:orderInCategory="3"
-        android:icon="@drawable/ic_action_call"
+        android:icon="@drawable/applozic_ic_action_call"
         mobitexter:showAsAction="ifRoom|collapseActionView"
         android:showAsAction="ifRoom|collapseActionView"
         android:title="Dial" />
@@ -30,7 +30,7 @@
     <item
         android:id="@+id/refresh"
         android:orderInCategory="4"
-        android:icon="@drawable/ic_action_time"
+        android:icon="@drawable/applozic_ic_action_time"
         mobitexter:showAsAction="collapseActionView"
         android:showAsAction="collapseActionView"
         android:title="Refresh" />
@@ -38,7 +38,7 @@
     <item
         android:id="@+id/deleteConversation"
         android:orderInCategory="5"
-        android:icon="@drawable/ic_action_edit"
+        android:icon="@drawable/applozic_ic_action_edit"
         mobitexter:showAsAction="collapseActionView"
         android:showAsAction="collapseActionView"
         android:title="@string/delete_conversation" />
@@ -46,7 +46,7 @@
     <item
         android:id="@+id/support"
         android:orderInCategory="8"
-        android:icon="@drawable/ic_action_help"
+        android:icon="@drawable/applozic_ic_action_help"
         mobitexter:showAsAction="collapseActionView"
         android:showAsAction="collapseActionView"
         android:title="Support" />

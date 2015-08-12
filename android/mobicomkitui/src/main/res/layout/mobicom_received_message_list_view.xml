@@ -24,7 +24,7 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginRight="4dp"
-        android:src="@drawable/ic_contact_picture_180_holo_light" />
+        android:src="@drawable/applozic_ic_contact_picture_180_holo_light" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/messageTextLayout"
@@ -62,7 +62,7 @@
             android:id="@+id/attached_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_action_attachment"
+            android:drawableLeft="@drawable/applozic_ic_action_attachment"
             android:textColor="@color/mobitexter_main_color"
             android:textSize="16dp" />
 
@@ -113,7 +113,7 @@
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_action_message_pending"
+                android:drawableRight="@drawable/applozic_ic_action_message_pending"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="11dp" />

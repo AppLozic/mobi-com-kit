@@ -25,7 +25,7 @@
         android:layout_gravity="center"
         android:layout_margin="4dp"
         android:layout_toRightOf="@+id/alphabeticImage"
-        android:src="@drawable/ic_contact_picture_180_holo_light"
+        android:src="@drawable/applozic_ic_contact_picture_180_holo_light"
         android:visibility="visible" />
 
     <LinearLayout
@@ -82,7 +82,7 @@
         android:layout_below="@+id/name_time"
         android:layout_toRightOf="@+id/sentOrReceivedIcon"
         android:gravity="center_vertical"
-        android:src="@drawable/ic_action_attachment"
+        android:src="@drawable/applozic_ic_action_attachment"
         android:visibility="gone" />
 
     <TextView

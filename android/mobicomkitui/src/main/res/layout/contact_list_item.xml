@@ -13,7 +13,7 @@
         android:layout_width="?android:attr/listPreferredItemHeight"
         android:scaleType="centerCrop"
         style="@style/quickContactBadgeStyle"
-        android:src="@drawable/ic_contact_picture_holo_light" />
+        android:src="@drawable/applozic_ic_contact_picture_holo_light" />
 
     <!-- Use standard android.R class text2 id instead of app specific id. This is just useful for
          consistency. This is secondary text and not always visible so by default is has its

@@ -121,7 +121,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                 return contactService.downloadContactImage((Activity) getContext(), (Contact) data);
             }
         };
-        contactImageLoader.setLoadingImage(R.drawable.ic_contact_picture_180_holo_light);
+        contactImageLoader.setLoadingImage(R.drawable.applozic_ic_contact_picture_180_holo_light);
         contactImageLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
         contactImageLoader.setImageFadeIn(false);
 
@@ -134,10 +134,10 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
         imageThumbnailLoader.setImageFadeIn(false);
         imageThumbnailLoader.addImageCache(((FragmentActivity) context).getSupportFragmentManager(), 0.1f);
 
-        sentIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_sent);
-        deliveredIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_delivered);
-        pendingIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_pending);
-        scheduledIcon = getContext().getResources().getDrawable(R.drawable.ic_action_message_schedule);
+        sentIcon = getContext().getResources().getDrawable(R.drawable.applozic_ic_action_message_sent);
+        deliveredIcon = getContext().getResources().getDrawable(R.drawable.applozic_ic_action_message_delivered);
+        pendingIcon = getContext().getResources().getDrawable(R.drawable.applozic_ic_action_message_pending);
+        scheduledIcon = getContext().getResources().getDrawable(R.drawable.applozic_ic_action_message_schedule);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -227,7 +227,7 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                 if ((!message.isCall()) || message.isDummyEmptyMessage()) {
                     sentOrReceived.setVisibility(View.GONE);
                 } else if (message.isCall()) {
-                    sentOrReceived.setImageResource(R.drawable.ic_action_call_holo_light);
+                    sentOrReceived.setImageResource(R.drawable.applozic_ic_action_call_holo_light);
                 } else if (getItemViewType(position) == 0) {
                     sentOrReceived.setImageResource(R.drawable.mobicom_social_forward);
                 } else {
@@ -315,13 +315,12 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                                 showAttachmentIconAndText(attachedFile, fileMeta.getName(), mimeType);
                             }
 
-                        }
-
                     }
 
                 }
 
             }
+        }
             if (message.isCanceled()) {
                 attachmentRetry.setVisibility(View.VISIBLE);
             }
@@ -387,9 +386,9 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                 messageTextView.setText(EmoticonUtils.getSmiledText(context, message.getMessage(), emojiconHandler));
                 if (mimeType != null) {
                     if (mimeType.startsWith("image")) {
-                        attachmentIcon.setImageResource(R.drawable.ic_action_camera);
+                        attachmentIcon.setImageResource(R.drawable.applozic_ic_action_camera);
                     } else if (mimeType.startsWith("video")) {
-                        attachmentIcon.setImageResource(R.drawable.ic_action_video);
+                        attachmentIcon.setImageResource(R.drawable.applozic_ic_action_video);
                     }
                 }
                 if (messageTextLayout != null) {

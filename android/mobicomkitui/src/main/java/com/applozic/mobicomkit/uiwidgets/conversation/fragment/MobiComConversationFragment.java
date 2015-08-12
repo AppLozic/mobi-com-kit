@@ -163,8 +163,8 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
         emptyTextView = (TextView) spinnerLayout.findViewById(R.id.noConversations);
         emoticonsBtn.setOnClickListener(this);
         listView.addHeaderView(spinnerLayout);
-        sentIcon = getResources().getDrawable(R.drawable.ic_action_message_sent);
-        deliveredIcon = getResources().getDrawable(R.drawable.ic_action_message_delivered);
+        sentIcon = getResources().getDrawable(R.drawable.applozic_ic_action_message_sent);
+        deliveredIcon = getResources().getDrawable(R.drawable.applozic_ic_action_message_delivered);
 
         listView.setLongClickable(true);
 
@@ -568,7 +568,7 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
                             listView.getFirstVisiblePosition() + 1);
                     if (view != null) {
                         TextView createdAtTime = (TextView) view.findViewById(R.id.createdAtTime);
-                        createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_action_message_delivered), null);
+                        createdAtTime.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.applozic_ic_action_message_delivered), null);
                     }
                 } else {
                     messageList.add(message);
@@ -863,11 +863,11 @@ abstract public class MobiComConversationFragment extends Fragment implements Vi
     protected void processPhoneNumbers() {
         if (contact.hasMultiplePhoneNumbers()) {
             ArrayList<SpinnerNavItem> navSpinner = new ArrayList<SpinnerNavItem>();
-            navSpinner.add(new SpinnerNavItem(contact, contact.getContactNumber(), contact.getPhoneNumbers().get(contact.getContactNumber()), R.drawable.ic_action_email));
+            navSpinner.add(new SpinnerNavItem(contact, contact.getContactNumber(), contact.getPhoneNumbers().get(contact.getContactNumber()), R.drawable.applozic_ic_action_email));
 
             for (String phoneNumber : contact.getPhoneNumbers().keySet()) {
                 if (!PhoneNumberUtils.compare(contact.getContactNumber(), phoneNumber)) {
-                    navSpinner.add(new SpinnerNavItem(contact, phoneNumber, contact.getPhoneNumbers().get(phoneNumber), R.drawable.ic_action_email));
+                    navSpinner.add(new SpinnerNavItem(contact, phoneNumber, contact.getPhoneNumbers().get(phoneNumber), R.drawable.applozic_ic_action_email));
                 }
             }
        // title drop down adapter

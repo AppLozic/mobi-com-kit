@@ -44,7 +44,7 @@
             android:id="@+id/attached_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_action_attachment"
+            android:drawableLeft="@drawable/applozic_ic_action_attachment"
             android:textColor="@color/mobitexter_main_color"
             android:textSize="16dp" />
 
@@ -83,7 +83,7 @@
                 android:id="@+id/createdAtTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_action_message_pending"
+                android:drawableRight="@drawable/applozic_ic_action_message_pending"
                 android:gravity="center_vertical"
                 android:paddingLeft="2dp"
                 android:text="created at time"
@@ -100,7 +100,7 @@
         android:layout_height="55dp"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="4dp"
-        android:src="@drawable/ic_contact_picture_180_holo_light" />
+        android:src="@drawable/applozic_ic_contact_picture_180_holo_light" />
 
 
 </RelativeLayout>

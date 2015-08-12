@@ -6,7 +6,7 @@
     <item
         android:id="@+id/forward"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_action_forward"
+        android:icon="@drawable/applozic_ic_action_forward"
         mobitexter:showAsAction="always"
         android:showAsAction="always"
         android:actionProviderClass="android.support.v7.widget.ShareActionProvider"
