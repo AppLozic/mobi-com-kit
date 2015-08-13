@@ -1,4 +1,4 @@
-package com.mobicomkit;
+package com.applozic.mobicomkit.sample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
