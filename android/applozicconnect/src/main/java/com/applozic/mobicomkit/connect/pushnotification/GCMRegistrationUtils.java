@@ -1,4 +1,4 @@
-package pushnotification;
+package com.applozic.mobicomkit.connect.pushnotification;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -6,11 +6,11 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.applozic.mobicomkit.api.account.register.RegisterUserClientService;
+import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.applozic.mobicomkit.api.account.register.RegisterUserClientService;
-import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 
 import java.io.IOException;
 
@@ -62,6 +62,7 @@ public class GCMRegistrationUtils extends Handler {
     }
 
     /**
+     *
      * Check the device to make sure it has the Google Play Services APK. If it doesn't, display a dialog that allows users
      * to download the APK from the Google Play Store or enable it in the device's system settings.
      */

@@ -1,4 +1,4 @@
-package com.mobicomkit.sample.pushnotification;
+package com.applozic.mobicomkit.sample.pushnotification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

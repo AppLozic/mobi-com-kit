@@ -1,4 +1,4 @@
-package com.mobicomkit.sample.pushnotification;
+package com.applozic.mobicomkit.sample.pushnotification;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -6,12 +6,12 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.api.account.user.PushNotificationTask;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 

@@ -1,17 +1,15 @@
-package com.applozic.connect;
+package com.applozic.mobicomkit.connect;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.applozic.mobicomkit.api.account.user.MobiComUserPreference;
 import com.applozic.mobicomkit.contact.AppContactService;
-
-import com.applozic.mobicommons.people.contact.Contact;;
+import com.applozic.mobicommons.people.contact.Contact;
 
 public class MainActivity extends FragmentActivity {
 
@@ -23,7 +21,6 @@ public class MainActivity extends FragmentActivity {
         if (!userPreference.isRegistered()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-//            fini
             return;
         }
         Intent intent = new Intent(this, AppLozicCoversationActivity.class);
@@ -34,7 +31,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(com.applozic.mobicomkit.connect.R.menu.menu_main, menu);
         return true;
     }
 
@@ -46,7 +43,7 @@ public class MainActivity extends FragmentActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == com.applozic.mobicomkit.connect.R.id.action_settings) {
             return true;
         }
 
@@ -57,13 +54,13 @@ public class MainActivity extends FragmentActivity {
         Context context = getApplicationContext();
         AppContactService appContactService = new AppContactService(context);
         // avoid each time update ....
-        if (appContactService.getContactById(getString(R.string.support_contact_userId)) == null) {
+        if (appContactService.getContactById(getString(com.applozic.mobicomkit.connect.R.string.support_contact_userId)) == null) {
             Contact contact = new Contact();
-            contact.setUserId(getString(R.string.support_contact_userId));
-            contact.setFullName(getString(R.string.support_contact_display_name));
-            contact.setContactNumber(getString(R.string.support_contact_number));
-            contact.setImageURL(getString(R.string.support_contact_image_url));
-            contact.setEmailId(getString(R.string.support_contact_emailId));
+            contact.setUserId(getString(com.applozic.mobicomkit.connect.R.string.support_contact_userId));
+            contact.setFullName(getString(com.applozic.mobicomkit.connect.R.string.support_contact_display_name));
+            contact.setContactNumber(getString(com.applozic.mobicomkit.connect.R.string.support_contact_number));
+            contact.setImageURL(getString(com.applozic.mobicomkit.connect.R.string.support_contact_image_url));
+            contact.setEmailId(getString(com.applozic.mobicomkit.connect.R.string.support_contact_emailId));
             appContactService.add(contact);
         }
     }

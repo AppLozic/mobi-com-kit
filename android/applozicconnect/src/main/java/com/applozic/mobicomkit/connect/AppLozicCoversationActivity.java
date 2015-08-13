@@ -1,4 +1,4 @@
-package com.applozic.connect;
+package com.applozic.mobicomkit.connect;
 
 import android.os.Bundle;
 

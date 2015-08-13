@@ -1,4 +1,4 @@
-package pushnotification;
+package com.applozic.mobicomkit.connect.pushnotification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.applozic.mobicomkit.api.notification.MobiComPushReceiver;
+
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
 

@@ -1,4 +1,4 @@
-package com.mobicomkit.sample;
+package com.applozic.mobicomkit.sample;
 
 import android.app.Activity;
 import android.content.Context;
