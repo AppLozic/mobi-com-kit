@@ -55,18 +55,18 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.applozic.mobicomkit.connect.R.layout.activity_login);
+        setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(com.applozic.mobicomkit.connect.R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
-        mPhoneNumberView = (EditText) findViewById(com.applozic.mobicomkit.connect.R.id.phoneNumber);
-        mUserIdView = (EditText) findViewById(com.applozic.mobicomkit.connect.R.id.userId);
-        mPasswordView = (EditText) findViewById(com.applozic.mobicomkit.connect.R.id.password);
+        mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        mUserIdView = (EditText) findViewById(R.id.userId);
+        mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == com.applozic.mobicomkit.connect.R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
@@ -74,7 +74,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-        mEmailSignInButton = (Button) findViewById(com.applozic.mobicomkit.connect.R.id.email_sign_in_button);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,8 +84,8 @@ public class LoginActivity extends Activity {
             }
         });
 
-        mLoginFormView = findViewById(com.applozic.mobicomkit.connect.R.id.login_form);
-        mProgressView = findViewById(com.applozic.mobicomkit.connect.R.id.login_progress);
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
     }
 
 //    @Override
@@ -103,7 +103,7 @@ public class LoginActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == com.applozic.mobicomkit.connect.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
@@ -166,18 +166,18 @@ public class LoginActivity extends Activity {
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(com.applozic.mobicomkit.connect.R.string.error_invalid_password));
+            mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(com.applozic.mobicomkit.connect.R.string.error_field_required));
+            mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(com.applozic.mobicomkit.connect.R.string.error_invalid_email));
+            mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
         }

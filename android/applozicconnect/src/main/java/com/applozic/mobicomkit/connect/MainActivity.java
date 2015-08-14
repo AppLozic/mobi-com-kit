@@ -31,7 +31,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(com.applozic.mobicomkit.connect.R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -43,7 +43,7 @@ public class MainActivity extends FragmentActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == com.applozic.mobicomkit.connect.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
@@ -54,13 +54,13 @@ public class MainActivity extends FragmentActivity {
         Context context = getApplicationContext();
         AppContactService appContactService = new AppContactService(context);
         // avoid each time update ....
-        if (appContactService.getContactById(getString(com.applozic.mobicomkit.connect.R.string.support_contact_userId)) == null) {
+        if (appContactService.getContactById(getString(R.string.support_contact_userId)) == null) {
             Contact contact = new Contact();
-            contact.setUserId(getString(com.applozic.mobicomkit.connect.R.string.support_contact_userId));
-            contact.setFullName(getString(com.applozic.mobicomkit.connect.R.string.support_contact_display_name));
-            contact.setContactNumber(getString(com.applozic.mobicomkit.connect.R.string.support_contact_number));
-            contact.setImageURL(getString(com.applozic.mobicomkit.connect.R.string.support_contact_image_url));
-            contact.setEmailId(getString(com.applozic.mobicomkit.connect.R.string.support_contact_emailId));
+            contact.setUserId(getString(R.string.support_contact_userId));
+            contact.setFullName(getString(R.string.support_contact_display_name));
+            contact.setContactNumber(getString(R.string.support_contact_number));
+            contact.setImageURL(getString(R.string.support_contact_image_url));
+            contact.setEmailId(getString(R.string.support_contact_emailId));
             appContactService.add(contact);
         }
     }
