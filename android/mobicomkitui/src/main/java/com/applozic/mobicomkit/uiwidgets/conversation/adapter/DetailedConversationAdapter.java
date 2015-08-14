@@ -373,6 +373,12 @@ public class DetailedConversationAdapter extends ArrayAdapter<Message> {
                     showFullView(message);
                 }
             });
+            attachmentView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return false;
+                }
+            });
 
             if (message.getScheduledAt() != null) {
                 createdAtTime.setText(DateUtils.getFormattedDate(message.getScheduledAt()));
