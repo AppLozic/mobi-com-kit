@@ -1,5 +1,6 @@
 (function ($) {
 
+    "use strict";
     var mobiComKit = new MobiComKit();
 
     var default_options = {
@@ -1143,8 +1144,7 @@
         }
 
         function MckInitializeChannel(token) {
-            channel = new goog.appengine.Channel(token);
-            socket = channel.open();
+            var channel = new goog.appengine.Channel(token), connected = false, socket = channel.open();
             socket.onopen = function () {
                 connected = true;
             };
