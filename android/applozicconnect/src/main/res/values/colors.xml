@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="background">#f2f2f2</color>
-    <color name="scrollview_background">#f2f2f2</color>
-    <color name="buttonbgcolor">#2683c2</color>
-    <color name="textbuttoncolor">#ffffff</color>
-
-</resources>
